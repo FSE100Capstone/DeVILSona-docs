@@ -1464,3 +1464,256 @@ Its most important responsibilities are:
 
 If future teams need to change how the car itself behaves, how the player manipulates its controls, or how the car responds visually and audibly to those manipulations, `BP_CarFinal` is one of the first Blueprints they should inspect.
 
+## BP_CarPath
+
+**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
+
+`BP_CarPath` is the spline actor used by the driving scenario. Its primary purpose is to hold the `DrivingSpline` component that defines the path the car follows during the level.
+
+### Main Role
+
+This Blueprint is responsible for:
+
+- containing the spline used for vehicle movement
+- defining the physical route of Mike’s drive through the scenario
+- serving as the spline reference used by `BP_CarSplineController`
+
+### Notes
+
+`BP_CarPath` is intentionally simple. It does not contain the movement logic itself; instead, `BP_CarSplineController` reads from the spline stored in this Blueprint and uses it to move `BP_CarFinal` along the route.
+
+If future teams need to adjust the actual driving route, turn shapes, or waypoint positions relative to the road, this is one of the first level assets they should inspect.
+
+## BP_SceneWaypoint
+
+**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
+
+`BP_SceneWaypoint` is a lightweight actor used to mark scene-beat stop locations along the driving route.
+
+### Main Role
+
+This Blueprint is responsible for:
+
+- marking important scenario waypoint locations
+- providing reference positions for pause/checkpoint-style scene beats
+- supporting the waypoint-driven stop/resume logic used by `BP_CarSplineController`
+
+### Component Structure
+
+`BP_SceneWaypoint` contains only an **Arrow Component**, which is used as the transform reference for placement in the level.
+
+### Level Usage
+
+The driving scenario currently uses **14 placed instances** of `BP_SceneWaypoint` in the level. These are positioned along the route where the car pauses or where the scenario checks against scene-beat progression.
+
+### Notes
+
+This Blueprint is intentionally minimal. Its importance comes from how it is used by the spline-controller logic rather than from any internal Blueprint complexity.
+
+## BP_HUDDisplay_Driving
+
+**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
+
+`BP_HUDDisplay_Driving` is a lightweight HUD container actor used to hold the driving HUD master widget in the level.
+
+### Main Role
+
+This Blueprint is responsible for:
+
+- containing the `DrivingHUD_Widget` component
+- exposing a function that returns the active driving HUD reference
+- initializing and storing the driving HUD reference at runtime
+- serving as the main bridge between the placed level actor and the actual driving HUD widget hierarchy
+
+### Widget Ownership
+
+The main widget component in this actor is `DrivingHUD_Widget`, which is an instance of `WB_DrivingHUD_Master`.
+
+### How It Is Used
+
+`BP_Driving_VRPawn` uses `BP_HUDDisplay_Driving` to retrieve the master driving HUD widget reference. That reference is then passed into other systems such as `BP_DialogueManager`.
+
+This means `BP_HUDDisplay_Driving` is mainly a reference/access point rather than a logic-heavy HUD controller.
+
+### Notes
+
+This Blueprint is simple, but it is important because it is the way the driving scenario consistently retrieves and works with the active HUD widget in the level.
+
+## BPI_DrivingInteraction
+
+**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
+
+`BPI_DrivingInteraction` is the main Blueprint Interface used for driving interaction communication between the player interaction systems and the car actor.
+
+### Main Role
+
+This interface is primarily used between:
+
+- `BP_Driving_VRPawn`
+- `BP_CarFinal`
+
+### Purpose
+
+The interface provides a cleaner interaction boundary between the player-side VR interaction logic and the car-side response logic.
+
+At a high level, it is used for events such as:
+
+- notifying the car that a control has been grabbed
+- updating control interaction state while the player is manipulating it
+- requesting action-style interactions such as engine start or phone acceptance
+- signaling that a car-side interaction should evaluate or commit
+
+This keeps the player interaction layer from depending entirely on direct car-specific function calls for every interaction.
+
+### Notes
+
+Although the overall scenario still contains a large amount of direct Blueprint-specific logic, `BPI_DrivingInteraction` is an important shared interface point between the pawn and the car.
+
+## Enums
+
+The driving scenario uses several enums to organize UI mode, objective phase, and interaction state behavior.
+
+### E_DrivingHUDMode
+
+**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
+
+`E_DrivingHUDMode` controls which HUD state is currently active in `WB_DrivingHUD_Master`.
+
+It is used to switch between the major HUD/widget modes in the driving scenario, including the tutorial, driving, and scenario completion states.
+
+This enum is primarily used in:
+
+- `WB_DrivingHUD_Master`
+- `WB_ControlsTutorial`
+- other HUD-switching logic tied to scenario state
+
+### E_HeadlightMode
+
+**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
+
+`E_HeadlightMode` is used to track the current headlight state of the vehicle.
+
+It is used by `BP_CarFinal` to determine whether the headlights are off, in low beam mode, or in high beam mode, and to apply the correct visual/audio/objective behavior tied to those states.
+
+### E_ObjectivePhase
+
+**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
+
+`E_ObjectivePhase` is used by `BP_CarSplineController` to distinguish between the major phases of the scenario.
+
+This includes broad progression states such as:
+
+- outside car
+- pre-drive
+- active driving
+- arrival
+
+It is one of the key enums used to organize the scenario’s overall flow and interaction gating.
+
+### E_TurnSignalMode
+
+**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
+
+`E_TurnSignalMode` is used by `BP_CarFinal` to track the current state of the turn signal system.
+
+It supports the repeated right-turn interactions used throughout the scenario and helps distinguish whether the turn signal is on or off while also supporting the audio/visual state changes associated with it.
+
+## WB_DrivingHUD_Master
+
+**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
+
+`WB_DrivingHUD_Master` is the master driving HUD widget used by the scenario. It acts as the top-level HUD container and switches between the major driving UI widgets.
+
+### Main Role
+
+This widget is responsible for:
+
+- containing the scenario’s major HUD widgets
+- switching which HUD is currently shown
+- exposing a central HUD mode interface through `E_DrivingHUDMode`
+
+### Widget Structure
+
+`WB_DrivingHUD_Master` contains the driving HUD widgets inside a **Widget Switcher**.
+
+The major child widgets managed through this switcher are:
+
+- `WB_ControlsTutorial`
+- `WB_ObjectiveHUD`
+- `WB_Subtitles`
+- `WB_DrivingScenarioComplete`
+
+### HUD Mode Switching
+
+The widget switches its active child widget based on `E_DrivingHUDMode`.
+
+This allows the scenario to move between:
+
+- tutorial/setup UI
+- active driving HUD
+- subtitle display flow
+- scenario completion UI
+
+without requiring separate top-level HUD ownership patterns for each stage.
+
+### Notes
+
+This widget is the central HUD container for the level. If future teams need to change which driving UI elements exist or how the level transitions between tutorial, gameplay, subtitles, and end-state UI, `WB_DrivingHUD_Master` is one of the first widgets they should inspect.
+
+## WB_FadeScreen
+
+**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
+
+`WB_FadeScreen` is the fade-screen widget used during level transitions in the driving scenario.
+
+### Main Role
+
+This widget is responsible for:
+
+- supporting the visual fade-in when entering the driving level
+- supporting fade transitions during setup and scene changes
+- helping hide abrupt visual transitions from the player
+
+### How It Is Used
+
+In the active driving implementation, this widget is used at level startup to complete the fade-in from the main menu redirect.
+
+It works together with the Level Blueprint and camera fade logic to make transitions into the level and into key scenario states feel smoother.
+
+### Notes
+
+`WB_FadeScreen` is a support widget rather than a main gameplay HUD element, but it is important for transition polish and comfort in VR.
+
+## Niagara Rain Systems
+
+The driving scenario uses two Niagara systems for exterior rain presentation around the moving vehicle.
+
+### NS_Rain_CarAttached
+
+**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
+
+`NS_Rain_CarAttached` is one of the Niagara rain systems used by the scenario. It is attached to the car and helps provide the exterior rain effect during the driving portion of the level.
+
+### NS_Rain_CarClose
+
+**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
+
+`NS_Rain_CarClose` is the second Niagara rain system used by the scenario. It works alongside the attached rain system to improve the appearance of rain near the car.
+
+### Main Role
+
+Together, these Niagara systems are responsible for:
+
+- presenting exterior rain around the vehicle
+- supporting the rainy driving atmosphere during the mid-scenario driving sequence
+- working with the rain blocker / kill-particles-in-volume setup so rain does not visibly enter the car interior while the vehicle moves along the spline
+
+### Notes
+
+These systems are part of the overall rain presentation pipeline along with:
+
+- the windshield rain overlay material logic in `BP_CarFinal`
+- the rain-interior blocker logic used to reduce particles entering the car
+- the wiper-linked reduction of windshield rain amount
+
+The Niagara systems provide the exterior volumetric rain presence, while the windshield overlay handles the player-facing windshield buildup/clearing effect.
