@@ -18,6 +18,7 @@ This wiki is the comprehensive knowledge base for everyone involved in the DeVIL
 | [Running a Session](educator-guide/running-a-session.md) | Step-by-step guide for launching and running a class session |
 | [Student Safety & Privacy](educator-guide/safety-privacy.md) | AI content guardrails, data privacy, VR sickness protocols |
 | [Troubleshooting for Educators](educator-guide/troubleshooting.md) | Quick-fix guide for common classroom problems |
+| [Project Resources and Deliverables](educator-guide/project-resources-and-deliverables.md) | Centralized links to major project resources, research materials, design artifacts, and non-code deliverables created during the DeVILSona capstone (Fall 2025/Spring 2026) |
 
 ---
 
