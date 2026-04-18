@@ -939,4 +939,528 @@ This objective-aware gating is one of the reasons the driving experience feels s
 
 If future teams need to modify how the player interacts with the car, how the driving-specific input works, or how the HUD behaves during the scenario, `BP_Driving_VRPawn` is one of the first Blueprints they should inspect.
 
+## BP_CarSplineController
+
+**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
+
+`BP_CarSplineController` is the main scenario progression controller for the driving level. It manages how the car moves along the spline, when the car should stop or resume, which interactions are currently allowed, and how the scenario advances from one objective to the next.
+
+If `BP_DialogueManager` is the main dialogue/objective display manager and `BP_Driving_VRPawn` is the player interaction layer, then `BP_CarSplineController` is the main **scenario flow and movement controller**.
+
+### Main Role
+
+This Blueprint is responsible for:
+
+- moving `BP_CarFinal` along the driving spline
+- controlling spline speed and waypoint progression
+- pausing and resuming the car at the appropriate scenario beats
+- tracking completed objectives
+- gating when interactions in `BP_CarFinal` should be enabled
+- distinguishing between outside-car, pre-drive, active driving, and arrival phases
+- coordinating objective progression with the rest of the scenario systems
+- triggering the final scenario completion flow
+
+This Blueprint is one of the most important pieces of the driving level because it determines when the player is allowed to act and when the car is allowed to continue moving.
+
+### High-Level Scenario Phases
+
+From the Blueprint structure, the controller tracks scenario progression using the driving objective phase enum. The active flow is divided into several broad phases, including:
+
+- **Outside Car**
+- **Pre-Drive**
+- **Driving**
+- **Arrival**
+
+These phases are used to distinguish:
+
+- interactions that happen before the car starts moving
+- interactions that happen while the car is actively moving
+- interactions that happen once the player reaches the interview location
+
+This makes the scenario progression more structured than a simple linear list of actions.
+
+### Spline Movement
+
+`BP_CarSplineController` manages the car’s movement along the spline using the car move timeline and the spline reference from `BP_CarPath`.
+
+At a high level, it:
+
+- stores the spline reference
+- calculates position and rotation along the spline
+- updates the car’s transform while the timeline is playing
+- handles forward and reverse movement behavior where needed
+- tracks the current waypoint index
+- stops movement when the scenario reaches a required pause point
+- resumes movement once the required objective has been completed
+
+This movement system is central to the level because the scenario is built around Mike progressing through a guided drive rather than free driving.
+
+### Waypoints and Scene Beats
+
+The Blueprint uses waypoints and scene-beat logic to decide when the car should stop and wait for player action.
+
+These waypoints are used to support moments such as:
+
+- the initial outside-car setup
+- pre-drive preparation interactions
+- interactions that happen while driving but still require scenario control
+- the arrival and exit sequence
+
+Rather than stopping at every objective in the same way, the Blueprint differentiates between objectives that require a pause and those that occur while the vehicle continues moving.
+
+### Objective Completion Tracking
+
+A major function of `BP_CarSplineController` is recording completed objectives and updating overall scenario progression.
+
+When an objective is completed, the Blueprint:
+
+- checks whether that objective was already recorded
+- adds it to the completed objective list if it is new
+- increments the completed objective count
+- recalculates normalized overall scenario progress
+- updates its current waiting / phase state as needed
+
+This helps keep objective progression from double-counting and ensures the scenario continues only when the required objective has actually been completed.
+
+### Interaction Gating
+
+One of the most important responsibilities of this Blueprint is gating interaction availability in `BP_CarFinal`.
+
+At different moments in the scenario, the controller enables or disables the interaction variables tied to:
+
+- outside driver door
+- seatbelt
+- engine start
+- shift knob
+- headlights
+- windshield wipers
+- right turn signal
+- phone call accept interaction
+- inside driver door
+
+This means the player does not have unrestricted access to all controls at all times. Instead, `BP_CarSplineController` selectively enables the relevant interaction at the correct step in the scenario.
+
+This gating is a major reason the level behaves like a guided scenario rather than a sandbox vehicle interaction system.
+
+### Moving vs. Stopped Interactions
+
+A key distinction in the Blueprint is the difference between interactions that happen while the car is stopped and interactions that happen while the car is moving.
+
+#### Stopped / Waiting Interactions
+
+These include scenario beats where the controller is explicitly waiting for the player to complete a required action before allowing the car to continue, such as early setup interactions and other blocked progression moments.
+
+In these cases, the controller typically:
+
+- sets a waiting objective
+- disables driving continuation
+- shows the relevant instruction through `BP_DialogueManager`
+- waits until the required objective is completed
+- then resumes the scenario flow
+
+#### Moving Interactions
+
+Other interactions are designed to occur while the car continues along the spline. In these cases, the car remains in its active driving state, but the controller still enables the relevant interaction variable at the correct time so the player can perform the expected action during motion.
+
+This distinction is especially important in the middle portion of the scenario, where several tasks occur during the actual drive rather than during full stops.
+
+### Dialogue / HUD Coordination
+
+Although `BP_DialogueManager` is the main UI/dialogue controller, `BP_CarSplineController` frequently coordinates with it by calling events such as:
+
+- `ShowInstructionOnly`
+- objective fade-related behavior
+- scenario progression displays tied to the current required task
+
+This allows movement control and objective presentation to stay synchronized.
+
+### Objective-Specific Configuration
+
+From the current implementation, the Blueprint includes objective-specific setup values for several interaction types, including rotation ranges, thresholds, direction values, and enabled-state toggles for controls such as:
+
+- shift knob
+- headlight lever
+- wiper lever
+- turn signal lever
+
+This means the controller is not only deciding *when* an interaction can happen, but also helping configure the expected interaction conditions for that objective.
+
+### Phone Call / Mid-Drive Event Handling
+
+The Blueprint also includes logic tied to the incoming phone call scene beat. This is one example of the controller coordinating a mid-drive event by:
+
+- pausing or gating progression at the correct scene beat
+- enabling the phone interaction at the required time
+- showing the relevant instruction
+- then allowing the scenario to continue once that objective is completed
+
+This is part of the broader pattern where the controller decides when scene-specific interactions become active.
+
+### Resume Driving
+
+`ResumeDriving` is one of the important custom events in this Blueprint. It is used when the player has completed a required waiting objective and the car should continue moving along the spline.
+
+At a high level, this event restores the timeline playback state and allows the scenario to move on to the next waypoint/objective segment.
+
+### Scenario Completion
+
+Once the final objective is completed, `BP_CarSplineController` triggers the scenario completion flow.
+
+In the current implementation, this leads into the completion state and the display of `WB_DrivingScenarioComplete`.
+
+This makes the controller responsible not only for mid-scenario movement and gating, but also for handing off the level into its final end-state.
+
+### Notes About Complexity
+
+This Blueprint is one of the largest and most scenario-specific Blueprints in the level. It contains a significant amount of direct objective-specific branching and configuration, which makes it powerful but also more difficult to refactor.
+
+Future teams should treat it as the main source of truth for:
+
+- when the car moves
+- when the car stops
+- what objective is currently being waited on
+- which interactions are currently allowed
+- how progression moves from one scene beat to the next
+
+### Summary
+
+`BP_CarSplineController` should be understood as the main **scenario state and car movement controller** for the driving level.
+
+Its most important responsibilities are:
+
+- controlling spline movement
+- pausing and resuming at scene beats
+- tracking completed objectives
+- gating interactions in `BP_CarFinal`
+- separating stopped interactions from moving interactions
+- coordinating objective progression with the dialogue/HUD systems
+- triggering the final scenario completion flow
+
+If future teams need to change the pacing of the drive, the order of the scenario beats, when the car pauses, or when specific interactions are enabled, `BP_CarSplineController` is one of the first Blueprints they should inspect.
+
+## BP_CarFinal
+
+**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
+
+`BP_CarFinal` is the main car actor used in **Scenario 2: Driving to a Job Interview**. It contains the physical car model, the interactable components used by the player, the audio and visual systems tied to those interactions, and the car-side logic that responds to the player input coming from `BP_Driving_VRPawn` and the scenario gating controlled by `BP_CarSplineController`.
+
+If `BP_Driving_VRPawn` is the player-side interaction layer and `BP_CarSplineController` is the scenario flow controller, then `BP_CarFinal` is the main **vehicle interaction and response actor**.
+
+### Main Role
+
+`BP_CarFinal` is responsible for:
+
+- containing the car’s component hierarchy and interactable controls
+- handling the actual car-side response to player interactions
+- owning the timelines, transforms, and state variables for door, shift, headlight, wiper, turn signal, seatbelt, phone, and engine interactions
+- updating audio, material, and visual feedback tied to those interactions
+- exposing interaction helper functions such as `CanGrab...` and `TryCommit...`
+- coordinating with `BP_DialogueManager` and `BP_CarSplineController` when interactions complete
+- managing rain, windshield overlay, and some scenario-specific visual/audio presentation
+- providing the in-car driver camera and HUD attachment points
+
+This is one of the largest and most scenario-specific Blueprints in the level.
+
+### Component Hierarchy Overview
+
+From the component hierarchy shown in the Blueprint, `BP_CarFinal` contains the full set of major gameplay and presentation elements needed by the scenario, including:
+
+- the vehicle body and primary static/skeletal meshes
+- the outside and inside driver door handles
+- the driver door pivot hierarchy
+- the shift knob
+- the seatbelt root, latch, spline, and related guide/anchor components
+- the windshield wipers and actuation lever pivots
+- the headlight toggle / left actuation lever
+- the right actuation lever used for wiper interactions
+- the phone mount, smartphone, and phone screen display
+- the driver camera and attached 3D HUD widget anchor points
+- headlights and other light components
+- rain and windshield overlay related components
+- audio components for engine, turn signal, rain, doors, phone call, ambience, and other feedback
+
+This makes `BP_CarFinal` both a gameplay actor and a presentation-heavy actor.
+
+### Relationship to Other Driving Blueprints
+
+`BP_CarFinal` works closely with three major systems:
+
+- `BP_Driving_VRPawn`, which supplies the player-side hand/controller interaction data
+- `BP_CarSplineController`, which decides when interactions should be enabled and when the car should continue moving
+- `BP_DialogueManager`, which handles the dialogue and objective responses triggered by specific interaction completions
+
+The Blueprint itself does not control the entire scenario flow, but it is the main actor that performs the actual vehicle-side response once another system says an interaction is allowed.
+
+### Interaction Model
+
+A common pattern throughout `BP_CarFinal` is:
+
+1. determine whether a specific control can currently be grabbed
+2. begin a player-driven interaction using cached hand/controller data
+3. continuously update the control’s visual state while the player is interacting
+4. determine whether the interaction has crossed its commit threshold
+5. animate or snap the control into its target state
+6. trigger dialogue/objective completion when appropriate
+
+This pattern appears repeatedly across the major interactive car controls.
+
+### Function Categories
+
+The function list shown in the Blueprint makes the overall structure of `BP_CarFinal` easier to understand. Broadly, the functions fall into several major groups.
+
+#### Interaction Validation Functions
+
+These are the `CanGrab...` functions, such as:
+
+- `CanGrabOutsideHandle`
+- `CanGrabShiftKnob`
+- `CanGrabHeadlightLever`
+- `CanGrabWiperLever`
+- `CanGrabTurnSignal`
+- `CanGrabInsideHandle`
+- `CanGrabSeatbeltLatch`
+
+These functions determine whether the relevant control is currently allowed to be grabbed based on scenario state and current interaction conditions.
+
+#### Commit / Threshold Functions
+
+These are the `TryCommit...` functions, such as:
+
+- `TryCommitShiftKnob`
+- `TryCommitHeadlightLever`
+- `TryCommitWiperLever`
+- `TryCommitTurnSignal`
+- `TryCommitSeatbeltLatch`
+
+These functions are used once the player has already begun interacting with a control and the Blueprint needs to decide whether the interaction crossed the required threshold to count as completed.
+
+#### Update / Visual Functions
+
+These include functions such as:
+
+- `UpdateHeadlights`
+- `UpdateSeatbeltVisual`
+- `UpdateSeatbeltMidPoint`
+- `RefreshSeatbeltSplinePoints`
+- `RefreshSeatbeltSplineMeshes`
+- `SetWindshieldRainAmount`
+- `SetRainActive`
+
+These functions update the car’s visual state and support the more presentation-heavy parts of the scenario.
+
+### BeginPlay Responsibilities
+
+From the active Event Graph logic, `BP_CarFinal` performs a substantial amount of setup on `BeginPlay`.
+
+At a high level, it:
+
+- stores initial rotations for the door and handle pivots
+- initializes the seatbelt spline setup
+- creates dynamic materials for the smartphone screen and windshield overlay
+- initializes the engine start button glow material
+- starts the level with headlights off
+- starts ambient suburban audio
+- sets up the visibility state of the Mike body/MetaHuman elements
+- prepares the rain-related materials and systems
+- initializes the state for both the outside and inside driver door interactions
+
+This BeginPlay setup is important because many of the car’s interaction systems depend on stored “rest state” values and dynamic materials that are created at runtime.
+
+### Door Interactions
+
+`BP_CarFinal` contains separate but related logic for:
+
+- the outside driver door handle
+- the inside driver door handle
+- the actual driver door opening animation
+
+The outside and inside handles each support player-driven rotation, and once their required pull/rotation amount is reached, the Blueprint drives the corresponding door opening behavior.
+
+The actual door open sequence is handled through timelines and rotation updates on the door pivot hierarchy. This logic also coordinates objective completion and the appropriate dialogue/trigger calls.
+
+The outside driver door is especially important because it is tied to the first objective of the scenario, while the inside door is tied to the final exit sequence.
+
+### Seatbelt System
+
+The seatbelt is one of the more visually complex interaction systems in the Blueprint.
+
+`BP_CarFinal` contains logic for:
+
+- detecting and tracking seatbelt latch grab state
+- storing seatbelt grab start positions
+- updating the latch position while it is being pulled
+- evaluating whether the latch has reached the commit threshold
+- snapping the belt into the final latched state
+- returning the belt to its rest state when unfastened
+- updating the spline-based visual representation of the belt
+
+This is one of the more custom systems in the Blueprint because the seatbelt is not just a simple rotating control; it also uses spline-driven visual updates so the belt looks continuous while moving.
+
+### Engine Start Interaction
+
+The engine start system includes:
+
+- overlap/press zone logic
+- pressable actor setup for the VR pawn
+- a request event received through the interaction interface
+- button press animation
+- glow material updates
+- engine start / idle / stop audio transitions
+- objective completion signaling
+
+This interaction behaves more like a press-confirm action than a continuous manipulation action.
+
+### Shift Knob System
+
+The shift knob logic supports the three scenario states:
+
+- reverse
+- drive
+- park
+
+The Blueprint tracks hand movement during the interaction, converts that movement into shift knob rotation, checks commit thresholds, and then animates the knob into its intended final state. It also triggers the corresponding dialogue/objective updates for the relevant shift action.
+
+Because several different objectives use the same physical control, this system includes logic to keep track of which shift objective is currently expected.
+
+### Headlight Lever / Rotary Toggle
+
+The headlight control logic allows the player to manipulate the left-side actuation/toggle control and step through the required headlight states.
+
+From the Event Graph, this includes:
+
+- overlap detection for the left hand over the control
+- grab-start state caching
+- rotation delta tracking
+- commit threshold checks
+- visual lever animation
+- state transitions through the headlight enum
+- dialogue / objective completion calls tied to the correct light state
+
+This system also calls `UpdateHeadlights`, which applies the resulting light state to the vehicle presentation.
+
+### Windshield Wiper System
+
+The wiper control logic uses the right-side actuation lever and supports both direct player-driven interaction and the actual wiper playback behavior.
+
+At a high level, the Blueprint handles:
+
+- overlap detection and hand caching
+- current rotation delta tracking
+- commit threshold logic
+- lever animation
+- playback of the wiper motion timelines
+- start/stop audio
+- linked dialogue/objective completion
+- windshield rain amount reduction while the wipers are active
+
+This means the wiper system is split between the input/control interaction and the visual rain-clearing feedback.
+
+### Turn Signal System
+
+The turn signal system is one of the more scenario-specific interaction paths because the level repeatedly uses the right turn signal during the drive.
+
+The Blueprint contains logic for:
+
+- overlap detection and left-hand control tracking
+- rotation delta tracking and commit checks
+- lever animation for on/off transitions
+- audio playback for turn signal on/off/loop
+- tracking which turn signal objective is currently active
+- repeated use of the same control across multiple right-turn objectives
+- coordination with dialogue/objective completion
+
+Because the same physical control is reused multiple times throughout the scenario, the turn signal system includes extra tracking to distinguish which right-turn objective is currently being satisfied.
+
+### Phone Call Interaction
+
+The smartphone interaction is tied to the incoming hands-free phone call during the drive.
+
+The Blueprint handles:
+
+- enabling the phone interaction at the correct point in the scenario
+- showing the ringing/phone screen visual state through a dynamic material
+- accepting the phone call when requested by the player
+- stopping the ringing state
+- updating the phone screen brightness/accepted-call state
+- triggering the sequential phone call dialogue flow
+
+This is one of the more scripted interaction paths because it is tightly connected to the dialogue sequence between Mike and his wife.
+
+### Rain and Windshield Overlay
+
+`BP_CarFinal` also owns the main car-side logic for rain presentation.
+
+From the Event Graph, this includes:
+
+- accumulating windshield rain over time
+- reducing windshield rain while the wipers are active
+- applying the current rain amount to the windshield overlay material
+- configuring Niagara rain-system box variables so the rain-interior blocker helps keep particles from entering the car while it moves along the spline
+
+This makes the Blueprint responsible not only for the windshield control input, but also for the resulting environmental feedback.
+
+### Audio and Presentation
+
+A large number of audio components are attached directly to `BP_CarFinal`, including sounds for:
+
+- engine start / stop / idle
+- reverse gravel
+- turn signal on / off / loop
+- windshield wipers
+- incoming phone call
+- rain / light rain
+- seatbelt fasten / unfasten
+- door open / close
+- suburban ambience
+- traffic ambience
+- parking lot brake / arrival-related feedback
+
+This means `BP_CarFinal` is also the primary owner of scenario-specific in-car and near-car audio feedback.
+
+### Mike Body / Driver Visibility
+
+The Blueprint also contains logic related to the visibility of Mike’s body/MetaHuman driver representation. In the current implementation, portions of the body are hidden or revealed depending on the player’s seated state so the in-car presentation works correctly from the player’s viewpoint.
+
+This is another example of `BP_CarFinal` acting as the presentation owner for the driver-side visual setup.
+
+### Why the Blueprint Is So Large
+
+`BP_CarFinal` has grown large because it combines several responsibilities in one actor:
+
+- vehicle presentation
+- control meshes and pivots
+- interaction state
+- audio
+- materials
+- rain effects
+- objective-completion callbacks
+- camera and HUD anchors
+
+From a long-term maintenance perspective, it is effectively the car interaction subsystem compressed into one Blueprint.
+
+### Known Interaction Limitation: Exaggerated Lever Pull
+
+The windshield wiper lever and turn signal lever currently require a more exaggerated player arm pull/rotation than intended.
+
+This was not a design goal, but rather a known implementation limitation that was not fully resolved before handoff. During development, the interaction behavior could be made to work more naturally when the car was near the world origin, but became inconsistent once the car was farther along the spline. The final shipped logic therefore uses the version that works more reliably across the full scenario, even though it requires exaggerated motion from the player.
+
+At a high level, this issue appears to be related to how those lever interactions are evaluated while the car is moving along the spline and how their rotation-based interaction logic behaves relative to the moving/rotating vehicle space. The shift knob did not suffer from this in the same way because its interaction pattern is different from the left/right lever-style controls.
+
+Future teams modifying the lever interaction systems should treat this as a known area for improvement.
+
+### Summary
+
+`BP_CarFinal` should be understood as the main **interactive vehicle actor** for the driving scenario.
+
+Its most important responsibilities are:
+
+- owning the car’s component hierarchy
+- responding to player interaction with car controls
+- tracking and animating control state changes
+- handling audio and material feedback
+- updating rain and windshield presentation
+- coordinating interaction completion with the dialogue and spline-controller systems
+- providing the camera and attachment points needed by the seated driving experience
+
+If future teams need to change how the car itself behaves, how the player manipulates its controls, or how the car responds visually and audibly to those manipulations, `BP_CarFinal` is one of the first Blueprints they should inspect.
 
