@@ -234,3 +234,137 @@ In the current driving scenario, `BP_DialogueManager` should be understood as th
 - communication with the AI Interaction Driver for spoken output
 
 If future teams need to modify how dialogue is selected, how subtitles are shown, or how the objective HUD is updated in response to scenario progression, `BP_DialogueManager` is one of the first Blueprints they should inspect.
+
+## DT_DrivingDialogue
+
+**Path:** `Content/Main/UI/Scenario/Driving/ScriptedDialogue`
+
+`DT_DrivingDialogue` is the primary dialogue data table used by the driving scenario. It stores the scripted spoken lines that can be triggered during the level and serves as the main dialogue source for `BP_DialogueManager`.
+
+Each row represents a single dialogue entry and includes the fields defined by `ST_DrivingDialogue`.
+
+### Main Purpose
+
+This data table is used to define:
+
+- the unique line identifier for a dialogue entry
+- who is speaking
+- what trigger tag should activate that line
+- what subtitle text should be displayed
+- which voice type should be used for spoken playback
+
+This allows the driving scenario to remain largely data-driven rather than hardcoding dialogue text directly into Blueprint logic.
+
+### Current Fields
+
+Based on the current structure, each row includes:
+
+- `LineID`
+- `Speaker`
+- `TriggerTag`
+- `SubtitleText`
+- `VoiceType`
+
+### How It Is Used
+
+`BP_DialogueManager` uses `DT_DrivingDialogue` in several different ways depending on the scenario flow:
+
+- `GetDialogueLineByID` searches the table using `LineID`
+- `PlayDialogueLine` retrieves a specific dialogue entry and uses it to drive subtitles, voice type selection, and spoken output
+- `OnInteractionTriggered` searches for entries associated with a matching `TriggerTag`
+
+This means the same data table supports both:
+
+- direct line lookup by a known ID
+- grouped or sequential playback tied to interaction tags
+
+### Practical Notes
+
+The table currently includes lines for:
+
+- Mike’s internal driving dialogue
+- hands-free phone call dialogue
+- arrival/interviewer dialogue
+
+Because voice type is stored per row, this table also determines which AI voice/persona configuration should be used for a given spoken line.
+
+## ST_DrivingDialogue
+
+**Path:** `Content/Main/UI/Scenario/Driving/ScriptedDialogue`
+
+`ST_DrivingDialogue` is the structure used by `DT_DrivingDialogue`. It defines the format of each dialogue entry used by the driving scenario.
+
+### Fields
+
+Each entry in `ST_DrivingDialogue` contains the following fields:
+
+- `LineID`
+- `Speaker`
+- `TriggerTag`
+- `SubtitleText`
+- `VoiceType`
+
+### Purpose
+
+This structure is used to standardize how dialogue lines are stored and retrieved throughout the scenario. It provides the data format that `BP_DialogueManager` expects when pulling rows from `DT_DrivingDialogue`.
+
+At a high level, the fields serve the following purposes:
+
+- `LineID` uniquely identifies a dialogue line for direct lookup
+- `Speaker` identifies who is delivering the line
+- `TriggerTag` groups lines by interaction or event trigger
+- `SubtitleText` stores the text shown to the player and also used for scripted spoken output
+- `VoiceType` determines which AI voice/persona configuration should be used when that line is spoken
+
+Because both subtitle display and scripted audio playback depend on this same structure, `ST_DrivingDialogue` acts as the shared data format tying those systems together.
+
+## WB_Subtitles
+
+**Path:** `Content/Main/UI/Scenario/Driving/ScriptedDialogue`
+
+`WB_Subtitles` is the widget used to display subtitle text during the driving scenario. In the active VR implementation, it is the main subtitle presentation layer connected to `BP_DialogueManager` through `WB_DrivingHUD_Master`.
+
+### Main Role
+
+This widget is responsible for:
+
+- receiving subtitle text when a dialogue line is played
+- updating the displayed subtitle text
+- handling the subtitle fade animation behavior
+- preventing visual flicker during rapid sequential subtitle updates
+
+### DisplaySubtitle
+
+The main custom event in this widget is `DisplaySubtitle`.
+
+At a high level, this event:
+
+1. receives subtitle text as input
+2. updates the text widget content
+3. marks the subtitle as active
+4. plays the fade animation
+5. clears the active state again once the fade animation has finished
+
+This event is used by `BP_DialogueManager` whenever a new spoken line needs to be shown to the player.
+
+### Sequential Phone Call Handling
+
+`WB_Subtitles` also contains special handling for the sequential hands-free phone call lines in the driving scenario.
+
+Because the phone conversation lines occur in quick succession, this widget includes logic to prevent each new subtitle from waiting on a full fade-out/fade-in cycle before the next line appears. This avoids subtitle flicker and makes the phone call sequence display more smoothly when multiple lines are triggered close together.
+
+This special handling is specific to those phone call dialogue entries and was added to support the pacing of that sequence.
+
+### Widget Layout
+
+The widget itself is very simple. It contains:
+
+- a `Canvas Panel`
+- a `Border`
+- a `SubtitleText` text element
+
+The `SubtitleText` element is the primary text field updated during runtime. The widget is positioned and styled to serve as an in-HUD subtitle display rather than a full-screen dialogue panel.
+
+### Active Use vs. Legacy Logic
+
+`WB_Subtitles` is part of the active VR subtitle path used by the current driving scenario. While some legacy non-VR subtitle references still exist elsewhere in the scenario Blueprints, this widget is the active subtitle display used in the current implementation.
