@@ -365,6 +365,276 @@ The widget itself is very simple. It contains:
 
 The `SubtitleText` element is the primary text field updated during runtime. The widget is positioned and styled to serve as an in-HUD subtitle display rather than a full-screen dialogue panel.
 
+## WB_DrivingScenarioComplete
+
+**Path:** `Content/Main/UI/Scenario/Driving/ScenarioEnd`
+
+`WB_DrivingScenarioComplete` is the end-of-scenario completion widget shown after the player successfully finishes the driving experience. It serves as the scenario completion screen for **Scenario 2: Driving to a Job Interview** and provides the player with navigation options after the level ends.
+
+### Main Role
+
+This widget is responsible for:
+
+- presenting the end-of-scenario completion message
+- playing the completion text animations
+- allowing the player to return to the main menu
+- allowing the player to jump directly to other scenarios from the completion screen
+- triggering the project save/completion system before loading the next level
+
+### Widget Layout
+
+The widget contains a centered completion panel that includes:
+
+- a congratulatory/completion text header
+- a short success message
+- a **Return to Main Menu** button
+- a **Load Morning Routine Scenario** button
+- a **Load Grocery Run and Preparing Dinner Scenario** button
+
+This makes the widget both a scenario-end screen and a navigation hub for moving to other available experiences.
+
+### Construct Logic
+
+On construct, the widget plays two animations on the completion text:
+
+- a pop animation
+- a pulsing animation
+
+These are used to give the completion message more visual emphasis when the widget first appears.
+
+### Button Behavior
+
+Each button in the widget follows the same general flow:
+
+1. call `Commit Scenario Completion`
+2. wait briefly using a short delay
+3. open the selected level
+
+The current button destinations shown in the Blueprint are:
+
+- **Return to Main Menu** → `MainMenu`
+- **Load Morning Routine Scenario** → `House`
+- **Load Grocery Run and Preparing Dinner Scenario** → `GroceryStore`
+
+### Save System / Completion Tracking
+
+Before loading a new level, the widget calls `Commit Scenario Completion`, which is part of the project’s save/completion system.
+
+In the intended design, this call is meant to record that the player fully completed the driving scenario before transitioning away from the level. However, the save system itself was developed separately and is designed to support broader progress-saving behavior, including partial scenario progress. Verification of whether full driving scenario completion from this widget is currently being saved successfully end-to-end, including AWS-backed persistence, was not completed during development of this level.
+
+For more detail on the project save system, refer to the dedicated save system documentation.
+
+### Notes
+
+This widget is specific to the end-state of the driving scenario and is not part of the general runtime HUD flow used during moment-to-moment gameplay. It is only shown once the scenario has been successfully completed.
+
 ### Active Use vs. Legacy Logic
 
 `WB_Subtitles` is part of the active VR subtitle path used by the current driving scenario. While some legacy non-VR subtitle references still exist elsewhere in the scenario Blueprints, this widget is the active subtitle display used in the current implementation.
+
+## DT_Objectives
+
+**Path:** `Content/Main/UI/Scenario/Driving/ScenarioEnd`
+
+`DT_Objectives` is the primary objective data table used by the driving scenario. It defines the ordered sequence of player tasks that make up the full drive from Mike’s house to the interview location.
+
+### Main Role
+
+This table is the main source of truth for objective progression in the level. It is used to determine:
+
+- what the current objective is
+- what text should be shown to the player
+- the order in which objectives occur
+- whether a dialogue line is linked to a given objective
+- whether the car should pause for that objective
+- what interaction hint text should be shown on the HUD
+
+The table currently contains **23 objectives** representing the full sequence of interactions in the driving scenario.
+
+### Key Fields
+
+Each objective entry includes:
+
+- `ObjectiveID`
+- `ObjectiveText`
+- `SequenceOrder`
+- `IsCompleted`
+- `LineID`
+- `bPauseCar`
+- `InteractionHintText`
+
+At a high level:
+
+- `ObjectiveID` is the unique identifier used to reference the objective in Blueprint logic
+- `ObjectiveText` is the main instruction shown to the player
+- `SequenceOrder` determines where the objective appears in the scenario progression
+- `IsCompleted` stores objective completion state in the data format
+- `LineID` links the objective to a dialogue line when applicable
+- `bPauseCar` indicates whether the driving flow should stop for that objective
+- `InteractionHintText` stores the more specific gameplay hint shown to help the player complete the task
+
+### How It Is Used
+
+`DT_Objectives` is used heavily by `BP_DialogueManager`, `BP_CarSplineController`, and the HUD widgets. It drives both objective display and scenario progression.
+
+In practice, it supports:
+
+- initial objective display
+- ordered scenario progression
+- mapping dialogue to objective state
+- progress bar updates
+- interaction hint updates
+- pause/resume logic tied to scenario beats
+
+Because the scenario is objective-driven, this table is one of the most important assets in the level.
+
+## ST_ObjectiveData
+
+**Path:** `Content/Main/UI/Scenario/Driving/ScenarioEnd`
+
+`ST_ObjectiveData` is the structure used by `DT_Objectives`. It defines the data format for each objective entry in the driving scenario.
+
+### Fields
+
+Each entry in `ST_ObjectiveData` contains:
+
+- `ObjectiveID`
+- `ObjectiveText`
+- `SequenceOrder`
+- `IsCompleted`
+- `LineID`
+- `bPauseCar`
+- `InteractionHintText`
+
+### Purpose
+
+This structure standardizes the objective data used throughout the driving scenario. It is the shared data format expected by the Blueprints and widgets that retrieve objective information from `DT_Objectives`.
+
+At a high level, it provides the fields needed for:
+
+- identifying the current objective
+- displaying the player-facing objective text
+- ordering scenario steps
+- linking objectives to dialogue
+- controlling whether the car pauses
+- showing interaction hint text on the HUD
+
+Because objective progression, HUD updates, and dialogue-to-objective linking all depend on the same data format, `ST_ObjectiveData` acts as the shared structure tying those systems together.
+
+## WB_ControlsTutorial
+
+**Path:** `Content/Main/UI/Scenario/Driving/ScenarioEnd`
+
+`WB_ControlsTutorial` is the introductory tutorial widget shown at the start of the driving scenario. It introduces the player to the scenario context, explains the main VR controls, and allows the player to enable or disable subtitles and AI voice before gameplay begins.
+
+### Main Role
+
+This widget is responsible for:
+
+- presenting the scenario introduction text
+- explaining the core VR driving controls
+- providing subtitle and AI voice toggle options
+- passing those settings into `BP_DialogueManager`
+- switching the HUD from tutorial mode into normal driving mode
+- triggering the first objective of the scenario
+- enabling the initial outside driver door interaction
+
+### Widget Layout
+
+The widget contains:
+
+- scenario introduction text
+- control instructions for right trigger, right grip, and left grip interactions
+- a subtitle checkbox
+- an AI voice checkbox
+- a continue button
+
+This makes it the player’s first in-scenario setup screen before actual driving objectives begin.
+
+### Construct Logic
+
+On construct, `WB_ControlsTutorial` finds and stores a reference to `BP_DialogueManager`. This reference is later used when the player presses Continue so the widget can pass the selected subtitle and AI voice settings into the active dialogue system.
+
+### Continue Button Flow
+
+When the Continue button is pressed, the widget:
+
+1. checks that the stored `BP_DialogueManager` reference is valid
+2. writes the subtitle checkbox value into the Dialogue Manager
+3. writes the AI voice checkbox value into the Dialogue Manager
+4. gets the current `BP_Driving_VRPawn` and unlocks its controls
+5. switches `WB_DrivingHUD_Master` into driving mode
+6. calls `ShowInstructionOnly` using the first objective (`OpenDriverDoor_Outside`)
+7. gets the active `BP_CarFinal`
+8. enables the outside driver door interaction
+9. removes the tutorial widget from the screen
+
+This means the tutorial widget does more than just explain controls. It also acts as the transition point from pre-scenario setup into active gameplay.
+
+### Notes
+
+`WB_ControlsTutorial` is part of the active VR startup flow for this scenario. It is not just informational UI; it also initializes the first live objective state and enables the first required interaction.
+
+## WB_ObjectiveHUD
+
+**Path:** `Content/Main/UI/Scenario/Driving/ScenarioEnd`
+
+`WB_ObjectiveHUD` is the widget used to display the player’s current objective, objective progress, and interaction hint text during the driving scenario.
+
+### Main Role
+
+This widget is responsible for:
+
+- displaying the current objective text
+- displaying objective progress through the full scenario sequence
+- displaying the current interaction hint text
+- updating the objective progress bar
+- handling fade-in and fade-out behavior for objective updates
+
+It is one of the main runtime HUD widgets used during the active driving experience.
+
+### Widget Layout
+
+The widget contains:
+
+- `ObjectiveText`
+- `ObjectiveHintText`
+- `ObjectiveProgressBar`
+
+These elements are presented as a compact objective display rather than a full-screen instructional menu.
+
+### UpdateObjectiveHUD
+
+The main custom event in this widget is `UpdateObjectiveHUD`.
+
+At a high level, this event:
+
+1. updates the main objective text
+2. updates the progress bar percent
+3. formats and updates the instructional/progress text
+4. checks whether the objective changed from the previously displayed objective
+5. stores the most recent objective ID
+6. plays the fade-in animation when appropriate
+
+This event is the primary entry point used by `BP_DialogueManager` when objective information changes.
+
+### Fade Handling
+
+The widget also contains separate fade handling for objective transitions.
+
+`PlayObjectiveFadeOut` is used to trigger the fade-out animation, while the construct logic binds to the end of that animation so the widget can reset its internal fading state once the fade-out completes.
+
+This helps prevent repeated overlapping fade calls and keeps objective updates visually stable.
+
+### Objective Formatting
+
+The widget formats the player-facing progress display using the current objective number, total objectives, and interaction instruction text. This allows the HUD to show both the current task and how far through the scenario the player is.
+
+### VR vs. Legacy Non-VR Logic
+
+`WB_ObjectiveHUD` still contains a small amount of legacy non-VR logic, but the active implementation used by the current driving scenario is the VR HUD path. The widget is actively used as part of `WB_DrivingHUD_Master` during normal scenario gameplay.
+
+### Notes
+
+Because the scenario is highly objective-driven, `WB_ObjectiveHUD` is a key runtime widget. If future teams need to adjust how objectives are presented to the player, this is one of the main widgets they should inspect.
+
