@@ -47,6 +47,7 @@ This wiki is the comprehensive knowledge base for everyone involved in the DeVIL
 | [Contribution Guidelines](developer-guide/contribution-guidelines.md) | Git flow, commit standards, PR process, code style, QA checklist |
 | [Known Issues & Roadmap](developer-guide/known-issues-roadmap.md) | Technical debt inventory, DeVILSpectator handoff, roadmap |
 | [Independent Learning Paths](developer-guide/learning-paths.md) | Curated curriculum with external resources for every technology |
+| [Scenario 2: Driving to a Job Interview](developer-guide/driving-scenario-overview.md) | Blueprint architecture, level flow, core actors, interactions, and implementation details for the driving scenario |
 
 ---
 
