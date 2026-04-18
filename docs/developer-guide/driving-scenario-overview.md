@@ -29,7 +29,7 @@ This guide documents the Blueprint architecture and core implementation for the 
 
 ---
 
-# Scenario Structure and Active Files
+# Key Assets and Systems
 
 ## Main Blueprints in Active Use
 
@@ -1763,3 +1763,94 @@ These systems are part of the overall rain presentation pipeline along with:
 - the wiper-linked reduction of windshield rain amount
 
 The Niagara systems provide the exterior volumetric rain presence, while the windshield overlay handles the player-facing windshield buildup/clearing effect.
+
+## Deferred Improvements, Known Limitations, and Follow-Up Work
+
+The following items were identified during development as desirable improvements or follow-up work for **Scenario 2: Driving to a Job Interview**, but were not completed before handoff.
+
+### Steering Wheel Interaction
+
+The original intent was to allow the player to freely interact with the steering wheel between required objectives, even though steering is **not** one of the 23 formal scenario objectives.
+
+A `RotateSteeringWheel` function exists in `BP_CarFinal`, but it was never connected to an active VR input action in the final implementation. Earlier non-VR versions used keyboard input for this behavior, but that interaction path was not fully carried over into the final VR scenario.
+
+### Increased Prosthetic-Related Interaction Difficulty
+
+Another intended design improvement was to further emphasize the physical difficulty of certain interactions for a player using a prosthetic arm. While the scenario already includes interaction constraints and some intentionally challenging motions, additional tuning and scenario-specific difficulty refinement were planned but not completed.
+
+### Main Menu BGM Sound-Level System
+
+The sound-level/BGM control system used in the Main Menu Level Blueprint was not integrated into this level. The driving scenario therefore does not currently share the same background music control behavior or volume-management flow used elsewhere in the project.
+
+### Save System Validation
+
+Although the scenario-end widget calls into the broader project save/completion system, full validation of that system from this level was not completed.
+
+In particular, end-to-end confirmation that scenario completion from this level is correctly saved and persisted, including any AWS-backed storage behavior, was not finished before handoff. The underlying save system was also designed more broadly around partial progress handling, while this scenario currently functions as a single full-run experience.
+
+### Additional Traffic / Moving Cars
+
+A planned environment improvement was to add moving traffic around the player car, including vehicles in front of and behind Mike as well as vehicles in other lanes. The intended implementation was to place additional cars on their own splines to create a more believable active roadway environment.
+
+This was not completed before handoff.
+
+### Haptic Feedback
+
+Haptic feedback for controller interactions was planned but not implemented. This would have been especially useful for controls such as:
+
+- door handles
+- shift knob
+- turn signal lever
+- windshield wiper lever
+- seatbelt latch
+- engine start button
+
+Adding haptics would likely improve interaction clarity and increase the perceived physicality of the scenario.
+
+### Exaggerated Turn Signal / Wiper Lever Motion
+
+The windshield wiper lever and turn signal lever currently require a more exaggerated arm pull/rotation than intended.
+
+This was a known issue during development and was not fully resolved before handoff. The implementation could be made to behave more naturally when the car was closer to the world origin, but became inconsistent farther along the spline. Because of this, the final version keeps the logic that behaved more reliably across the full scenario, even though it requires exaggerated movement from the player.
+
+This issue appears related to the interaction between spline movement, vehicle rotation/space changes, and the rotation-based evaluation used by the lever interactions.
+
+### Additional Visual Guidance for Objectives
+
+A planned usability improvement was to add visual indicators directly over interactive objects when their objective became active.
+
+Examples included:
+
+- a curved arrow over the headlight control showing intended rotation direction
+- more explicit directional guidance over lever-based controls
+- clearer in-world prompts beyond the HUD text alone
+
+The current implementation relies primarily on the objective HUD text and interaction hint text. While functional, some interactions may still be confusing to players without stronger in-world visual guidance.
+
+### Better Hand Clamping / Grab Feel
+
+Another intended improvement was to better “clamp” or anchor the player’s hand to overlapped interactable objects during grabs so the interaction feels less like the hand is floating near the control and more like the player is physically holding it.
+
+The current implementation supports overlap-based interaction and movement tracking, but a more physically convincing attachment/constraint feel was planned and not completed.
+
+### Non-Stopping Turn-Signal-Off Objectives During Driving
+
+During development, three driving-phase interactions were originally intended **not** to force a full car stop at a waypoint. These were turn-signal-off objectives that were meant to happen while the vehicle continued moving.
+
+However, this created a progression issue: if the player failed to complete one of those objectives before reaching the next waypoint that **did** require a stop, the car could continue past the intended stopping point.
+
+Multiple fixes were attempted in `BP_CarSplineController`, but a clean solution was not finalized before handoff. The logic tied to those stop points was ultimately removed in the relevant section of the Blueprint. There is a comment box in `BP_CarSplineController` labeled `Removed` marking this area.
+
+Future teams revisiting spline stop/resume behavior should treat this as a known scenario-flow issue, especially for objectives intended to remain active while the car is still moving.
+
+### Summary
+
+These deferred items are a mix of:
+
+- gameplay polish improvements
+- realism improvements
+- usability improvements
+- technical cleanup
+- unresolved scenario-flow issues
+
+Future teams continuing work on this level may want to prioritize these depending on whether the goal is improved immersion, clearer user guidance, or more maintainable scenario logic.
