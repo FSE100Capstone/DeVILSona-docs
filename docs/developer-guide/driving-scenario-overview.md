@@ -638,3 +638,305 @@ The widget formats the player-facing progress display using the current objectiv
 
 Because the scenario is highly objective-driven, `WB_ObjectiveHUD` is a key runtime widget. If future teams need to adjust how objectives are presented to the player, this is one of the main widgets they should inspect.
 
+## Level Blueprint
+
+The driving scenario’s **Level Blueprint** contains important setup and transition logic for the active VR implementation. Although the Level Blueprint still includes older non-VR and legacy prototype logic, the sections documented here focus only on the currently active logic used by the final scenario flow.
+
+### Main Role
+
+In the current implementation, the Level Blueprint is responsible for:
+
+- handling initial level startup behavior
+- spawning and possessing the driving VR pawn
+- positioning the player correctly at the outside starting location
+- applying the initial fade-in from the main menu transition
+- listening for the event that transitions the player from outside the car to the seated in-car driving state
+- moving and attaching the player pawn to the car when the player enters
+- handling the fade-out / fade-in transition during the outside-to-inside car handoff
+
+This means the Level Blueprint is not the main scenario logic controller, but it does handle several key one-time transitions that the rest of the level depends on.
+
+### BeginPlay Startup Flow
+
+On `BeginPlay`, the Level Blueprint runs an active sequence that performs the following setup:
+
+1. creates and adds `WB_FadeScreen` to the viewport in order to complete the fade-in from the main menu redirect
+2. spawns `BP_Driving_VRPawn`
+3. possesses the spawned pawn with the player controller
+4. uses the outside start anchor to snap the player into the correct starting position outside the car
+5. sets the input mode for the player controller
+
+Although a `PlayerStart` is still part of the flow, the active VR implementation relies on the outside start anchor and the pawn snap logic to place the player correctly from the headset/camera point of view.
+
+### Outside Start Positioning
+
+The active VR startup logic places the player outside the driver door using:
+
+- the spawned `BP_Driving_VRPawn`
+- the outside start anchor
+- a short delay after possession
+- `Snap To Outside Anchor`
+
+This approach is used so that the player starts in the intended camera position regardless of headset offset or standing position at runtime.
+
+### Outside-to-Inside Car Transition
+
+The Level Blueprint also contains the active transition flow that runs once the player completes the outside door objective and needs to move into the seated in-car state.
+
+At a high level, this flow:
+
+1. waits for the relevant enter-car event to trigger
+2. fades the camera to black
+3. gets the current player pawn and casts it to `BP_Driving_VRPawn`
+4. gets `BP_CarFinal`
+5. gets the car’s `DriverCamera`
+6. sets the VR pawn transform to the `DriverCamera` transform
+7. attaches the VR pawn to the car actor
+8. marks the car as driver-seated
+9. calls `EnterCarSeat` on the VR pawn
+10. fades the camera back in
+
+This is the active handoff that transitions the player from the outside interaction phase into the seated driving phase while ensuring the pawn follows the car along the spline afterward.
+
+### DriverCamera-Based Placement
+
+For the seated in-car transition, the active logic uses the `DriverCamera` inside `BP_CarFinal` as the target position for the player. The pawn is first moved to that transform and then attached to the car so that the player and car move together during the driving portion of the scenario.
+
+This means the car’s driver camera acts as the reference point for the player’s seated in-car placement.
+
+### Fade Transitions
+
+The Level Blueprint uses fade transitions to make the outside-to-inside handoff less abrupt.
+
+The active flow includes:
+
+- fade-out before repositioning and attachment
+- a short delay during the transition
+- fade-in after the player has been repositioned and attached
+
+This helps hide the seat-transfer setup from the player and makes the transition feel more intentional.
+
+### Legacy Logic
+
+The Level Blueprint still contains additional older logic from earlier prototype and non-VR versions of the scenario. That legacy content is not part of the current active VR implementation documented here.
+
+Future teams reviewing the Level Blueprint should be aware that not every section in that graph is still in use. The active sections are primarily the VR startup logic, fade screen initialization, player spawn/possess flow, and the outside-to-inside car transition sequence.
+
+### Summary
+
+In the current driving scenario, the Level Blueprint should be understood primarily as a **startup and transition controller**. It is responsible for:
+
+- preparing the player’s initial VR spawn state
+- completing the transition from main menu into the level
+- moving the player into the car once the outside phase is complete
+- attaching the seated player pawn to `BP_CarFinal`
+
+It is not the main objective or dialogue controller, but it is essential to the player’s level entry flow and the shift from outside interaction into active driving.
+
+## BP_Driving_VRPawn
+
+**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
+
+`BP_Driving_VRPawn` is the driving-specific VR pawn used in **Scenario 2: Driving to a Job Interview**. It is a child of the shared `VR_Pawn`, which is also used by the main menu and other parts of the project, but this child Blueprint adds the driving-specific hierarchy, input handling, interaction logic, and seated driving behavior required by this level.
+
+### Main Role
+
+This Blueprint is responsible for:
+
+- setting up the driving-specific HUD references used by the scenario
+- applying the input mapping contexts required for this level
+- configuring tracking origin behavior for the driving experience
+- handling the player’s seated in-car placement logic
+- processing the VR input actions used for the driving interactions
+- driving direct player interaction with the car controls
+- updating the interaction state continuously during active grabs
+- managing hand pose animation changes during trigger and grip interactions
+- providing the HUD stabilization logic used during gameplay
+
+This is one of the most important Blueprints in the level and serves as the main player interaction layer for the scenario.
+
+### Relationship to the Parent `VR_Pawn`
+
+`BP_Driving_VRPawn` is not a completely separate pawn implementation. It inherits from the project’s shared `VR_Pawn`, but overrides and extends that base pawn with logic specific to the driving scenario.
+
+This allows the project to keep one common VR pawn foundation while still introducing scenario-specific behavior where needed.
+
+### BeginPlay Responsibilities
+
+On `BeginPlay`, the active logic in `BP_Driving_VRPawn` performs several setup tasks needed for the driving level.
+
+At a high level, the Blueprint:
+
+- initializes and stores the `DrivingHUD_Master` reference through `BP_HUDDisplay_Driving`
+- passes that HUD reference into `BP_DialogueManager`
+- sets the tracking origin to **Local Floor**
+- applies the driving-specific input mapping context along with the hand input mapping context
+- sets up the initial references used for outside door interaction
+- prepares the inside-car interaction setup used later for the final objective
+- begins the logic used to stabilize the HUD relative to the moving player/camera
+
+These setup steps are specific to the driving scenario and are not part of the shared base pawn’s generic behavior.
+
+### Tracking and Seated Placement
+
+This Blueprint contains the driving-specific logic used to place the player correctly both outside the car and inside the driver seat.
+
+For the seated in-car state, the Blueprint uses the `DriverCamera` in `BP_CarFinal` as the target reference and aligns the pawn’s transform so that the VR camera ends up at the intended seated driver position. This includes both rotation correction and location correction based on the difference between the pawn camera and the target seat camera.
+
+This seated placement logic is used when the player transitions from the outside interaction phase into the in-car driving phase.
+
+### Input Mapping Contexts
+
+`BP_Driving_VRPawn` applies the scenario-specific input mapping context used by the level along with the hand mapping context.
+
+The driving scenario uses:
+
+- `IMC_Driving_DebugVR`
+- `IMC_Hands`
+
+Although the driving mapping context still contains `DebugVR` in its name, it is the active live mapping context used by the level.
+
+### Interaction Model
+
+The driving pawn processes most gameplay interaction through the scenario’s Enhanced Input actions, primarily using trigger and grip input from the right and left controllers.
+
+Rather than relying on one generic interaction path, the Blueprint branches into interaction-specific behavior depending on:
+
+- the current objective
+- which hand is being used
+- whether the player is grabbing a supported car control
+- whether the relevant component can currently be grabbed or committed
+
+This means the pawn acts as the direct player-side interaction layer, while the car Blueprint and the interaction interface handle the corresponding car-side behavior.
+
+### Right Trigger Input
+
+The right trigger input is used for interactions that behave more like pressing or confirming rather than continuously pulling/rotating.
+
+From the current implementation, this includes:
+
+- engine start interaction
+- accepting the incoming phone call
+- widget interaction with the scenario completion widget
+- right-hand trigger pose animation updates
+
+The Blueprint checks whether the currently targeted object implements the interaction interface and then calls the appropriate request functions as needed.
+
+### Grip Input and Direct Manipulation
+
+The grip inputs are used for direct manipulation of car controls.
+
+At a high level, the pawn supports interaction with:
+
+- outside driver door handle
+- inside driver door handle
+- seatbelt latch
+- shift knob
+- windshield wiper lever
+- headlight lever
+- turn signal lever
+
+The Blueprint distinguishes between right-hand and left-hand interactions depending on the target control and the scenario’s intended motion pattern.
+
+These interactions are generally handled in two phases:
+
+1. grip press / grab begin
+2. grip release / commit attempt
+
+During the active grab, the pawn stores state such as whether the player is currently grabbing a given control and passes controller movement information into the relevant update logic.
+
+### Event Tick Interaction Updates
+
+A large portion of the pawn’s driving interaction behavior is updated continuously on `Event Tick`.
+
+The active tick-based logic updates the current interaction state for controls that depend on hand movement over time, including:
+
+- outside driver door pull
+- inside driver door pull
+- seatbelt pull
+- shift knob movement
+- windshield wiper lever movement
+- turn signal lever movement
+- headlight lever movement
+- HUD stabilizer transform updates
+
+This means the pawn is not only detecting input presses, but also continuously measuring controller movement during active interactions and passing those values into the car-side systems.
+
+### Outside Driver Door Logic
+
+For the first objective, `BP_Driving_VRPawn` contains the player-side handling for grabbing and pulling the outside driver door handle.
+
+This includes:
+
+- binding to the outside door grab component
+- tracking when the right hand begins and ends the grab
+- storing the initial grab hand location
+- calculating pull distance and normalized pull alpha
+- updating the outside door interaction through the relevant car-side logic
+- resetting the interaction values when the grab is released
+
+This is one of the most important early interaction paths because it begins the scenario and introduces the player to the control scheme.
+
+### Inside Driver Door Logic
+
+The pawn contains a similar but separate interaction path for the inside driver door used at the end of the scenario.
+
+This logic mirrors the outside door pattern, but is tied to the final objective and the in-car phase of the level.
+
+### Shift / Seatbelt / Lever Controls
+
+For the seatbelt, shift knob, wipers, turn signal, and headlights, the pawn mainly acts as the hand/controller input side of the interaction.
+
+It determines:
+
+- whether the correct control can currently be grabbed
+- whether the player is actively grabbing that control
+- what the current controller position or rotation implies
+- when to call the relevant notify/update/commit functions on the car or interaction interface
+
+This keeps the pawn responsible for interpreting player hand motion while allowing the car-side Blueprints to apply the corresponding control state changes.
+
+### Hand Animation Updates
+
+`BP_Driving_VRPawn` also updates the VR hand animation state in response to trigger and grip input.
+
+The Blueprint changes pose alpha and finger curl values for the hand animation blueprint so that the player’s hands visually react to:
+
+- right trigger press/release
+- right grip press/release
+- left grip press/release
+
+These animation adjustments improve the visual clarity of interactions, especially when the player is grabbing or pressing controls in the car.
+
+### HUD Stabilizer
+
+This Blueprint contains the active HUD stabilizer logic used during the driving scenario.
+
+Rather than simply attaching the HUD directly and rigidly to the player view, the pawn updates the stabilizer transform with smoothing so the HUD remains readable while still following the player and camera during movement and interaction.
+
+This is especially important in VR, where abrupt HUD motion can make the objective display difficult to read.
+
+### Objective-Specific Behavior
+
+A key feature of `BP_Driving_VRPawn` is that many interaction paths are tied directly to the active objective flow of the scenario.
+
+This means the pawn does not expose every interaction at all times. Instead, interactions are effectively gated so the player can only perform the relevant car actions when the scenario expects them.
+
+This objective-aware gating is one of the reasons the driving experience feels structured rather than fully freeform.
+
+### Summary
+
+`BP_Driving_VRPawn` should be understood as the driving scenario’s main **player interaction pawn**. It sits between the VR controllers and the rest of the scenario systems and is responsible for:
+
+- scenario-specific player setup
+- HUD hookup and stabilization
+- input mapping
+- seated placement
+- grab and press detection
+- direct manipulation tracking
+- hand animation updates
+- sending player interaction state into the rest of the driving systems
+
+If future teams need to modify how the player interacts with the car, how the driving-specific input works, or how the HUD behaves during the scenario, `BP_Driving_VRPawn` is one of the first Blueprints they should inspect.
+
+
