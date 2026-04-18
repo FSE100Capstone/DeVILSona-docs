@@ -26,5 +26,5 @@ jobs:
           restore-keys: |
             mkdocs-material-
       - run: pip install mkdocs-material 
-      - run: pip install mkdocs-panzoom
+      - run: pip install mkdocs-panzoom-plugin
       - run: mkdocs gh-deploy --force
