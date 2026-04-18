@@ -25,13 +25,13 @@ This is the main level used for **Scenario 2: Driving to a Job Interview** and s
 
 ## Scope of This Guide
 
-This guide documents the Blueprint architecture and core implementation for the driving scenario, including the major actors, level setup, scenario flow, interaction logic, and other supporting systems specific to this experience.
+This guide documents the Blueprint architecture and core implementation for the driving scenario, including the major actors, level setup, scenario flow, interaction logic, and supporting systems specific to this experience.
 
-## Scenario Structure and Active Files
+---
 
-The primary active files used by this level are summarized below.
+# Scenario Structure and Active Files
 
-### Main Blueprints in Active Use
+## Main Blueprints in Active Use
 
 The main Blueprints currently in active use for this level are:
 
@@ -44,56 +44,7 @@ The main Blueprints currently in active use for this level are:
 - `BP_AI_InteractionDriver_Driving` — `Content/Main/UI/Scenario/Driving/ScriptedDialogue`
 - `BP_DialogueManager` — `Content/Main/UI/Scenario/Driving/ScriptedDialogue`
 
-### Enums
-
-There are four enums used by the driving scenario:
-
-- `E_DrivingHUDMode` — `Content/Main/UI/Scenario/Driving/Blueprints`
-- `E_HeadlightMode` — `Content/Main/UI/Scenario/Driving/Blueprints`
-- `E_ObjectivePhase` — `Content/Main/UI/Scenario/Driving/Blueprints`
-- `E_TurnSignalMode` — `Content/Main/UI/Scenario/Driving/Blueprints`
-
-### Blueprint Interface
-
-The primary Blueprint Interface used by this scenario is:
-
-- `BPI_DrivingInteraction` — `Content/Main/UI/Scenario/Driving/Blueprints`
-
-### Niagara Systems
-
-Two Niagara systems are used for the rain effects in this level:
-
-- `NS_Rain_CarAttached` — `Content/Main/UI/Scenario/Driving/Blueprints`
-- `NS_Rain_CarClose` — `Content/Main/UI/Scenario/Driving/Blueprints`
-
-### Widgets
-
-#### Master Widget
-
-- `WB_DrivingHUD_Master` — `Content/Main/UI/Scenario/Driving/Blueprints`
-
-#### Child or Supporting Widgets
-
-- `WB_FadeScreen` — `Content/Main/UI/Scenario/Driving/Blueprints`
-- `WB_DrivingScenarioComplete` — `Content/Main/UI/Scenario/Driving/ScenarioEnd`
-- `WB_ControlsTutorial` — `Content/Main/UI/Scenario/Driving/ScenarioEnd`
-- `WB_ObjectiveHUD` — `Content/Main/UI/Scenario/Driving/ScenarioEnd`
-- `WB_Subtitles` — `Content/Main/UI/Scenario/Driving/ScriptedDialogue`
-
-### Data Tables and Structures
-
-The driving scenario uses the following Data Tables and Structures:
-
-- `DT_DrivingDialogue` — `Content/Main/UI/Scenario/Driving/ScriptedDialogue`
-- `ST_DrivingDialogue` — `Content/Main/UI/Scenario/Driving/ScriptedDialogue`
-- `DT_Objectives` — `Content/Main/UI/Scenario/Driving/ScenarioEnd`
-- `ST_ObjectiveData` — `Content/Main/UI/Scenario/Driving/ScenarioEnd`
-
-### Level Blueprint Logic
-
-The level also contains important logic inside the **Level Blueprint**, which is used as part of the scenario setup and runtime flow.
-
-### Input Mapping Context
+## Input Mapping Context
 
 The driving scenario uses the input mapping context:
 
@@ -103,540 +54,76 @@ Although the name still includes `DebugVR`, this is the **active live input mapp
 
 This mapping context includes five active input actions implemented specifically for `BP_Driving_VRPawn`.
 
-## BP_AI_InteractionDriver_Driving
+## Enums
 
-**Path:** `Content/Main/UI/Scenario/Driving/ScriptedDialogue`
+The scenario uses four enums:
 
-`BP_AI_InteractionDriver_Driving` is the scenario-specific Interviewee Actor used to convert scripted text input into spoken AI output during the driving level. It is derived from the shared `IntervieweeActor` class, but in this scenario it is configured for **scripted output rather than live back-and-forth conversation**.
+- `E_DrivingHUDMode` — `Content/Main/UI/Scenario/Driving/Blueprints`
+- `E_HeadlightMode` — `Content/Main/UI/Scenario/Driving/Blueprints`
+- `E_ObjectivePhase` — `Content/Main/UI/Scenario/Driving/Blueprints`
+- `E_TurnSignalMode` — `Content/Main/UI/Scenario/Driving/Blueprints`
 
-At a high level, this actor is used when the driving scenario needs a spoken line to be played through the AI voice system. In the current implementation, it is configured with:
+## Blueprint Interface
 
-- a text-to-speech style prompt
-- a selected voice option
-- scripted input enabled
-- forced audio responses enabled
-- normal conversational input disabled
+The primary Blueprint Interface used by this scenario is:
 
-This allows the level to pass in text from the dialogue table and have it spoken back as audio without treating the driving scenario like an open-ended conversation system.
+- `BPI_DrivingInteraction` — `Content/Main/UI/Scenario/Driving/Blueprints`
 
-### Main Role in the Level
+## Niagara Systems
 
-`BP_AI_InteractionDriver_Driving` is primarily used by `BP_DialogueManager` when a dialogue line needs to be played. Rather than storing prerecorded voice lines, the driving scenario sends text to this actor and uses the AI voice pipeline to generate the spoken output at runtime.
+Two Niagara systems are used for the rain effects in this level:
 
-This actor is therefore responsible for the spoken delivery layer of the scenario’s scripted dialogue flow.
+- `NS_Rain_CarAttached` — `Content/Main/UI/Scenario/Driving/Blueprints`
+- `NS_Rain_CarClose` — `Content/Main/UI/Scenario/Driving/Blueprints`
 
-### Current Usage Notes
+## Widgets
 
-This Blueprint is configured specifically for the driving scenario’s scripted dialogue use case and should not be treated as a general-purpose conversational NPC. The actor is intended to speak lines provided by the scenario systems, not to handle unrestricted player conversation.
+### Master Widget
 
-Because this Blueprint inherits from the shared `IntervieweeActor` implementation, some of the lower-level behavior comes from the parent C++ class rather than from extensive Blueprint graph logic inside this asset itself.
+- `WB_DrivingHUD_Master` — `Content/Main/UI/Scenario/Driving/Blueprints`
 
-## BP_DialogueManager
+### Child or Supporting Widgets
 
-**Path:** `Content/Main/UI/Scenario/Driving/ScriptedDialogue`
+- `WB_FadeScreen` — `Content/Main/UI/Scenario/Driving/Blueprints`
+- `WB_DrivingScenarioComplete` — `Content/Main/UI/Scenario/Driving/ScenarioEnd`
+- `WB_ControlsTutorial` — `Content/Main/UI/Scenario/Driving/ScenarioEnd`
+- `WB_ObjectiveHUD` — `Content/Main/UI/Scenario/Driving/ScenarioEnd`
+- `WB_Subtitles` — `Content/Main/UI/Scenario/Driving/ScriptedDialogue`
 
-`BP_DialogueManager` acts as the main dialogue and HUD coordination layer for the driving scenario. It is responsible for connecting the scenario’s dialogue data, objective data, subtitle display, objective HUD updates, and scripted AI voice playback into one centralized Blueprint.
+## Data Tables and Structures
 
-This Blueprint is one of the main control points for the scenario and should be treated as the manager for **what line should play**, **what subtitle should display**, and **what objective text should appear on the HUD**.
+The driving scenario uses the following Data Tables and Structures:
 
-### BeginPlay Initialization
+- `DT_DrivingDialogue` — `Content/Main/UI/Scenario/Driving/ScriptedDialogue`
+- `ST_DrivingDialogue` — `Content/Main/UI/Scenario/Driving/ScriptedDialogue`
+- `DT_Objectives` — `Content/Main/UI/Scenario/Driving/ScenarioEnd`
+- `ST_ObjectiveData` — `Content/Main/UI/Scenario/Driving/ScenarioEnd`
 
-On `BeginPlay`, `BP_DialogueManager` performs a setup sequence to initialize the scenario’s HUD and dialogue references.
+## Level Blueprint Logic
 
-From the current implementation shown in the Blueprint:
+The level also contains important logic inside the **Level Blueprint**, which is used as part of the scenario setup and runtime flow.
 
-- it waits briefly for the driving HUD to exist
-- gets the active `BP_HUDDisplay_Driving` actor
-- stores the `WB_DrivingHUD_Master` reference
-- switches the master HUD to the controls tutorial mode
-- stores references to key child widgets such as the objective HUD
-- finds the active Interviewee Actor used for scripted AI voice playback
-- stores that actor reference
-- calls `InitializePersonaNative` once on the Interviewee Actor so the scripted voice system is ready before dialogue begins
+---
 
-This initialization step is important because `BP_DialogueManager` depends on both the HUD widget hierarchy and the AI Interaction Driver being valid before scenario dialogue starts.
+# High-Level Runtime Flow
 
-### Main Responsibilities
+At a high level, the active VR driving scenario works as follows:
 
-The primary responsibilities of `BP_DialogueManager` are:
+1. the level opens and the Level Blueprint handles fade-in, pawn spawn, possession, and outside start positioning
+2. `BP_Driving_VRPawn` initializes the HUD references, input mapping, tracking origin, and driving-specific interaction setup
+3. `WB_ControlsTutorial` is shown first through `WB_DrivingHUD_Master`
+4. once the player presses Continue, the first objective is shown and the outside driver door interaction is enabled
+5. `BP_CarSplineController` controls the scenario phase, car spline movement, scene-beat pauses, and interaction gating
+6. `BP_Driving_VRPawn` handles the player-side input, grab, press, and continuous hand-movement logic
+7. `BP_CarFinal` handles the car-side interaction response, animations, materials, and audio
+8. `BP_DialogueManager` coordinates dialogue lookup, subtitle display, objective HUD updates, and scripted AI-spoken lines
+9. once the player completes the outside phase, the Level Blueprint transitions the player into the seated in-car driving state
+10. the scenario continues through objective-driven driving interactions until the final inside door objective is completed
+11. `WB_DrivingScenarioComplete` is displayed at the end of the scenario
 
-- retrieving dialogue lines from `DT_DrivingDialogue`
-- retrieving objective data from `DT_Objectives`
-- sending text to the Interviewee Actor for AI-spoken dialogue
-- displaying subtitles in VR
-- updating the current objective and progress HUD
-- triggering sequences of dialogue associated with interaction tags
+---
 
-In practice, this Blueprint is the main bridge between the data tables and the player-facing UI/audio systems.
-
-### PlayDialogueLine
-
-`PlayDialogueLine` is the core event used to play an individual dialogue line based on its `LineID`.
-
-At a high level, this event:
-
-1. retrieves the dialogue entry by `LineID` from `DT_DrivingDialogue`
-2. stores the current dialogue line
-3. sends the line’s voice type and text to the Interviewee Actor
-4. retrieves any objective linked to that same line
-5. updates the current objective state if applicable
-6. displays the corresponding subtitle in VR
-
-This event therefore handles both the spoken line itself and the associated scenario/UI updates tied to that dialogue line.
-
-### ShowInstructionOnly
-
-`ShowInstructionOnly` is used when the scenario needs to update the player’s current objective/instruction without immediately playing a spoken dialogue line.
-
-This event retrieves the objective from `DT_Objectives` using `ObjectiveID`, stores the current objective information, updates the current sequence order, and pushes the objective text/progress values into `WB_ObjectiveHUD`.
-
-This is important for scenario beats where the player should first see the next task on the HUD before any dialogue is triggered.
-
-### OnInteractionTriggered
-
-`OnInteractionTriggered` is the custom event used to trigger dialogue based on a `TriggerTag` defined in `DT_DrivingDialogue`.
-
-Rather than directly calling a single hardcoded line, this event searches the dialogue table for all rows associated with the provided trigger tag and then plays the matching lines. The current implementation supports sequential dialogue behavior for entries that share the same trigger tag, including the delayed playback flow shown in the Blueprint.
-
-This is one of the key mechanisms used to connect player interactions and scenario state changes to dialogue playback.
-
-### Data Lookup Functions
-
-`BP_DialogueManager` also contains several helper functions for retrieving structured data from the scenario Data Tables.
-
-#### GetDialogueLineByID
-
-This function searches `DT_DrivingDialogue` using the `LineID` field rather than relying on the row name directly. It is used when the scenario logic already knows which `LineID` should be played.
-
-#### GetObjectiveByObjectiveID
-
-This function retrieves an objective from `DT_Objectives` based on the `ObjectiveID`. It is used for objective text and HUD updates tied directly to a known objective identifier.
-
-#### GetObjectiveByLineID
-
-This function retrieves an objective from `DT_Objectives` using the `LineID` field. This is useful when a dialogue line is linked to a specific objective and the scenario needs to derive the related objective entry from the dialogue being played.
-
-### VR vs. Legacy Non-VR Logic
-
-`BP_DialogueManager` still contains some logic left over from earlier non-VR implementations of the driving scenario. This includes nodes and references related to a non-VR subtitle/widget path that is no longer part of the active VR version.
-
-That logic remains in the Blueprint as legacy implementation residue, but it is **not part of the current active scenario flow**. The active version of the level uses the VR HUD and subtitle widget path through `WB_DrivingHUD_Master`.
-
-### Summary
-
-In the current driving scenario, `BP_DialogueManager` should be understood as the central manager for:
-
-- dialogue lookup
-- subtitle display
-- objective lookup
-- objective HUD updates
-- interaction-triggered dialogue sequencing
-- communication with the AI Interaction Driver for spoken output
-
-If future teams need to modify how dialogue is selected, how subtitles are shown, or how the objective HUD is updated in response to scenario progression, `BP_DialogueManager` is one of the first Blueprints they should inspect.
-
-## DT_DrivingDialogue
-
-**Path:** `Content/Main/UI/Scenario/Driving/ScriptedDialogue`
-
-`DT_DrivingDialogue` is the primary dialogue data table used by the driving scenario. It stores the scripted spoken lines that can be triggered during the level and serves as the main dialogue source for `BP_DialogueManager`.
-
-Each row represents a single dialogue entry and includes the fields defined by `ST_DrivingDialogue`.
-
-### Main Purpose
-
-This data table is used to define:
-
-- the unique line identifier for a dialogue entry
-- who is speaking
-- what trigger tag should activate that line
-- what subtitle text should be displayed
-- which voice type should be used for spoken playback
-
-This allows the driving scenario to remain largely data-driven rather than hardcoding dialogue text directly into Blueprint logic.
-
-### Current Fields
-
-Based on the current structure, each row includes:
-
-- `LineID`
-- `Speaker`
-- `TriggerTag`
-- `SubtitleText`
-- `VoiceType`
-
-### How It Is Used
-
-`BP_DialogueManager` uses `DT_DrivingDialogue` in several different ways depending on the scenario flow:
-
-- `GetDialogueLineByID` searches the table using `LineID`
-- `PlayDialogueLine` retrieves a specific dialogue entry and uses it to drive subtitles, voice type selection, and spoken output
-- `OnInteractionTriggered` searches for entries associated with a matching `TriggerTag`
-
-This means the same data table supports both:
-
-- direct line lookup by a known ID
-- grouped or sequential playback tied to interaction tags
-
-### Practical Notes
-
-The table currently includes lines for:
-
-- Mike’s internal driving dialogue
-- hands-free phone call dialogue
-- arrival/interviewer dialogue
-
-Because voice type is stored per row, this table also determines which AI voice/persona configuration should be used for a given spoken line.
-
-## ST_DrivingDialogue
-
-**Path:** `Content/Main/UI/Scenario/Driving/ScriptedDialogue`
-
-`ST_DrivingDialogue` is the structure used by `DT_DrivingDialogue`. It defines the format of each dialogue entry used by the driving scenario.
-
-### Fields
-
-Each entry in `ST_DrivingDialogue` contains the following fields:
-
-- `LineID`
-- `Speaker`
-- `TriggerTag`
-- `SubtitleText`
-- `VoiceType`
-
-### Purpose
-
-This structure is used to standardize how dialogue lines are stored and retrieved throughout the scenario. It provides the data format that `BP_DialogueManager` expects when pulling rows from `DT_DrivingDialogue`.
-
-At a high level, the fields serve the following purposes:
-
-- `LineID` uniquely identifies a dialogue line for direct lookup
-- `Speaker` identifies who is delivering the line
-- `TriggerTag` groups lines by interaction or event trigger
-- `SubtitleText` stores the text shown to the player and also used for scripted spoken output
-- `VoiceType` determines which AI voice/persona configuration should be used when that line is spoken
-
-Because both subtitle display and scripted audio playback depend on this same structure, `ST_DrivingDialogue` acts as the shared data format tying those systems together.
-
-## WB_Subtitles
-
-**Path:** `Content/Main/UI/Scenario/Driving/ScriptedDialogue`
-
-`WB_Subtitles` is the widget used to display subtitle text during the driving scenario. In the active VR implementation, it is the main subtitle presentation layer connected to `BP_DialogueManager` through `WB_DrivingHUD_Master`.
-
-### Main Role
-
-This widget is responsible for:
-
-- receiving subtitle text when a dialogue line is played
-- updating the displayed subtitle text
-- handling the subtitle fade animation behavior
-- preventing visual flicker during rapid sequential subtitle updates
-
-### DisplaySubtitle
-
-The main custom event in this widget is `DisplaySubtitle`.
-
-At a high level, this event:
-
-1. receives subtitle text as input
-2. updates the text widget content
-3. marks the subtitle as active
-4. plays the fade animation
-5. clears the active state again once the fade animation has finished
-
-This event is used by `BP_DialogueManager` whenever a new spoken line needs to be shown to the player.
-
-### Sequential Phone Call Handling
-
-`WB_Subtitles` also contains special handling for the sequential hands-free phone call lines in the driving scenario.
-
-Because the phone conversation lines occur in quick succession, this widget includes logic to prevent each new subtitle from waiting on a full fade-out/fade-in cycle before the next line appears. This avoids subtitle flicker and makes the phone call sequence display more smoothly when multiple lines are triggered close together.
-
-This special handling is specific to those phone call dialogue entries and was added to support the pacing of that sequence.
-
-### Widget Layout
-
-The widget itself is very simple. It contains:
-
-- a `Canvas Panel`
-- a `Border`
-- a `SubtitleText` text element
-
-The `SubtitleText` element is the primary text field updated during runtime. The widget is positioned and styled to serve as an in-HUD subtitle display rather than a full-screen dialogue panel.
-
-## WB_DrivingScenarioComplete
-
-**Path:** `Content/Main/UI/Scenario/Driving/ScenarioEnd`
-
-`WB_DrivingScenarioComplete` is the end-of-scenario completion widget shown after the player successfully finishes the driving experience. It serves as the scenario completion screen for **Scenario 2: Driving to a Job Interview** and provides the player with navigation options after the level ends.
-
-### Main Role
-
-This widget is responsible for:
-
-- presenting the end-of-scenario completion message
-- playing the completion text animations
-- allowing the player to return to the main menu
-- allowing the player to jump directly to other scenarios from the completion screen
-- triggering the project save/completion system before loading the next level
-
-### Widget Layout
-
-The widget contains a centered completion panel that includes:
-
-- a congratulatory/completion text header
-- a short success message
-- a **Return to Main Menu** button
-- a **Load Morning Routine Scenario** button
-- a **Load Grocery Run and Preparing Dinner Scenario** button
-
-This makes the widget both a scenario-end screen and a navigation hub for moving to other available experiences.
-
-### Construct Logic
-
-On construct, the widget plays two animations on the completion text:
-
-- a pop animation
-- a pulsing animation
-
-These are used to give the completion message more visual emphasis when the widget first appears.
-
-### Button Behavior
-
-Each button in the widget follows the same general flow:
-
-1. call `Commit Scenario Completion`
-2. wait briefly using a short delay
-3. open the selected level
-
-The current button destinations shown in the Blueprint are:
-
-- **Return to Main Menu** → `MainMenu`
-- **Load Morning Routine Scenario** → `House`
-- **Load Grocery Run and Preparing Dinner Scenario** → `GroceryStore`
-
-### Save System / Completion Tracking
-
-Before loading a new level, the widget calls `Commit Scenario Completion`, which is part of the project’s save/completion system.
-
-In the intended design, this call is meant to record that the player fully completed the driving scenario before transitioning away from the level. However, the save system itself was developed separately and is designed to support broader progress-saving behavior, including partial scenario progress. Verification of whether full driving scenario completion from this widget is currently being saved successfully end-to-end, including AWS-backed persistence, was not completed during development of this level.
-
-For more detail on the project save system, refer to the dedicated save system documentation.
-
-### Notes
-
-This widget is specific to the end-state of the driving scenario and is not part of the general runtime HUD flow used during moment-to-moment gameplay. It is only shown once the scenario has been successfully completed.
-
-### Active Use vs. Legacy Logic
-
-`WB_Subtitles` is part of the active VR subtitle path used by the current driving scenario. While some legacy non-VR subtitle references still exist elsewhere in the scenario Blueprints, this widget is the active subtitle display used in the current implementation.
-
-## DT_Objectives
-
-**Path:** `Content/Main/UI/Scenario/Driving/ScenarioEnd`
-
-`DT_Objectives` is the primary objective data table used by the driving scenario. It defines the ordered sequence of player tasks that make up the full drive from Mike’s house to the interview location.
-
-### Main Role
-
-This table is the main source of truth for objective progression in the level. It is used to determine:
-
-- what the current objective is
-- what text should be shown to the player
-- the order in which objectives occur
-- whether a dialogue line is linked to a given objective
-- whether the car should pause for that objective
-- what interaction hint text should be shown on the HUD
-
-The table currently contains **23 objectives** representing the full sequence of interactions in the driving scenario.
-
-### Key Fields
-
-Each objective entry includes:
-
-- `ObjectiveID`
-- `ObjectiveText`
-- `SequenceOrder`
-- `IsCompleted`
-- `LineID`
-- `bPauseCar`
-- `InteractionHintText`
-
-At a high level:
-
-- `ObjectiveID` is the unique identifier used to reference the objective in Blueprint logic
-- `ObjectiveText` is the main instruction shown to the player
-- `SequenceOrder` determines where the objective appears in the scenario progression
-- `IsCompleted` stores objective completion state in the data format
-- `LineID` links the objective to a dialogue line when applicable
-- `bPauseCar` indicates whether the driving flow should stop for that objective
-- `InteractionHintText` stores the more specific gameplay hint shown to help the player complete the task
-
-### How It Is Used
-
-`DT_Objectives` is used heavily by `BP_DialogueManager`, `BP_CarSplineController`, and the HUD widgets. It drives both objective display and scenario progression.
-
-In practice, it supports:
-
-- initial objective display
-- ordered scenario progression
-- mapping dialogue to objective state
-- progress bar updates
-- interaction hint updates
-- pause/resume logic tied to scenario beats
-
-Because the scenario is objective-driven, this table is one of the most important assets in the level.
-
-## ST_ObjectiveData
-
-**Path:** `Content/Main/UI/Scenario/Driving/ScenarioEnd`
-
-`ST_ObjectiveData` is the structure used by `DT_Objectives`. It defines the data format for each objective entry in the driving scenario.
-
-### Fields
-
-Each entry in `ST_ObjectiveData` contains:
-
-- `ObjectiveID`
-- `ObjectiveText`
-- `SequenceOrder`
-- `IsCompleted`
-- `LineID`
-- `bPauseCar`
-- `InteractionHintText`
-
-### Purpose
-
-This structure standardizes the objective data used throughout the driving scenario. It is the shared data format expected by the Blueprints and widgets that retrieve objective information from `DT_Objectives`.
-
-At a high level, it provides the fields needed for:
-
-- identifying the current objective
-- displaying the player-facing objective text
-- ordering scenario steps
-- linking objectives to dialogue
-- controlling whether the car pauses
-- showing interaction hint text on the HUD
-
-Because objective progression, HUD updates, and dialogue-to-objective linking all depend on the same data format, `ST_ObjectiveData` acts as the shared structure tying those systems together.
-
-## WB_ControlsTutorial
-
-**Path:** `Content/Main/UI/Scenario/Driving/ScenarioEnd`
-
-`WB_ControlsTutorial` is the introductory tutorial widget shown at the start of the driving scenario. It introduces the player to the scenario context, explains the main VR controls, and allows the player to enable or disable subtitles and AI voice before gameplay begins.
-
-### Main Role
-
-This widget is responsible for:
-
-- presenting the scenario introduction text
-- explaining the core VR driving controls
-- providing subtitle and AI voice toggle options
-- passing those settings into `BP_DialogueManager`
-- switching the HUD from tutorial mode into normal driving mode
-- triggering the first objective of the scenario
-- enabling the initial outside driver door interaction
-
-### Widget Layout
-
-The widget contains:
-
-- scenario introduction text
-- control instructions for right trigger, right grip, and left grip interactions
-- a subtitle checkbox
-- an AI voice checkbox
-- a continue button
-
-This makes it the player’s first in-scenario setup screen before actual driving objectives begin.
-
-### Construct Logic
-
-On construct, `WB_ControlsTutorial` finds and stores a reference to `BP_DialogueManager`. This reference is later used when the player presses Continue so the widget can pass the selected subtitle and AI voice settings into the active dialogue system.
-
-### Continue Button Flow
-
-When the Continue button is pressed, the widget:
-
-1. checks that the stored `BP_DialogueManager` reference is valid
-2. writes the subtitle checkbox value into the Dialogue Manager
-3. writes the AI voice checkbox value into the Dialogue Manager
-4. gets the current `BP_Driving_VRPawn` and unlocks its controls
-5. switches `WB_DrivingHUD_Master` into driving mode
-6. calls `ShowInstructionOnly` using the first objective (`OpenDriverDoor_Outside`)
-7. gets the active `BP_CarFinal`
-8. enables the outside driver door interaction
-9. removes the tutorial widget from the screen
-
-This means the tutorial widget does more than just explain controls. It also acts as the transition point from pre-scenario setup into active gameplay.
-
-### Notes
-
-`WB_ControlsTutorial` is part of the active VR startup flow for this scenario. It is not just informational UI; it also initializes the first live objective state and enables the first required interaction.
-
-## WB_ObjectiveHUD
-
-**Path:** `Content/Main/UI/Scenario/Driving/ScenarioEnd`
-
-`WB_ObjectiveHUD` is the widget used to display the player’s current objective, objective progress, and interaction hint text during the driving scenario.
-
-### Main Role
-
-This widget is responsible for:
-
-- displaying the current objective text
-- displaying objective progress through the full scenario sequence
-- displaying the current interaction hint text
-- updating the objective progress bar
-- handling fade-in and fade-out behavior for objective updates
-
-It is one of the main runtime HUD widgets used during the active driving experience.
-
-### Widget Layout
-
-The widget contains:
-
-- `ObjectiveText`
-- `ObjectiveHintText`
-- `ObjectiveProgressBar`
-
-These elements are presented as a compact objective display rather than a full-screen instructional menu.
-
-### UpdateObjectiveHUD
-
-The main custom event in this widget is `UpdateObjectiveHUD`.
-
-At a high level, this event:
-
-1. updates the main objective text
-2. updates the progress bar percent
-3. formats and updates the instructional/progress text
-4. checks whether the objective changed from the previously displayed objective
-5. stores the most recent objective ID
-6. plays the fade-in animation when appropriate
-
-This event is the primary entry point used by `BP_DialogueManager` when objective information changes.
-
-### Fade Handling
-
-The widget also contains separate fade handling for objective transitions.
-
-`PlayObjectiveFadeOut` is used to trigger the fade-out animation, while the construct logic binds to the end of that animation so the widget can reset its internal fading state once the fade-out completes.
-
-This helps prevent repeated overlapping fade calls and keeps objective updates visually stable.
-
-### Objective Formatting
-
-The widget formats the player-facing progress display using the current objective number, total objectives, and interaction instruction text. This allows the HUD to show both the current task and how far through the scenario the player is.
-
-### VR vs. Legacy Non-VR Logic
-
-`WB_ObjectiveHUD` still contains a small amount of legacy non-VR logic, but the active implementation used by the current driving scenario is the VR HUD path. The widget is actively used as part of `WB_DrivingHUD_Master` during normal scenario gameplay.
-
-### Notes
-
-Because the scenario is highly objective-driven, `WB_ObjectiveHUD` is a key runtime widget. If future teams need to adjust how objectives are presented to the player, this is one of the main widgets they should inspect.
+# Level Startup, Spawn, and Transition Logic
 
 ## Level Blueprint
 
@@ -732,6 +219,34 @@ In the current driving scenario, the Level Blueprint should be understood primar
 - attaching the seated player pawn to `BP_CarFinal`
 
 It is not the main objective or dialogue controller, but it is essential to the player’s level entry flow and the shift from outside interaction into active driving.
+
+## WB_FadeScreen
+
+**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
+
+`WB_FadeScreen` is the fade-screen widget used during level transitions in the driving scenario.
+
+### Main Role
+
+This widget is responsible for:
+
+- supporting the visual fade-in when entering the driving level
+- supporting fade transitions during setup and scene changes
+- helping hide abrupt visual transitions from the player
+
+### How It Is Used
+
+In the active driving implementation, this widget is used at level startup to complete the fade-in from the main menu redirect.
+
+It works together with the Level Blueprint and camera fade logic to make transitions into the level and into key scenario states feel smoother.
+
+### Notes
+
+`WB_FadeScreen` is a support widget rather than a main gameplay HUD element, but it is important for transition polish and comfort in VR.
+
+---
+
+# Player Pawn and Interaction Layer
 
 ## BP_Driving_VRPawn
 
@@ -938,6 +453,86 @@ This objective-aware gating is one of the reasons the driving experience feels s
 - sending player interaction state into the rest of the driving systems
 
 If future teams need to modify how the player interacts with the car, how the driving-specific input works, or how the HUD behaves during the scenario, `BP_Driving_VRPawn` is one of the first Blueprints they should inspect.
+
+## BPI_DrivingInteraction
+
+**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
+
+`BPI_DrivingInteraction` is the main Blueprint Interface used for driving interaction communication between the player interaction systems and the car actor.
+
+### Main Role
+
+This interface is primarily used between:
+
+- `BP_Driving_VRPawn`
+- `BP_CarFinal`
+
+### Purpose
+
+The interface provides a cleaner interaction boundary between the player-side VR interaction logic and the car-side response logic.
+
+At a high level, it is used for events such as:
+
+- notifying the car that a control has been grabbed
+- updating control interaction state while the player is manipulating it
+- requesting action-style interactions such as engine start or phone acceptance
+- signaling that a car-side interaction should evaluate or commit
+
+This keeps the player interaction layer from depending entirely on direct car-specific function calls for every interaction.
+
+### Notes
+
+Although the overall scenario still contains a large amount of direct Blueprint-specific logic, `BPI_DrivingInteraction` is an important shared interface point between the pawn and the car.
+
+---
+
+# Vehicle, Spline, and Scenario Control
+
+## BP_CarPath
+
+**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
+
+`BP_CarPath` is the spline actor used by the driving scenario. Its primary purpose is to hold the `DrivingSpline` component that defines the path the car follows during the level.
+
+### Main Role
+
+This Blueprint is responsible for:
+
+- containing the spline used for vehicle movement
+- defining the physical route of Mike’s drive through the scenario
+- serving as the spline reference used by `BP_CarSplineController`
+
+### Notes
+
+`BP_CarPath` is intentionally simple. It does not contain the movement logic itself; instead, `BP_CarSplineController` reads from the spline stored in this Blueprint and uses it to move `BP_CarFinal` along the route.
+
+If future teams need to adjust the actual driving route, turn shapes, or waypoint positions relative to the road, this is one of the first level assets they should inspect.
+
+## BP_SceneWaypoint
+
+**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
+
+`BP_SceneWaypoint` is a lightweight actor used to mark scene-beat stop locations along the driving route.
+
+### Main Role
+
+This Blueprint is responsible for:
+
+- marking important scenario waypoint locations
+- providing reference positions for pause/checkpoint-style scene beats
+- supporting the waypoint-driven stop/resume logic used by `BP_CarSplineController`
+
+### Component Structure
+
+`BP_SceneWaypoint` contains only an **Arrow Component**, which is used as the transform reference for placement in the level.
+
+### Level Usage
+
+The driving scenario currently uses **14 placed instances** of `BP_SceneWaypoint` in the level. These are positioned along the route where the car pauses or where the scenario checks against scene-beat progression.
+
+### Notes
+
+This Blueprint is intentionally minimal. Its importance comes from how it is used by the spline-controller logic rather than from any internal Blueprint complexity.
 
 ## BP_CarSplineController
 
@@ -1464,51 +1059,317 @@ Its most important responsibilities are:
 
 If future teams need to change how the car itself behaves, how the player manipulates its controls, or how the car responds visually and audibly to those manipulations, `BP_CarFinal` is one of the first Blueprints they should inspect.
 
-## BP_CarPath
+---
 
-**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
+# Dialogue, Objectives, and HUD Systems
 
-`BP_CarPath` is the spline actor used by the driving scenario. Its primary purpose is to hold the `DrivingSpline` component that defines the path the car follows during the level.
+## BP_AI_InteractionDriver_Driving
+
+**Path:** `Content/Main/UI/Scenario/Driving/ScriptedDialogue`
+
+`BP_AI_InteractionDriver_Driving` is the scenario-specific Interviewee Actor used to convert scripted text input into spoken AI output during the driving level. It is derived from the shared `IntervieweeActor` class, but in this scenario it is configured for **scripted output rather than live back-and-forth conversation**.
+
+At a high level, this actor is used when the driving scenario needs a spoken line to be played through the AI voice system. In the current implementation, it is configured with:
+
+- a text-to-speech style prompt
+- a selected voice option
+- scripted input enabled
+- forced audio responses enabled
+- normal conversational input disabled
+
+This allows the level to pass in text from the dialogue table and have it spoken back as audio without treating the driving scenario like an open-ended conversation system.
+
+### Main Role in the Level
+
+`BP_AI_InteractionDriver_Driving` is primarily used by `BP_DialogueManager` when a dialogue line needs to be played. Rather than storing prerecorded voice lines, the driving scenario sends text to this actor and uses the AI voice pipeline to generate the spoken output at runtime.
+
+This actor is therefore responsible for the spoken delivery layer of the scenario’s scripted dialogue flow.
+
+### Current Usage Notes
+
+This Blueprint is configured specifically for the driving scenario’s scripted dialogue use case and should not be treated as a general-purpose conversational NPC. The actor is intended to speak lines provided by the scenario systems, not to handle unrestricted player conversation.
+
+Because this Blueprint inherits from the shared `IntervieweeActor` implementation, some of the lower-level behavior comes from the parent C++ class rather than from extensive Blueprint graph logic inside this asset itself.
+
+## BP_DialogueManager
+
+**Path:** `Content/Main/UI/Scenario/Driving/ScriptedDialogue`
+
+`BP_DialogueManager` acts as the main dialogue and HUD coordination layer for the driving scenario. It is responsible for connecting the scenario’s dialogue data, objective data, subtitle display, objective HUD updates, and scripted AI voice playback into one centralized Blueprint.
+
+This Blueprint is one of the main control points for the scenario and should be treated as the manager for **what line should play**, **what subtitle should display**, and **what objective text should appear on the HUD**.
+
+### BeginPlay Initialization
+
+On `BeginPlay`, `BP_DialogueManager` performs a setup sequence to initialize the scenario’s HUD and dialogue references.
+
+From the current implementation shown in the Blueprint:
+
+- it waits briefly for the driving HUD to exist
+- gets the active `BP_HUDDisplay_Driving` actor
+- stores the `WB_DrivingHUD_Master` reference
+- switches the master HUD to the controls tutorial mode
+- stores references to key child widgets such as the objective HUD
+- finds the active Interviewee Actor used for scripted AI voice playback
+- stores that actor reference
+- calls `InitializePersonaNative` once on the Interviewee Actor so the scripted voice system is ready before dialogue begins
+
+This initialization step is important because `BP_DialogueManager` depends on both the HUD widget hierarchy and the AI Interaction Driver being valid before scenario dialogue starts.
+
+### Main Responsibilities
+
+The primary responsibilities of `BP_DialogueManager` are:
+
+- retrieving dialogue lines from `DT_DrivingDialogue`
+- retrieving objective data from `DT_Objectives`
+- sending text to the Interviewee Actor for AI-spoken dialogue
+- displaying subtitles in VR
+- updating the current objective and progress HUD
+- triggering sequences of dialogue associated with interaction tags
+
+In practice, this Blueprint is the main bridge between the data tables and the player-facing UI/audio systems.
+
+### PlayDialogueLine
+
+`PlayDialogueLine` is the core event used to play an individual dialogue line based on its `LineID`.
+
+At a high level, this event:
+
+1. retrieves the dialogue entry by `LineID` from `DT_DrivingDialogue`
+2. stores the current dialogue line
+3. sends the line’s voice type and text to the Interviewee Actor
+4. retrieves any objective linked to that same line
+5. updates the current objective state if applicable
+6. displays the corresponding subtitle in VR
+
+This event therefore handles both the spoken line itself and the associated scenario/UI updates tied to that dialogue line.
+
+### ShowInstructionOnly
+
+`ShowInstructionOnly` is used when the scenario needs to update the player’s current objective/instruction without immediately playing a spoken dialogue line.
+
+This event retrieves the objective from `DT_Objectives` using `ObjectiveID`, stores the current objective information, updates the current sequence order, and pushes the objective text/progress values into `WB_ObjectiveHUD`.
+
+This is important for scenario beats where the player should first see the next task on the HUD before any dialogue is triggered.
+
+### OnInteractionTriggered
+
+`OnInteractionTriggered` is the custom event used to trigger dialogue based on a `TriggerTag` defined in `DT_DrivingDialogue`.
+
+Rather than directly calling a single hardcoded line, this event searches the dialogue table for all rows associated with the provided trigger tag and then plays the matching lines. The current implementation supports sequential dialogue behavior for entries that share the same trigger tag, including the delayed playback flow shown in the Blueprint.
+
+This is one of the key mechanisms used to connect player interactions and scenario state changes to dialogue playback.
+
+### Data Lookup Functions
+
+`BP_DialogueManager` also contains several helper functions for retrieving structured data from the scenario Data Tables.
+
+#### GetDialogueLineByID
+
+This function searches `DT_DrivingDialogue` using the `LineID` field rather than relying on the row name directly. It is used when the scenario logic already knows which `LineID` should be played.
+
+#### GetObjectiveByObjectiveID
+
+This function retrieves an objective from `DT_Objectives` based on the `ObjectiveID`. It is used for objective text and HUD updates tied directly to a known objective identifier.
+
+#### GetObjectiveByLineID
+
+This function retrieves an objective from `DT_Objectives` using the `LineID` field. This is useful when a dialogue line is linked to a specific objective and the scenario needs to derive the related objective entry from the dialogue being played.
+
+### VR vs. Legacy Non-VR Logic
+
+`BP_DialogueManager` still contains some logic left over from earlier non-VR implementations of the driving scenario. This includes nodes and references related to a non-VR subtitle/widget path that is no longer part of the active VR version.
+
+That logic remains in the Blueprint as legacy implementation residue, but it is **not part of the current active scenario flow**. The active version of the level uses the VR HUD and subtitle widget path through `WB_DrivingHUD_Master`.
+
+### Summary
+
+In the current driving scenario, `BP_DialogueManager` should be understood as the central manager for:
+
+- dialogue lookup
+- subtitle display
+- objective lookup
+- objective HUD updates
+- interaction-triggered dialogue sequencing
+- communication with the AI Interaction Driver for spoken output
+
+If future teams need to modify how dialogue is selected, how subtitles are shown, or how the objective HUD is updated in response to scenario progression, `BP_DialogueManager` is one of the first Blueprints they should inspect.
+
+## DT_DrivingDialogue
+
+**Path:** `Content/Main/UI/Scenario/Driving/ScriptedDialogue`
+
+`DT_DrivingDialogue` is the primary dialogue data table used by the driving scenario. It stores the scripted spoken lines that can be triggered during the level and serves as the main dialogue source for `BP_DialogueManager`.
+
+Each row represents a single dialogue entry and includes the fields defined by `ST_DrivingDialogue`.
+
+### Main Purpose
+
+This data table is used to define:
+
+- the unique line identifier for a dialogue entry
+- who is speaking
+- what trigger tag should activate that line
+- what subtitle text should be displayed
+- which voice type should be used for spoken playback
+
+This allows the driving scenario to remain largely data-driven rather than hardcoding dialogue text directly into Blueprint logic.
+
+### Current Fields
+
+Based on the current structure, each row includes:
+
+- `LineID`
+- `Speaker`
+- `TriggerTag`
+- `SubtitleText`
+- `VoiceType`
+
+### How It Is Used
+
+`BP_DialogueManager` uses `DT_DrivingDialogue` in several different ways depending on the scenario flow:
+
+- `GetDialogueLineByID` searches the table using `LineID`
+- `PlayDialogueLine` retrieves a specific dialogue entry and uses it to drive subtitles, voice type selection, and spoken output
+- `OnInteractionTriggered` searches for entries associated with a matching `TriggerTag`
+
+This means the same data table supports both:
+
+- direct line lookup by a known ID
+- grouped or sequential playback tied to interaction tags
+
+### Practical Notes
+
+The table currently includes lines for:
+
+- Mike’s internal driving dialogue
+- hands-free phone call dialogue
+- arrival/interviewer dialogue
+
+Because voice type is stored per row, this table also determines which AI voice/persona configuration should be used for a given spoken line.
+
+## ST_DrivingDialogue
+
+**Path:** `Content/Main/UI/Scenario/Driving/ScriptedDialogue`
+
+`ST_DrivingDialogue` is the structure used by `DT_DrivingDialogue`. It defines the format of each dialogue entry used by the driving scenario.
+
+### Fields
+
+Each entry in `ST_DrivingDialogue` contains the following fields:
+
+- `LineID`
+- `Speaker`
+- `TriggerTag`
+- `SubtitleText`
+- `VoiceType`
+
+### Purpose
+
+This structure is used to standardize how dialogue lines are stored and retrieved throughout the scenario. It provides the data format that `BP_DialogueManager` expects when pulling rows from `DT_DrivingDialogue`.
+
+At a high level, the fields serve the following purposes:
+
+- `LineID` uniquely identifies a dialogue line for direct lookup
+- `Speaker` identifies who is delivering the line
+- `TriggerTag` groups lines by interaction or event trigger
+- `SubtitleText` stores the text shown to the player and also used for scripted spoken output
+- `VoiceType` determines which AI voice/persona configuration should be used when that line is spoken
+
+Because both subtitle display and scripted audio playback depend on this same structure, `ST_DrivingDialogue` acts as the shared data format tying those systems together.
+
+## DT_Objectives
+
+**Path:** `Content/Main/UI/Scenario/Driving/ScenarioEnd`
+
+`DT_Objectives` is the primary objective data table used by the driving scenario. It defines the ordered sequence of player tasks that make up the full drive from Mike’s house to the interview location.
 
 ### Main Role
 
-This Blueprint is responsible for:
+This table is the main source of truth for objective progression in the level. It is used to determine:
 
-- containing the spline used for vehicle movement
-- defining the physical route of Mike’s drive through the scenario
-- serving as the spline reference used by `BP_CarSplineController`
+- what the current objective is
+- what text should be shown to the player
+- the order in which objectives occur
+- whether a dialogue line is linked to a given objective
+- whether the car should pause for that objective
+- what interaction hint text should be shown on the HUD
 
-### Notes
+The table currently contains **23 objectives** representing the full sequence of interactions in the driving scenario.
 
-`BP_CarPath` is intentionally simple. It does not contain the movement logic itself; instead, `BP_CarSplineController` reads from the spline stored in this Blueprint and uses it to move `BP_CarFinal` along the route.
+### Key Fields
 
-If future teams need to adjust the actual driving route, turn shapes, or waypoint positions relative to the road, this is one of the first level assets they should inspect.
+Each objective entry includes:
 
-## BP_SceneWaypoint
+- `ObjectiveID`
+- `ObjectiveText`
+- `SequenceOrder`
+- `IsCompleted`
+- `LineID`
+- `bPauseCar`
+- `InteractionHintText`
 
-**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
+At a high level:
 
-`BP_SceneWaypoint` is a lightweight actor used to mark scene-beat stop locations along the driving route.
+- `ObjectiveID` is the unique identifier used to reference the objective in Blueprint logic
+- `ObjectiveText` is the main instruction shown to the player
+- `SequenceOrder` determines where the objective appears in the scenario progression
+- `IsCompleted` stores objective completion state in the data format
+- `LineID` links the objective to a dialogue line when applicable
+- `bPauseCar` indicates whether the driving flow should stop for that objective
+- `InteractionHintText` stores the more specific gameplay hint shown to help the player complete the task
 
-### Main Role
+### How It Is Used
 
-This Blueprint is responsible for:
+`DT_Objectives` is used heavily by `BP_DialogueManager`, `BP_CarSplineController`, and the HUD widgets. It drives both objective display and scenario progression.
 
-- marking important scenario waypoint locations
-- providing reference positions for pause/checkpoint-style scene beats
-- supporting the waypoint-driven stop/resume logic used by `BP_CarSplineController`
+In practice, it supports:
 
-### Component Structure
+- initial objective display
+- ordered scenario progression
+- mapping dialogue to objective state
+- progress bar updates
+- interaction hint updates
+- pause/resume logic tied to scenario beats
 
-`BP_SceneWaypoint` contains only an **Arrow Component**, which is used as the transform reference for placement in the level.
+Because the scenario is objective-driven, this table is one of the most important assets in the level.
 
-### Level Usage
+## ST_ObjectiveData
 
-The driving scenario currently uses **14 placed instances** of `BP_SceneWaypoint` in the level. These are positioned along the route where the car pauses or where the scenario checks against scene-beat progression.
+**Path:** `Content/Main/UI/Scenario/Driving/ScenarioEnd`
 
-### Notes
+`ST_ObjectiveData` is the structure used by `DT_Objectives`. It defines the data format for each objective entry in the driving scenario.
 
-This Blueprint is intentionally minimal. Its importance comes from how it is used by the spline-controller logic rather than from any internal Blueprint complexity.
+### Fields
+
+Each entry in `ST_ObjectiveData` contains:
+
+- `ObjectiveID`
+- `ObjectiveText`
+- `SequenceOrder`
+- `IsCompleted`
+- `LineID`
+- `bPauseCar`
+- `InteractionHintText`
+
+### Purpose
+
+This structure standardizes the objective data used throughout the driving scenario. It is the shared data format expected by the Blueprints and widgets that retrieve objective information from `DT_Objectives`.
+
+At a high level, it provides the fields needed for:
+
+- identifying the current objective
+- displaying the player-facing objective text
+- ordering scenario steps
+- linking objectives to dialogue
+- controlling whether the car pauses
+- showing interaction hint text on the HUD
+
+Because objective progression, HUD updates, and dialogue-to-objective linking all depend on the same data format, `ST_ObjectiveData` acts as the shared structure tying those systems together.
+
+---
+
+# HUD and UI Widgets
 
 ## BP_HUDDisplay_Driving
 
@@ -1539,35 +1400,282 @@ This means `BP_HUDDisplay_Driving` is mainly a reference/access point rather tha
 
 This Blueprint is simple, but it is important because it is the way the driving scenario consistently retrieves and works with the active HUD widget in the level.
 
-## BPI_DrivingInteraction
+## WB_DrivingHUD_Master
 
 **Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
 
-`BPI_DrivingInteraction` is the main Blueprint Interface used for driving interaction communication between the player interaction systems and the car actor.
+`WB_DrivingHUD_Master` is the master driving HUD widget used by the scenario. It acts as the top-level HUD container and switches between the major driving UI widgets.
 
 ### Main Role
 
-This interface is primarily used between:
+This widget is responsible for:
 
-- `BP_Driving_VRPawn`
-- `BP_CarFinal`
+- containing the scenario’s major HUD widgets
+- switching which HUD is currently shown
+- exposing a central HUD mode interface through `E_DrivingHUDMode`
 
-### Purpose
+### Widget Structure
 
-The interface provides a cleaner interaction boundary between the player-side VR interaction logic and the car-side response logic.
+`WB_DrivingHUD_Master` contains the driving HUD widgets inside a **Widget Switcher**.
 
-At a high level, it is used for events such as:
+The major child widgets managed through this switcher are:
 
-- notifying the car that a control has been grabbed
-- updating control interaction state while the player is manipulating it
-- requesting action-style interactions such as engine start or phone acceptance
-- signaling that a car-side interaction should evaluate or commit
+- `WB_ControlsTutorial`
+- `WB_ObjectiveHUD`
+- `WB_Subtitles`
+- `WB_DrivingScenarioComplete`
 
-This keeps the player interaction layer from depending entirely on direct car-specific function calls for every interaction.
+### HUD Mode Switching
+
+The widget switches its active child widget based on `E_DrivingHUDMode`.
+
+This allows the scenario to move between:
+
+- tutorial/setup UI
+- active driving HUD
+- subtitle display flow
+- scenario completion UI
+
+without requiring separate top-level HUD ownership patterns for each stage.
 
 ### Notes
 
-Although the overall scenario still contains a large amount of direct Blueprint-specific logic, `BPI_DrivingInteraction` is an important shared interface point between the pawn and the car.
+This widget is the central HUD container for the level. If future teams need to change which driving UI elements exist or how the level transitions between tutorial, gameplay, subtitles, and end-state UI, `WB_DrivingHUD_Master` is one of the first widgets they should inspect.
+
+## WB_ControlsTutorial
+
+**Path:** `Content/Main/UI/Scenario/Driving/ScenarioEnd`
+
+`WB_ControlsTutorial` is the introductory tutorial widget shown at the start of the driving scenario. It introduces the player to the scenario context, explains the main VR controls, and allows the player to enable or disable subtitles and AI voice before gameplay begins.
+
+### Main Role
+
+This widget is responsible for:
+
+- presenting the scenario introduction text
+- explaining the core VR driving controls
+- providing subtitle and AI voice toggle options
+- passing those settings into `BP_DialogueManager`
+- switching the HUD from tutorial mode into normal driving mode
+- triggering the first objective of the scenario
+- enabling the initial outside driver door interaction
+
+### Widget Layout
+
+The widget contains:
+
+- scenario introduction text
+- control instructions for right trigger, right grip, and left grip interactions
+- a subtitle checkbox
+- an AI voice checkbox
+- a continue button
+
+This makes it the player’s first in-scenario setup screen before actual driving objectives begin.
+
+### Construct Logic
+
+On construct, `WB_ControlsTutorial` finds and stores a reference to `BP_DialogueManager`. This reference is later used when the player presses Continue so the widget can pass the selected subtitle and AI voice settings into the active dialogue system.
+
+### Continue Button Flow
+
+When the Continue button is pressed, the widget:
+
+1. checks that the stored `BP_DialogueManager` reference is valid
+2. writes the subtitle checkbox value into the Dialogue Manager
+3. writes the AI voice checkbox value into the Dialogue Manager
+4. gets the current `BP_Driving_VRPawn` and unlocks its controls
+5. switches `WB_DrivingHUD_Master` into driving mode
+6. calls `ShowInstructionOnly` using the first objective (`OpenDriverDoor_Outside`)
+7. gets the active `BP_CarFinal`
+8. enables the outside driver door interaction
+9. removes the tutorial widget from the screen
+
+This means the tutorial widget does more than just explain controls. It also acts as the transition point from pre-scenario setup into active gameplay.
+
+### Notes
+
+`WB_ControlsTutorial` is part of the active VR startup flow for this scenario. It is not just informational UI; it also initializes the first live objective state and enables the first required interaction.
+
+## WB_ObjectiveHUD
+
+**Path:** `Content/Main/UI/Scenario/Driving/ScenarioEnd`
+
+`WB_ObjectiveHUD` is the widget used to display the player’s current objective, objective progress, and interaction hint text during the driving scenario.
+
+### Main Role
+
+This widget is responsible for:
+
+- displaying the current objective text
+- displaying objective progress through the full scenario sequence
+- displaying the current interaction hint text
+- updating the objective progress bar
+- handling fade-in and fade-out behavior for objective updates
+
+It is one of the main runtime HUD widgets used during the active driving experience.
+
+### Widget Layout
+
+The widget contains:
+
+- `ObjectiveText`
+- `ObjectiveHintText`
+- `ObjectiveProgressBar`
+
+These elements are presented as a compact objective display rather than a full-screen instructional menu.
+
+### UpdateObjectiveHUD
+
+The main custom event in this widget is `UpdateObjectiveHUD`.
+
+At a high level, this event:
+
+1. updates the main objective text
+2. updates the progress bar percent
+3. formats and updates the instructional/progress text
+4. checks whether the objective changed from the previously displayed objective
+5. stores the most recent objective ID
+6. plays the fade-in animation when appropriate
+
+This event is the primary entry point used by `BP_DialogueManager` when objective information changes.
+
+### Fade Handling
+
+The widget also contains separate fade handling for objective transitions.
+
+`PlayObjectiveFadeOut` is used to trigger the fade-out animation, while the construct logic binds to the end of that animation so the widget can reset its internal fading state once the fade-out completes.
+
+This helps prevent repeated overlapping fade calls and keeps objective updates visually stable.
+
+### Objective Formatting
+
+The widget formats the player-facing progress display using the current objective number, total objectives, and interaction instruction text. This allows the HUD to show both the current task and how far through the scenario the player is.
+
+### VR vs. Legacy Non-VR Logic
+
+`WB_ObjectiveHUD` still contains a small amount of legacy non-VR logic, but the active implementation used by the current driving scenario is the VR HUD path. The widget is actively used as part of `WB_DrivingHUD_Master` during normal scenario gameplay.
+
+### Notes
+
+Because the scenario is highly objective-driven, `WB_ObjectiveHUD` is a key runtime widget. If future teams need to adjust how objectives are presented to the player, this is one of the main widgets they should inspect.
+
+## WB_Subtitles
+
+**Path:** `Content/Main/UI/Scenario/Driving/ScriptedDialogue`
+
+`WB_Subtitles` is the widget used to display subtitle text during the driving scenario. In the active VR implementation, it is the main subtitle presentation layer connected to `BP_DialogueManager` through `WB_DrivingHUD_Master`.
+
+### Main Role
+
+This widget is responsible for:
+
+- receiving subtitle text when a dialogue line is played
+- updating the displayed subtitle text
+- handling the subtitle fade animation behavior
+- preventing visual flicker during rapid sequential subtitle updates
+
+### DisplaySubtitle
+
+The main custom event in this widget is `DisplaySubtitle`.
+
+At a high level, this event:
+
+1. receives subtitle text as input
+2. updates the text widget content
+3. marks the subtitle as active
+4. plays the fade animation
+5. clears the active state again once the fade animation has finished
+
+This event is used by `BP_DialogueManager` whenever a new spoken line needs to be shown to the player.
+
+### Sequential Phone Call Handling
+
+`WB_Subtitles` also contains special handling for the sequential hands-free phone call lines in the driving scenario.
+
+Because the phone conversation lines occur in quick succession, this widget includes logic to prevent each new subtitle from waiting on a full fade-out/fade-in cycle before the next line appears. This avoids subtitle flicker and makes the phone call sequence display more smoothly when multiple lines are triggered close together.
+
+This special handling is specific to those phone call dialogue entries and was added to support the pacing of that sequence.
+
+### Widget Layout
+
+The widget itself is very simple. It contains:
+
+- a `Canvas Panel`
+- a `Border`
+- a `SubtitleText` text element
+
+The `SubtitleText` element is the primary text field updated during runtime. The widget is positioned and styled to serve as an in-HUD subtitle display rather than a full-screen dialogue panel.
+
+### Active Use vs. Legacy Logic
+
+`WB_Subtitles` is part of the active VR subtitle path used by the current driving scenario. While some legacy non-VR subtitle references still exist elsewhere in the scenario Blueprints, this widget is the active subtitle display used in the current implementation.
+
+## WB_DrivingScenarioComplete
+
+**Path:** `Content/Main/UI/Scenario/Driving/ScenarioEnd`
+
+`WB_DrivingScenarioComplete` is the end-of-scenario completion widget shown after the player successfully finishes the driving experience. It serves as the scenario completion screen for **Scenario 2: Driving to a Job Interview** and provides the player with navigation options after the level ends.
+
+### Main Role
+
+This widget is responsible for:
+
+- presenting the end-of-scenario completion message
+- playing the completion text animations
+- allowing the player to return to the main menu
+- allowing the player to jump directly to other scenarios from the completion screen
+- triggering the project save/completion system before loading the next level
+
+### Widget Layout
+
+The widget contains a centered completion panel that includes:
+
+- a congratulatory/completion text header
+- a short success message
+- a **Return to Main Menu** button
+- a **Load Morning Routine Scenario** button
+- a **Load Grocery Run and Preparing Dinner Scenario** button
+
+This makes the widget both a scenario-end screen and a navigation hub for moving to other available experiences.
+
+### Construct Logic
+
+On construct, the widget plays two animations on the completion text:
+
+- a pop animation
+- a pulsing animation
+
+These are used to give the completion message more visual emphasis when the widget first appears.
+
+### Button Behavior
+
+Each button in the widget follows the same general flow:
+
+1. call `Commit Scenario Completion`
+2. wait briefly using a short delay
+3. open the selected level
+
+The current button destinations shown in the Blueprint are:
+
+- **Return to Main Menu** → `MainMenu`
+- **Load Morning Routine Scenario** → `House`
+- **Load Grocery Run and Preparing Dinner Scenario** → `GroceryStore`
+
+### Save System / Completion Tracking
+
+Before loading a new level, the widget calls `Commit Scenario Completion`, which is part of the project’s save/completion system.
+
+In the intended design, this call is meant to record that the player fully completed the driving scenario before transitioning away from the level. However, the save system itself was developed separately and is designed to support broader progress-saving behavior, including partial scenario progress. Verification of whether full driving scenario completion from this widget is currently being saved successfully end-to-end, including AWS-backed persistence, was not completed during development of this level.
+
+For more detail on the project save system, refer to the dedicated save system documentation.
+
+### Notes
+
+This widget is specific to the end-state of the driving scenario and is not part of the general runtime HUD flow used during moment-to-moment gameplay. It is only shown once the scenario has been successfully completed.
+
+---
+
+# Enums and Shared State
 
 ## Enums
 
@@ -1618,71 +1726,9 @@ It is one of the key enums used to organize the scenario’s overall flow and in
 
 It supports the repeated right-turn interactions used throughout the scenario and helps distinguish whether the turn signal is on or off while also supporting the audio/visual state changes associated with it.
 
-## WB_DrivingHUD_Master
+---
 
-**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
-
-`WB_DrivingHUD_Master` is the master driving HUD widget used by the scenario. It acts as the top-level HUD container and switches between the major driving UI widgets.
-
-### Main Role
-
-This widget is responsible for:
-
-- containing the scenario’s major HUD widgets
-- switching which HUD is currently shown
-- exposing a central HUD mode interface through `E_DrivingHUDMode`
-
-### Widget Structure
-
-`WB_DrivingHUD_Master` contains the driving HUD widgets inside a **Widget Switcher**.
-
-The major child widgets managed through this switcher are:
-
-- `WB_ControlsTutorial`
-- `WB_ObjectiveHUD`
-- `WB_Subtitles`
-- `WB_DrivingScenarioComplete`
-
-### HUD Mode Switching
-
-The widget switches its active child widget based on `E_DrivingHUDMode`.
-
-This allows the scenario to move between:
-
-- tutorial/setup UI
-- active driving HUD
-- subtitle display flow
-- scenario completion UI
-
-without requiring separate top-level HUD ownership patterns for each stage.
-
-### Notes
-
-This widget is the central HUD container for the level. If future teams need to change which driving UI elements exist or how the level transitions between tutorial, gameplay, subtitles, and end-state UI, `WB_DrivingHUD_Master` is one of the first widgets they should inspect.
-
-## WB_FadeScreen
-
-**Path:** `Content/Main/UI/Scenario/Driving/Blueprints`
-
-`WB_FadeScreen` is the fade-screen widget used during level transitions in the driving scenario.
-
-### Main Role
-
-This widget is responsible for:
-
-- supporting the visual fade-in when entering the driving level
-- supporting fade transitions during setup and scene changes
-- helping hide abrupt visual transitions from the player
-
-### How It Is Used
-
-In the active driving implementation, this widget is used at level startup to complete the fade-in from the main menu redirect.
-
-It works together with the Level Blueprint and camera fade logic to make transitions into the level and into key scenario states feel smoother.
-
-### Notes
-
-`WB_FadeScreen` is a support widget rather than a main gameplay HUD element, but it is important for transition polish and comfort in VR.
+# Rain and Environmental Presentation
 
 ## Niagara Rain Systems
 
