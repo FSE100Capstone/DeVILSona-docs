@@ -43,3 +43,9 @@ This document contains the broader research compiled for the Military Veteran Mi
 This spreadsheet contains the fact and constraint matrix used to organize key archetype details, implementation considerations, and design constraints for Military Veteran Mike.
 
 - [Military Veteran Mike Fact and Constraint Matrix](https://docs.google.com/spreadsheets/d/138C3B176kA7OBNG4NMaaNsf6XcGC0WaOX5l34bYUahw/edit?usp=sharing)
+
+## Facial Animation, Lip Sync, and Emotion-Based Body Animation Comparison
+
+This document compares potential implementation options considered for facial animation, real-time lip sync, and emotion-based body animation. It was used to evaluate different approaches for expressive character presentation and to support technical decision-making during development.
+
+- [Facial Animation, Lip Sync, and Emotion-Based Body Animation Comparison](https://docs.google.com/document/d/1YkG0ez9KFxvdZH2gyiCbsLBMOC31m9BJQxt2AeW4d9M/edit?usp=sharing)
