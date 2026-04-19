@@ -23,6 +23,21 @@ To open the driving scenario level in Unreal Engine:
 
 This is the main level used for **Scenario 2: Driving to a Job Interview** and serves as the entry point for reviewing, testing, and modifying the scenario.
 
+## VR Preview Testing Note
+
+For **Unreal Engine VR Preview testing only when using Meta Quest Link**, adjust only the Z location transform for the `OutsideStartAnchor` actor in the level Outliner to the following before pressing Play:
+
+`Z = 48.58`
+
+This temporary adjustment is required for correct player positioning during in-editor VR Preview testing with Meta Quest Link.
+
+!!! warning
+    The current saved level state may place `OutsideStartAnchor` at a much higher location to support correct orientation in the packaged Windows desktop build and Android APK build. If the anchor is left in that higher position during Unreal Engine VR Preview testing with Meta Quest Link, the player may be unable to enter the car correctly.
+
+After VR Preview testing is complete, restore the Z location transform to the following as needed for the intended packaged build configuration.
+
+`Z = 147.200386`
+
 ## Scope of This Guide
 
 This guide documents the Blueprint architecture and core implementation for the driving scenario, including the major actors, level setup, scenario flow, interaction logic, and supporting systems specific to this experience.
