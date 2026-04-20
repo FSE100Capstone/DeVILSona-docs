@@ -149,13 +149,13 @@ If the build includes an OBB file, it must be placed in the correct folder on th
 
 ### OBB Folder Format
 
-```text
-/Android/obb/<package.name>/
+`/Android/obb/<package.name>/`
 
 Example:
-/Android/obb/com.YourCompany.FSE100Capstone/
 
-## Steps
+`/Android/obb/com.YourCompany.FSE100Capstone/`
+
+### Steps
 
 1. In SideQuest, open the headset file browser.
 2. Navigate to:
@@ -164,11 +164,11 @@ Example:
 3. Create the package folder if it does not already exist.
 4. Copy the `.obb` file into that folder.
 
-### Example final location
+### Example Final Location
 
 `/Android/obb/com.YourCompany.FSE100Capstone/main.1.com.YourCompany.FSE100Capstone.obb`
 
-## Launching After Install
+### Launching After Install
 
 1. Put on the headset.
 2. Open **Library**.
@@ -176,15 +176,15 @@ Example:
 4. Select the installed application.
 5. Launch it from the headset.
 
-## Post-Install Audio Checks
+### Post-Install Audio Checks
 
 After installing the APK, verify the headset audio and microphone settings before testing AI voice input.
 
-### Check That the Microphone Is Not Muted
+#### Check That the Microphone Is Not Muted
 
 Make sure the headset microphone is not muted before launching the application.
 
-### Check App Microphone Permission
+#### Check App Microphone Permission
 
 In the headset, go to:
 
@@ -192,7 +192,7 @@ In the headset, go to:
 
 Make sure microphone permission is enabled for the application.
 
-### Important Note
+#### Important Note
 
 Even if the APK installs correctly, AI voice input will not work if:
 
@@ -220,7 +220,7 @@ Before launching the desktop build:
 - A desktop executable available, such as:
   - `FSE100Capstone.exe`
 
-## Launching the Desktop Build
+### Launching the Desktop Build
 
 1. Connect the headset to the PC using a USB cable.
 2. Put on the headset.
@@ -241,13 +241,13 @@ Before launching the desktop build:
 
 ## Recommended Usage
 
-### Use the Android APK build when:
+### Use the Android APK Build When:
 
 - the experience should run directly on the headset
 - you are testing native headset deployment
 - you need to validate actual Android / Quest behavior
 
-### Use the Windows desktop executable when:
+### Use the Windows Desktop Executable When:
 
 - you want to run the PC version in VR
 - the headset is connected through Meta Quest Link
@@ -257,9 +257,9 @@ Before launching the desktop build:
 
 ## Common Installation Notes
 
-- A Meta Developer account is required in order to enable Developer Mode
-- Developer Mode alone is not enough for USB installation workflows
-- The user must also accept the required USB prompts inside the headset
+- A **Meta Developer account** is required in order to enable Developer Mode
+- **Developer Mode alone is not enough** for USB installation workflows
+- The user must also accept the required **USB prompts inside the headset**
 - Always use the main packaged APK for headset installation
 - If an OBB is generated, it must be copied to the correct package-name folder on the headset
 - If an install script is provided by Unreal, it is usually the simplest Android installation method
@@ -317,13 +317,13 @@ Check that:
 
 The project supports two deployment methods:
 
-### Android APK deployment
+### Android APK Deployment
 
 - install directly to the headset
 - launch from **Unknown Sources**
 - can be installed using Unreal's install script or SideQuest
 
-### Windows desktop deployment
+### Windows Desktop Deployment
 
 - connect headset through Meta Quest Link
 - launch the packaged `.exe` on the PC
