@@ -26,25 +26,27 @@ Before diving into the steps, here is a quick mental model of how everything fit
 !!! note "When"
     Do this step at least **5 minutes before students arrive**, ideally 10–15 minutes before class begins.
 
-### Step 1.1: Open DeVILStarter
+### Step 1.1: Download and Open DeVILStarter
 
-1. On your **Windows laptop**, locate the **DeVILStarter** application. It may be pinned to the taskbar or desktop.
-2. Double-click to launch it. A window will open showing the DeVILSona Launcher interface with a status panel and log output area.
+1. If you do not already have the application installed on your **Windows laptop**, download the latest version of DeVILStarter by navigating to the [DeVILStarter GitHub Releases page](https://github.com/FSE100Capstone/DeVILStarter/releases/latest) and clicking on the hyperlinked text "DeVILStarter.exe". Place the downloaded file to a convenient location if necessary.
+
+![Screenshot showing location of DeVILStarter.exe link on GitHub](img/devilstarter-location.png)
+
+2. Locate the **DeVILStarter** application on your computer. It may be pinned to the taskbar, on your desktop, or in the Downloads folder.
+
+![Screenshot showing location of DeVILStarter.exe on Windows](img/devilstarter-file-explorer.png)
+
+3. Double-click to launch it. A window will open showing the DeVILStarter interface with a status panel.
+
 
 ### Step 1.2: Start the Infrastructure
 
 1. In DeVILStarter, click the **"Start Infrastructure"** button (or similar label—the exact label may vary by version, but it is the primary large action button).
 2. DeVILStarter will begin running. You will see **live log output** in the panel showing the progress of the deployment.
-3. Wait until the status indicator shows **"Infrastructure Running"** or **"Ready"** (a green status light). This typically takes **2–5 minutes**.
+3. Wait until the status indicator shows **"Ready"** (a green status light). This typically takes **2–5 minutes**. Once DeVILStarter is finished and shows that it's ready, the infrastructure is up, and you do not need to take any further action.
 
 !!! note
     If DeVILStarter fails to start or shows an error, see [Troubleshooting for Educators](troubleshooting.md) for quick-fix steps.
-
-### Step 1.3: Note the API Endpoints (If Required)
-
-In some deployment configurations, after the infrastructure starts, DeVILStarter will display **API endpoint URLs**. These are automatically pre-configured into the headset application and you typically do not need to do anything with them. However, if a technical administrator has told you they need these URLs, copy them from the log output at this stage.
-
----
 
 ## Part 2: Powering On & Prepping the Headset
 
@@ -64,7 +66,7 @@ In some deployment configurations, after the infrastructure starts, DeVILStarter
 
 1. From the headset home screen, navigate to **App Library** (click the grid icon at the bottom of the home screen).
 2. If the headset is newly set up, look under **"Unknown Sources"** (a separate tab in the App Library) since DeVILSona is sideloaded and not from the Meta Store.
-3. Select **"FSE100 Capstone"** or **"DeVILSona"** (the exact label depends on the build version installed).
+3. Select **"FSE100Capstone"**.
 4. The app will launch. You will see a **login screen** prompting for the student's ASUID and Session ID.
 
 !!! note
