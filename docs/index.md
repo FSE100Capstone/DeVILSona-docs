@@ -76,6 +76,7 @@ The pages below are **fine-grained technical documents** covering specific subsy
 | [AWS & Terraform](legacy/aws-terraform.md) | Full Terraform config walkthrough for the cloud backend |
 | [Auto-generated API Documentation](legacy/api-documentation.md) | Auto-generated API reference for all subsystems |
 | [Mac Setup & Limitations](legacy/mac-setup-limitations.md) | OVRLipSync, VR, and AI integration notes on macOS |
+| [MetaQuest Link Setup and Use](legacy/metaquest-link-setup-and-use.md) | Meta Horizon mobile app, developer mode, Meta Horizon Link desktop setup, OpenXR activation, and Unreal Engine VR Preview workflow |
 | [Meta XR Plugin](legacy/meta-xr-plugin.md) | Meta XR SDK plugin setup and configuration |
 | [MetaHuman Creator](legacy/metahuman-creator.md) | MetaHuman pipeline, blendshapes, and animation notes |
 | [Oculus LipSync Plugin](legacy/oculus-lipsync.md) | OVRLipSync integration, viseme mapping, and troubleshooting |
