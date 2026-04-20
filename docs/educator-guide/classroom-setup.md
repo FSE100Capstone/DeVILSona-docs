@@ -22,22 +22,16 @@ Each active VR station requires a minimum **2m × 2m (approximately 6.5ft × 6.5
 !!! warning "Critical Safety Note"
     Students wearing the headset cannot see the real world. A tripping hazard that seems minor in a normal classroom becomes a genuine fall risk during a VR session. Clear the area thoroughly.
 
-### Recommended Play Area Setup
+#### Setting up the Virtual Boundary
 
-```
-┌─────────────────────────────────────┐
-│                                     │
-│      2m × 2m CLEAR FLOOR SPACE      │
-│                                     │
-│    ← Mark boundary with tape →      │
-│                                     │
-│         [Student stands here]       │
-│                                     │
-└─────────────────────────────────────┘
-        ↑ At least 1m clearance to any furniture or wall
-```
+Once the physical space is cleared, you need to configure the virtual boundary within the headset to match your designated play area. The Meta Quest boundary system warns users if they step too close to the edge of the safe zone.
 
-For **seated sessions** (recommended for longer interactions or students with balance concerns): place a single chair with no armrests in the center of the play area. Ensure the chair cannot roll or tip.
+1. Put on the headset and power it on.
+2. If prompted automatically, follow the on-screen instructions to create a Roomscale boundary.
+3. Trace the boundary to encompass the safe, cleared space you prepared earlier.
+4. If you need to redraw or reset the boundary later, navigate to **Quick Settings > Boundary** in the headset's main menu.
+
+For comprehensive instructions on drawing and managing the virtual boundary, refer to the [Meta Quest Help Center: Set up boundaries for Meta Quest](https://www.meta.com/help/quest/463504908043519/).
 
 ### Classroom Lighting
 
