@@ -242,6 +242,19 @@ This is useful during long testing sessions.
 
 ## Troubleshooting
 
+## Common VR Preview Black Screen Issue
+
+It is common for **VR Preview** to launch to a black screen the first time, especially if another play mode such as **Selected Viewport** was used immediately before it. This can also happen occasionally even without switching play modes.
+
+In most cases, this does not mean the headset or project is broken.
+
+### Recommended Fix
+
+1. Press **Esc** to exit the failed VR Preview session.
+2. Launch **VR Preview** again.
+
+The second launch will often load correctly.
+
 ## Headset Does Not Show Up in Meta Horizon Link
 
 - Confirm the USB cable supports data transfer, not just charging
