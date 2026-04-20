@@ -84,6 +84,7 @@ The pages below are **fine-grained technical documents** covering specific subsy
 | [Subsystems](legacy/subsystems.md) | Overview of all UE5 GameInstanceSubsystems |
 | [UE5 Build Guide (Android APK)](legacy/build-android-apk.md) | Packaging the project as a Meta Quest APK |
 | [UE5 Build Guide (Windows Shipping)](legacy/build-windows-shipping.md) | Packaging the project as a Windows Shipping build |
+| [UE5 Android APK Build Guide (MetaHuman Variant)](legacy/build-android-apk-metahuman.md) | Additional setup and troubleshooting required to package the MetaHuman / Meta XR Android APK build |
 | [Deployment and Launch Guide](legacy/deployment-and-launch-guide.md) | Android APK installation to Meta Quest, OBB placement, SideQuest/install script workflow, and Windows desktop launch through Meta Quest Link |
 
 ---
