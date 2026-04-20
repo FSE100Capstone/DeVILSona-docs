@@ -166,5 +166,6 @@ nav:
     - Build Guides:
       - Build Guide (Android APK): legacy/build-android-apk.md
       - Build Guide (Windows Shipping): legacy/build-windows-shipping.md
+      - UE5 Android APK Build Guide (MetaHuman Variant): legacy/build-android-apk-metahuman.md
     - Deployment:
       - Deployment and Launch Guide: legacy/deployment-and-launch-guide.md
