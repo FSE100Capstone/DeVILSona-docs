@@ -166,3 +166,5 @@ nav:
     - Build Guides:
       - Build Guide (Android APK): legacy/build-android-apk.md
       - Build Guide (Windows Shipping): legacy/build-windows-shipping.md
+    - Deployment:
+      - Deployment and Launch Guide: legacy/deployment-and-launch-guide.md
