@@ -176,43 +176,6 @@ aws configure
 
 ---
 
-## AWS CloudWatch Logs (Backend Errors)
-
-For errors that occur in the cloud backend after a request reaches AWS:
-
-### Accessing Lambda Logs
-
-1. AWS Console → **CloudWatch** → **Log Groups**
-2. Find log groups:
-   - `/aws/lambda/FSE100_SaveSession`
-   - `/aws/lambda/FSE100_Login`
-3. Click the most recent **Log Stream** to see invocations
-
-### Reading Lambda Errors
-
-Each Lambda invocation creates a log entry. A failed invocation looks like:
-```
-START RequestId: a1b2c3d4 Version: $LATEST
-=== Login event ===
-{"body":"{\"StudentID\":\"bad\",\"SessionID\":\"0001\"}"}
-ERROR: StudentID and SessionID are required (or wrong types)
-END RequestId: a1b2c3d4
-REPORT RequestId: a1b2c3d4  Duration: 42.1 ms  Billed Duration: 43 ms
-```
-
-### Setting Up CloudWatch Alarms (Optional Improvement)
-
-For proactive monitoring, create a CloudWatch Alarm that notifies via email when Lambda errors exceed a threshold:
-
-1. CloudWatch → **Alarms** → **Create Alarm**
-2. Select metric: `Lambda → By Function Name → FSE100_Login → Errors`
-3. Set threshold: `Errors > 5 in 5 minutes`
-4. Configure SNS notification to your email
-
-This allows administrators to be automatically alerted when the backend experiences unusual error rates.
-
----
-
 ## Escalation Path
 
 When logging and basic troubleshooting are insufficient, use the following escalation path:
@@ -222,7 +185,6 @@ When logging and basic troubleshooting are insufficient, use the following escal
 - Restart the app, check Wi-Fi, restart the headset
 
 ### Level 2: Technical Administrator
-- Access CloudWatch logs to identify Lambda errors
 - Use ADB to pull crash logs from the headset
 - Check DynamoDB for missing or corrupted student records
 - Restart DeVILStarter and re-deploy infrastructure if needed
@@ -239,10 +201,9 @@ When escalating to the developer team, provide:
 
 1. **ADB logcat capture** from when the issue occurred
 2. **DeVILStarter log file** from the session
-3. **CloudWatch log stream link** or exported logs
-4. **Exact steps to reproduce** the issue
-5. **Headset model and firmware version** (from Settings → About in the headset)
-6. **Network environment description** (campus Wi-Fi, name, any known restrictions)
+3. **Exact steps to reproduce** the issue
+4. **Headset model and firmware version** (from Settings → About in the headset)
+5. **Network environment description** (campus Wi-Fi, name, any known restrictions)
 
 ---
 
@@ -261,8 +222,6 @@ When something isn't working:
    [ ] Is WebSocket traffic allowed? (test with wscat from same SSID laptop)
 
 3. BACKEND CHECK:
-   [ ] CloudWatch logs showing recent invocations? (or is API not being reached?)
-   [ ] Lambda errors in CloudWatch?
    [ ] DynamoDB table accessible (check from AWS Console)?
 
 4. CLIENT CHECK:

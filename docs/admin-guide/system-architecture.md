@@ -64,7 +64,6 @@ The backend is a serverless cloud infrastructure provisioned entirely through **
 | **Lambda** | `FSE100_Login` (Node.js 22) | Handles POST /login → queries DynamoDB |
 | **DynamoDB** | `StudentSessions` table | NoSQL key-value store for session records |
 | **IAM** | `FSE100_Lambda_ExecutionRole` | Grants Lambda permission to access DynamoDB |
-| **CloudWatch** | Auto-generated log groups | Lambda execution logs |
 
 ### Data Schema: StudentSessions DynamoDB Table
 

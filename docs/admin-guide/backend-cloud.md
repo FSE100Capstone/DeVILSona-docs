@@ -116,40 +116,13 @@ For each Lambda function, verify:
 | **Execution Role** | `FSE100_Lambda_ExecutionRole` |
 | **Environment Variables** | `TABLE_NAME = StudentSessions`, `STAGE = dev` |
 
-### Checking Lambda Execution Logs (CloudWatch)
-
-Lambda automatically logs to **CloudWatch Logs**.
-
-1. In the Lambda function detail page, click the **"Monitor"** tab
-2. Click **"View CloudWatch logs"**
-3. You will see a log group named `/aws/lambda/FSE100_SaveSession` or `/aws/lambda/FSE100_Login`
-4. Click on a recent **Log Stream** (streams are grouped by Lambda container instance + time)
-
-**Reading the logs:**
-
-Each Lambda invocation produces a log entry. The Node.js functions use `console.log()` extensively, so you will see:
-
-For a login request:
-```
-=== Login event ===
-{"body":"{\"StudentID\":1234567890,\"SessionID\":\"0001\"}", ...}
-```
-
-For a save request:
-```
-=== SaveSession event ===
-{"body":"{\"StudentID\":1234567890,...}", ...}
-```
-
-If a request fails, the logs will show the error with a stack trace.
-
 ### Lambda Metrics
 
 In the **Monitor** tab, review:
 
 - **Invocations:** Number of times the function was called
 - **Duration:** Execution time per invocation (should be well under 1 second for normal DynamoDB operations)
-- **Error count:** Any non-zero value indicates failures—drill into CloudWatch logs for details
+- **Error count:** Any non-zero value indicates failures and should be investigated
 - **Throttles:** Occurs if Lambda concurrency limits are hit (unlikely at this usage scale)
 
 ### Testing Lambda Directly
@@ -281,7 +254,6 @@ For reference, the typical monthly cost for this infrastructure at FSE100 scale:
 | Lambda (millions of free requests included) | ~$0.00 |
 | API Gateway | ~$0.01–$0.10 (based on ~1,000–10,000 requests/semester) |
 | DynamoDB (PAY_PER_REQUEST) | ~$0.01–$0.25 (a few hundred items, minimal reads) |
-| CloudWatch Logs | ~$0.01–$0.05 |
 | **Total (while running)** | **< $0.50/month** |
 | **When torn down (destroy)** | **$0.00** |
 

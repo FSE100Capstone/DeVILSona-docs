@@ -25,7 +25,6 @@ graph LR
     LL[Lambda<br/>FSE100_Login<br/>POST /login]
     DDB[DynamoDB<br/>StudentSessions<br/>PAY_PER_REQUEST]
     IAM[IAM Role<br/>FSE100_Lambda_ExecutionRole]
-    CW[CloudWatch<br/>Log Groups]
 
     UE5 -->|POST /session| APIGW
     UE5 -->|POST /login| APIGW
@@ -35,8 +34,6 @@ graph LR
     LL -->|Query| DDB
     IAM -->|grants| LS
     IAM -->|grants| LL
-    LS -->|logs| CW
-    LL -->|logs| CW
 ```
 
 ### DynamoDB Table Schema
@@ -256,7 +253,7 @@ resource "aws_iam_role" "lambda_exec_role" {
   })
 }
 
-# CloudWatch logging permissions
+# Lambda basic execution role
 resource "aws_iam_role_policy_attachment" "lambda_basic_exec" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
   role       = aws_iam_role.lambda_exec_role.name

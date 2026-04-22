@@ -184,7 +184,7 @@ resource "aws_dynamodb_table" "student_sessions" {
 </code></pre>
 <hr>
 <h1>📘 <strong>5.4 Attach Required Policies</strong></h1>
-<h3>✔ Lambda logging (CloudWatch)</h3>
+<h3>✔ Lambda basic execution role</h3>
 <pre><code class="language-hcl">resource "aws_iam_role_policy_attachment" "lambda_basic_exec" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
   role       = aws_iam_role.lambda_exec_role.name
@@ -218,7 +218,7 @@ Component | Purpose
 -- | --
 Lambda functions | Save / login logic
 IAM role | Lambda execution role
-BasicExecutionRole | CloudWatch logs
+BasicExecutionRole | Lambda basic execution role
 DynamoDBFullAccess | Read/write to StudentSessions
 Zip files | Deployed code packages
 

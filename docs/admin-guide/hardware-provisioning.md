@@ -214,7 +214,6 @@ The IAM user/role running DeVILStarter needs permissions to manage the following
 - `lambda:*`
 - `dynamodb:*`
 - `iam:*` (for creating Lambda execution roles)
-- `logs:*` (for CloudWatch)
 
 The simplest approach for a development/educational deployment is attaching the **AdministratorAccess** managed policy to the IAM user, accepting that this is not least-privilege. For stricter environments, craft a custom IAM policy limited to the above services in `us-east-2`.
 
