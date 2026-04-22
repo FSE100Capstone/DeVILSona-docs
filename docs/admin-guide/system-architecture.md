@@ -11,43 +11,15 @@ This page provides a comprehensive technical topology of the entire DeVILSona ec
 
 Before examining each component individually, it helps to trace the path of a single interaction from a student speaking in a headset to data persisting in the cloud and back:
 
-```
-┌──────────────────────────────────────────────────────────────────┐
-│                     Student In Headset                            │
-│                    (Meta Quest VR Client)                         │
-└──────────────┬───────────────────────────────────────────────────┘
-               │  Student speaks → Microphone captures audio
-               ↓
-┌──────────────────────────────────────────────────────────────────┐
-│              AudioInputSubsystem (UE5 C++)                        │
-│  Downsamples to 24kHz mono PCM16 → encodes to base64             │
-└──────────────┬───────────────────────────────────────────────────┘
-               │  base64 PCM16 audio chunks
-               ↓
-┌──────────────────────────────────────────────────────────────────┐
-│              WebSocketSubsystem → OpenAI Realtime API             │
-│  wss://api.openai.com/v1/realtime                                │
-└──────────────┬───────────────────────────────────────────────────┘
-               │  AI processes audio, generates response
-               ↓
-┌──────────────────────────────────────────────────────────────────┐
-│                   OpenAI Returns:                                  │
-│   • Audio deltas (base64 PCM16) → played through SoundWave       │
-│   • Transcript deltas → displayed as subtitles                   │
-│   • Function calls (set_emotion, etc.) → game logic              │
-└──────────────┬───────────────────────────────────────────────────┘
-               │  Session progress events (login/save)
-               ↓
-┌──────────────────────────────────────────────────────────────────┐
-│            AWS API Gateway (HTTPS REST)                           │
-│  POST /session (save) │ POST /login (load)                       │
-└──────────────┬───────────────────────────────────────────────────┘
-               │  Triggers Lambda functions
-               ↓
-┌──────────────────────────────────────────────────────────────────┐
-│        AWS Lambda (Node.js 22) │ DynamoDB (StudentSessions)      │
-│  FSE100_SaveSession  │  FSE100_Login                             │
-└──────────────────────────────────────────────────────────────────┘
+```mermaid
+%%{init: {'flowchart': {'wrappingWidth': 500}}}%%
+graph TD
+    A["Student In Headset<br/>(Meta Quest VR Client)"] -->|Student speaks -> Microphone captures audio| B["In-Game Audio Capture<br/>Downsamples to 24kHz mono PCM16 -> encodes to base64"]
+    B -->|Audio stream| C["OpenAI Realtime API<br/>wss://api.openai.com/v1/realtime"]
+    C -->|AI processes audio, generates response| D["OpenAI Returns:<br/>Audio response -> played through speakers<br/>Transcript -> subtitles<br/>Actions -> game logic"]
+    D -->|Session progress events: login and save| E["AWS API Gateway"]
+    E -->|Invokes| F["AWS Lambda"]
+    F -->|Writes and reads| G["AWS DynamoDB: StudentSessions"]
 ```
 
 ---
