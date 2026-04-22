@@ -97,7 +97,7 @@ Meta Quest headsets have a battery life of approximately **2–3 hours** under a
 
 ### Charging Procedure
 
-1. Connect the USB-C cable to the **bottom** of the headset
+1. Connect the USB-C cable to the side of the headset
 2. Connect the other end to the power adapter (or a powered USB port—use at least 18W for reasonable charging speed)
 3. A solid orange LED on the right side of the headset indicates charging; **green** indicates fully charged
 
@@ -115,10 +115,10 @@ If you have classes back-to-back (e.g., two sections of FSE100 in one morning):
 
 ### Controller Battery Management
 
-Controllers use **AA batteries** (one per controller on Quest 2; built-in rechargeable on Quest 3).
+Controllers rely on **AA batteries** or built-in USB-C ports for power, depending on your headset model.
 
-- Quest 2 controllers: Keep a supply of **AA Energizer or Duracell** alkaline batteries. Replace when the in-headset battery indicator shows one bar.
-- Quest 3 controllers: Charge via USB-C; the controllers charge simultaneously when connected to the headset during storage.
+- Quest 2 controllers: Keep a supply of **AA Energizer or Duracell** alkaline batteries and replace them as needed. The controller's exposed battery compartment can be cleaned with alcohol-free wipes before removing batteries.
+- Quest 3 controllers: Each controller has a **built-in USB-C port** for direct battery charging. Remove the AA batteries before using USB-C to charge the internal batteries. Recharge in a well-ventilated area while not worn. Controllers do not support official USB-C charging docks from Meta; use the built-in controller charging port instead.
 
 ---
 
@@ -130,15 +130,15 @@ Multiple students will use the same headsets during a lab session. Proper hygien
 
 After each student finishes their session:
 
-1. **Remove the face gasket** (the foam ring around the face opening) and wipe with a **lens-safe alcohol wipe** (70% isopropyl). Allow it to air-dry for at least 30 seconds.
-2. **Wipe the controllers** with a hand sanitizer wipe or mild disinfectant wipe. Pay attention to the grip areas and buttons.
-3. **Do not touch the lenses** unless they are visibly smudged. If cleaning is needed, use only a **microfiber cloth** designed for camera or eyeglass lenses—never paper towels, tissues, or alcohol directly on the lens.
+1. **Remove the face gasket** (the foam ring around the face opening). For routine cleaning, gently wipe it with a dry or slightly damp microfiber cloth to remove surface debris and sweat. For sanitization between students, use alcohol-free disinfecting wipes designed for sensitive electronics. **Do not use alcohol-based products on any facial interface component**, as alcohol can damage the foam material over time ([per Meta official cleaning guidelines](https://www.meta.com/help/quest/467048561217367/)).
+2. **Wipe the controllers** with a hand sanitizer wipe or mild disinfectant wipe. Pay attention to the grip areas and buttons. Avoid getting moisture in the battery compartments or controller ports.
+3. **Do not touch the lenses** unless they are visibly smudged. If cleaning is needed, use only a **clean microfiber cloth**—never paper towels, tissues, or alcohol-based products directly on the lens.
 
 ### Deep Cleaning (after each class day)
 
-1. Remove the foam face gasket (it clips or velcros off on most Quest models) and wash it with mild soap and warm water. Allow it to **fully dry** before reattaching—damp foam against the face is uncomfortable and can damage the gasket over time.
+1. Remove the foam face gasket (it clips or velcros off on most Quest models) and hand wash it with cool water and mild liquid detergent in a bowl. Rinse thoroughly to remove soap residue. **Do not submerge** the gasket or expose it to running water. Allow it to **fully air dry** before reattaching—damp foam against the face is uncomfortable and can damage the gasket over time. Per [Meta official cleaning guidelines](https://www.meta.com/help/quest/467048561217367/), hand washing with mild detergent is the recommended cleaning method for facial interface components.
 2. Wipe the headset's exterior housing with a **dry or slightly damp** cloth. Avoid getting liquid near charging ports or speaker grilles.
-3. Check controller grips for any accumulated dirt in the button recesses; use a dry toothbrush or compressed air to clear them.
+3. Check controller grips for any accumulated dirt in the button recesses; use a dry toothbrush or compressed air to clear them. Use alcohol-free disinfecting wipes if sanitizing controller surfaces.
 
 ### Replacement Foam Gaskets
 

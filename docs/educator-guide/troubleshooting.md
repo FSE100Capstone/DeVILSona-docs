@@ -109,7 +109,7 @@ This page provides a simple **"If X happens, do Y"** guide for the most common c
 | Student feels dizzy mid-session | Remove headset immediately. Have student sit, drink water, and rest. Do not retry VR that day. |
 | Headset shows "Guardian Setup" screen | Walk the student through the 3-step boundary drawing process—it takes about 30 seconds. |
 | App prompts for a software update | Decline the update during class (click "Later"). Apply updates after class when headsets are charging. |
-| Multiple students want to use the same headset quickly | Wipe face gasket between students (30-sec alcohol wipe dry time). Reset session by pressing Meta button and logging out. |
+| Multiple students want to use the same headset quickly | Use Clorox Clean-Up Disinfectant Wipes for facial interface cleaning between students. Skip drying time—simply use a fresh wipe on the face gasket for each student. Reset session by pressing Meta button and logging out. |
 | Student can't hear the AI's voice | The AI audio plays through the integrated speakers on the sides of the headset. Increase volume with the volume buttons on the right side of the headset. |
 | Login screen keyboard is hard to use | Encourage the student to take their time. Controller precision improves with practice. Alternatively, help guide the student's hand by pointing at the correct key. |
 
