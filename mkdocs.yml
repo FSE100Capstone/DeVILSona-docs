@@ -136,6 +136,7 @@ nav:
   - Developer Guide:
     - Getting Started:
       - Onboarding & Environment Setup: developer-guide/onboarding.md
+      - Learning Paths: developer-guide/learning-paths.md
     - Architecture & Systems:
       - Core Architecture: developer-guide/core-architecture.md
       - AI Pipeline: developer-guide/ai-pipeline.md
@@ -145,7 +146,6 @@ nav:
     - Contributing:
       - Contribution Guidelines: developer-guide/contribution-guidelines.md
       - Known Issues & Roadmap: developer-guide/known-issues-roadmap.md
-      - Learning Paths: developer-guide/learning-paths.md
     - Level Implementations:
       - Scenario 2 Driving to a Job Interview Overview and Blueprint Guide: developer-guide/driving-scenario-overview.md
 
