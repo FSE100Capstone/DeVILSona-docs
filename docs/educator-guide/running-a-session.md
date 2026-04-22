@@ -21,12 +21,12 @@ Before diving into the steps, here is a quick mental model of how everything fit
 
 ---
 
-## Part 1: Booting the Cloud Infrastructure (Before Class)
+## Booting the Cloud Infrastructure (Before Class)
 
 !!! note "When"
     Do this step at least **5 minutes before students arrive**, ideally 10–15 minutes before class begins.
 
-### Step 1.1: Download and Open DeVILStarter
+### Download and Open DeVILStarter
 
 1. If you do not already have the application installed on your **Windows laptop**, download the latest version of DeVILStarter by navigating to the [DeVILStarter GitHub Releases page](https://github.com/FSE100Capstone/DeVILStarter/releases/latest) and clicking on the hyperlinked text "DeVILStarter.exe". Place the downloaded file to a convenient location if necessary.
 
@@ -39,7 +39,7 @@ Before diving into the steps, here is a quick mental model of how everything fit
 3. Double-click to launch it. A window will open showing the DeVILStarter interface with a status panel.
 
 
-### Step 1.2: Start the Infrastructure
+### Start the Infrastructure
 
 1. In DeVILStarter, click the **"Start Infrastructure"** button (or similar label—the exact label may vary by version, but it is the primary large action button).
 2. DeVILStarter will begin running. You will see **live log output** in the panel showing the progress of the deployment.
@@ -48,21 +48,21 @@ Before diving into the steps, here is a quick mental model of how everything fit
 !!! note
     If DeVILStarter fails to start or shows an error, see [Troubleshooting for Educators](troubleshooting.md) for quick-fix steps.
 
-## Part 2: Powering On & Prepping the Headset
+## Powering On & Prepping the Headset
 
-### Step 2.1: Power On the Headset
+### Power On the Headset
 
 1. Press and hold the **power button** on the right side of the Meta Quest headset for 2–3 seconds until you feel a vibration and see the Meta logo on-screen.
 2. Wait for the **home environment** to load (approximately 10–20 seconds).
 3. Check the **battery indicator** in the top-right corner. The headset should be above 80% before a session.
 
-### Step 2.2: Confirm Wi-Fi Connectivity
+### Confirm Wi-Fi Connectivity
 
 1. In the headset home screen, look at the Wi-Fi icon in the system toolbar (visible when you look straight ahead in the home environment).
 2. A **solid white Wi-Fi icon** indicates you are connected to the network.
 3. If the headset shows a disconnected Wi-Fi icon or an exclamation mark, navigate to **Settings → Wi-Fi** and confirm the headset is connected to the correct network (the same network as your DeVILStarter laptop). See [Troubleshooting for Educators](troubleshooting.md) if you cannot connect.
 
-### Step 2.3: Launch the DeVILSona Application
+### Launch the DeVILSona Application
 
 1. From the headset home screen, navigate to **App Library** (click the grid icon at the bottom of the home screen).
 2. If the headset is newly set up, look under **"Unknown Sources"** (a separate tab in the App Library) since DeVILSona is sideloaded and not from the Meta Store.
@@ -74,9 +74,9 @@ Before diving into the steps, here is a quick mental model of how everything fit
 
 ---
 
-## Part 3: Guiding the Student
+## Guiding the Student
 
-### Step 3.1: Brief the Student Before They Put On the Headset
+### Brief the Student Before They Put On the Headset
 
 Before the headset goes on, take 1–2 minutes to prepare the student:
 
@@ -88,7 +88,7 @@ Before the headset goes on, take 1–2 minutes to prepare the student:
 
 4. **Safety reminder:** "Stay in the marked area. If you feel unwell or disoriented at any point, just say so and we'll pause the session."
 
-### Step 3.2: Fitting the Headset
+### Fitting the Headset
 
 1. **Adjust the top strap first:** Loosen the wheel on the back of the headset until it's loose, then have the student put the headset over their face and tighten the wheel until the headset feels secure but not tight. It should not create pressure on the face.
 
@@ -98,7 +98,7 @@ Before the headset goes on, take 1–2 minutes to prepare the student:
 
 4. **Hand the controllers:** Give the student one controller in each hand. They should hold them naturally with the ring facing forward.
 
-### Step 3.3: Student Logs In
+### Student Logs In
 
 Once the headset is on and comfortable:
 
@@ -114,9 +114,9 @@ Once the headset is on and comfortable:
 
 ---
 
-## Part 4: Monitoring the Session
+## Monitoring the Session
 
-### Step 4.1: Casting the View
+### Casting the View
 
 While a session is in progress, you (and the rest of the class) can optionally watch what the student sees in VR. This is called **casting**.
 
@@ -133,7 +133,7 @@ While a session is in progress, you (and the rest of the class) can optionally w
 3. Open that URL on any laptop or display browser connected to the same network
 4. The student's view will stream to the screen—display on a projector for the class to watch
 
-### Step 4.2: Observing the Session
+### Observing the Session
 
 Watch for:
 
@@ -147,7 +147,7 @@ A typical session lasts **5–10 minutes**. For FSE100 labs, a common structure 
 - 7-minute VR conversation
 - 1-minute exit and debrief questions
 
-### Step 4.3: Ending a Student's Session
+### Ending a Student's Session
 
 1. Alert the student with a verbal prompt: "You have about one minute left—try to wrap up the conversation."
 2. After the session, ask the student to **say goodbye to the character** (the app may save the session automatically upon exiting)
@@ -156,12 +156,12 @@ A typical session lasts **5–10 minutes**. For FSE100 labs, a common structure 
 
 ---
 
-## Part 5: Proper Shutdown
+## Proper Shutdown
 
 !!! note "When"
     Do this **after all students have finished** for the day, or if you need to leave the session unattended for more than 30 minutes.
 
-### Step 5.1: Close the App on All Headsets
+### Close the App on All Headsets
 
 For each active headset:
 
@@ -169,14 +169,14 @@ For each active headset:
 2. This brings up the home menu overlay
 3. Navigate to the DeVILSona app in the taskbar and select **Quit** or simply navigate away to the App Library
 
-### Step 5.2: Power Down the Headsets
+### Power Down the Headsets
 
 1. **Press and hold** the power button on the right side of the headset for 3–4 seconds
 2. A menu will appear asking: **Sleep**, **Power Off**, or **Cancel**
 3. Select **Power Off**
 4. The headset will shut down completely (the LED will turn off)
 
-### Step 5.3: Tear Down the Cloud Infrastructure
+### Tear Down the Cloud Infrastructure
 
 !!! warning "This step is critical for cost management."
     The AWS cloud infrastructure costs money while it is running. Always shut it down after each session.
@@ -187,7 +187,7 @@ For each active headset:
 4. Wait until the status shows **"Infrastructure Stopped"** or **"Offline"** (typically 1–3 minutes)
 5. Close DeVILStarter
 
-### Step 5.4: Store the Hardware
+### Store the Hardware
 
 1. Connect headsets to charge (see [Classroom Setup & Hardware](classroom-setup.md) for charging procedures)
 2. Store controllers with headsets in their designated storage location
