@@ -36,14 +36,29 @@ Before diving into the steps, here is a quick mental model of how everything fit
 
 ![Screenshot showing location of DeVILStarter.exe on Windows](img/devilstarter-file-explorer.png)
 
-3. Double-click to launch it. A window will open showing the DeVILStarter interface with a status panel.
+3. Double-click to launch it. A window will open showing the DeVILStarter interface with a status panel, and DeVILStarter will begin its initialization phase.
 
+![Screenshot showing DeVILStarter starting](img/devilstarter-init.png)
 
 ### Start the Infrastructure
 
-1. In DeVILStarter, click the **"Start Infrastructure"** button (or similar label—the exact label may vary by version, but it is the primary large action button).
-2. DeVILStarter will begin running. You will see **live log output** in the panel showing the progress of the deployment.
-3. Wait until the status indicator shows **"Ready"** (a green status light). This typically takes **2–5 minutes**. Once DeVILStarter is finished and shows that it's ready, the infrastructure is up, and you do not need to take any further action.
+1. Once DeVILStarter has finished initialization, click the large slider with a power icon (if unblurred).
+
+![Init finished](img/devilstarter-init-finished.png)
+
+2. If prompted, log into your ASU account.
+
+3. Observe that the code shown on the AWS login screen matches the code shown on DeVILStarter. Click "confirm and continue" once validated, and "allow" on the following page.
+
+![AWS login screen showing same code as DeVILStarter](img/devilstarter-aws-code.png)
+
+4. DeVILStarter will automatically begin the infrastructure deployment. For more comprehensive feedback on deployment progress, click "Show logs" for **live log output** in the panel.
+
+![Deployment in progress](img/devilstarter-deploying.png)
+
+5. Wait until the progress bar disappears. The status text on the bottom left should now read "Infrastructure deployed".
+
+![Deployed](img/devilstarter-deployed.png)
 
 !!! note
     If DeVILStarter fails to start or shows an error, see [Troubleshooting for Educators](troubleshooting.md) for quick-fix steps.
