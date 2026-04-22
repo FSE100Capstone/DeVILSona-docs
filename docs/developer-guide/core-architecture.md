@@ -112,107 +112,158 @@ This section traces exactly what happens from the moment a student stops speakin
 
 ### Phase 1: Audio Capture & Transmission (Student Speaks)
 
-```
-1. Student's voice → Microphone hardware
-2. Microphone hardware → AudioInputSubsystem (via UE5 audio capture API)
-3. AudioInputSubsystem:
-   a. Receives raw PCM audio buffer (any sample rate, any channels)
-   b. Downsamples to 24,000 Hz
-   c. Converts to single channel (mono)
-   d. Casts to int16 PCM16 format
-   e. Base64-encodes the buffer
-   f. Broadcasts via OnAudioChunkCaptured(const FString& Base64Audio)
+```mermaid
+sequenceDiagram
+    participant Student
+    participant Mic as Microphone
+    participant AIS as AudioInputSubsystem
+    participant ORCH as AIConversationOrchestratorSubsystem
+    participant OAI as OpenAiApiSubsystem
+    participant WSS as WebSocketSubsystem
+    participant Cloud as OpenAI Realtime API
 
-4. AIConversationOrchestratorSubsystem receives the event
-5. Orchestrator calls OpenAiApiSubsystem::SendAudioInputToAI(Base64Audio)
-6. OpenAiApiSubsystem constructs the JSON message:
-   {
-     "type": "input_audio_buffer.append",
-     "audio": "<base64 PCM16>"
-   }
-
-7. OpenAiApiSubsystem calls WebSocketSubsystem::SendMessage(JsonString)
-8. WebSocketSubsystem sends the message over the persistent WSS connection
+    Student->>Mic: Speak
+    Mic->>AIS: Raw audio buffer
+    Note over AIS: Downsample to 24kHz mono, PCM16, base64
+    AIS->>ORCH: OnAudioChunkCaptured(base64)
+    ORCH->>OAI: SendAudioInputToAI(base64)
+    OAI->>WSS: SendMessage(JSON)
+    WSS->>Cloud: input_audio_buffer.append
 ```
+
+1. Student's voice -> Microphone hardware.
+2. Microphone hardware -> `AudioInputSubsystem` (via UE5 audio capture API).
+3. `AudioInputSubsystem`:
+    a. Receives raw PCM audio buffer (any sample rate, any channels).
+    b. Downsamples to 24,000 Hz.
+    c. Converts to single channel (mono).
+    d. Casts to int16 PCM16 format.
+    e. Base64-encodes the buffer.
+    f. Broadcasts via `OnAudioChunkCaptured(const FString& Base64Audio)`.
+4. `AIConversationOrchestratorSubsystem` receives the event.
+5. Orchestrator calls `OpenAiApiSubsystem::SendAudioInputToAI(Base64Audio)`.
+6. `OpenAiApiSubsystem` constructs the JSON message:
+
+```json
+{
+  "type": "input_audio_buffer.append",
+  "audio": "<base64 PCM16>"
+}
+```
+
+7. `OpenAiApiSubsystem` calls `WebSocketSubsystem::SendMessage(JsonString)`.
+8. `WebSocketSubsystem` sends the message over the persistent WSS connection.
 
 ### Phase 2: AI Processing (OpenAI Cloud)
 
+```mermaid
+sequenceDiagram
+    participant Cloud as OpenAI Realtime API
+    participant Client as UE5 Client
+
+    Cloud->>Cloud: Receive audio chunks
+    Cloud->>Cloud: Detect speech end (VAD)
+    Cloud->>Cloud: Speech-to-text, LLM response
+    Cloud-->>Client: response.audio.delta
+    Cloud-->>Client: response.audio_transcript.delta
+    Cloud-->>Client: response.function_call_arguments.done
+    Cloud-->>Client: response.done
 ```
-1. OpenAI receives streamed audio chunks
-2. OpenAI detects speech end (server-side VAD)
-3. OpenAI processes speech-to-text, generates LLM response
+
+1. OpenAI receives streamed audio chunks.
+2. OpenAI detects speech end (server-side VAD).
+3. OpenAI processes speech-to-text, generates LLM response.
 4. OpenAI streams back the response in small incremental messages:
-   - response.audio.delta: { "delta": "<base64 PCM16 audio>" }
-   - response.audio_transcript.delta: { "delta": "Hello, I was saying..." }
-   - response.done (when response completes)
-   - response.function_call_arguments.done (if character triggers an emotion)
-```
+    - `response.audio.delta`: `{ "delta": "<base64 PCM16 audio>" }`
+    - `response.audio_transcript.delta`: `{ "delta": "Hello, I was saying..." }`
+    - `response.done` (when response completes)
+    - `response.function_call_arguments.done` (if character triggers an emotion)
 
 ### Phase 3: AI Response Reception & Rendering
 
+```mermaid
+sequenceDiagram
+    participant WSS as WebSocketSubsystem
+    participant OAI as OpenAiApiSubsystem
+    participant IA as IntervieweeActor
+    participant Lip as OVRLipSyncContext
+    participant ABP as ABP_Face_PostProcess
+    participant Tools as AIToolInterpreterSubsystem
+
+    WSS->>OAI: OnMessageReceived(JSON)
+    OAI->>IA: OnResponseAudioDeltaReceived(base64)
+    OAI->>Tools: OnFunctionCallReceived(json)
+    IA->>IA: Queue audio + buffer PCM
+    IA->>Lip: ProcessFrame(10ms)
+    Lip-->>IA: Viseme weights
+    ABP->>IA: GetCurrentVisemes()
+    Tools-->>IA: OnSetEmotion(emotion)
 ```
-1. WebSocketSubsystem::OnMessageReceived fires with each JSON message
-2. OpenAiApiSubsystem parses the JSON:
-   - Audio delta → fires OnResponseAudioDeltaReceived(const FString& Base64Audio)
-   - Transcript delta → fires OnResponseTranscriptDeltaReceived(const FString& Text)
-   - Function call → fires OnFunctionCallReceived(TSharedPtr<FJsonObject> FunctionCall)
-3. IntervieweeActor::HandleAudioDeltaReceived:
-   a. Decodes base64 → raw bytes
-   b. Queues audio to AIResponseSoundWave (USoundWaveProcedural)
-   c. Casts bytes to int16 PCM samples
-   d. Appends to PlaybackPCMBuffer (for lip sync processing)
-   e. Computes RMS loudness
-   f. Starts the lip sync timer (10ms interval) if not already running
 
-4. LipSync Timer → IntervieweeActor::ProcessLipSyncFrames (every 10ms):
-   a. Extracts 240-sample frame (10ms at 24kHz)
-   b. Passes to OVRLipSyncContext::ProcessFrame()
-   c. Stores returned 15 viseme weights in CurrentVisemes[]
-
-5. ABP_Face_PostProcess (Animation Blueprint) runs at ~72fps:
-   a. Reads CurrentVisemes[] via GetCurrentVisemes() 
-   b. Applies per-viseme multipliers
-   c. Smooths with FInterpTo
-   d. Writes to LipSyncCurves map
-   e. ModifyCurve node applies curves to CTRL_expressions_* control rig
-   f. RigLogic evaluates full facial deformation
-
-6. AIToolInterpreterSubsystem::HandleFunctionCall:
-   a. Reads "name" field from function call JSON
-   b. If name == "set_emotion": fires OnSetEmotion(emotion)
-   c. IntervieweeActor receives OnSetEmotion, switches animation state
-```
+1. `WebSocketSubsystem::OnMessageReceived` fires with each JSON message.
+2. `OpenAiApiSubsystem` parses the JSON:
+    - Audio delta -> fires `OnResponseAudioDeltaReceived(const FString& Base64Audio)`.
+    - Transcript delta -> fires `OnResponseTranscriptDeltaReceived(const FString& Text)`.
+    - Function call -> fires `OnFunctionCallReceived(TSharedPtr<FJsonObject> FunctionCall)`.
+3. `IntervieweeActor::HandleAudioDeltaReceived`:
+    a. Decodes base64 -> raw bytes.
+    b. Queues audio to `AIResponseSoundWave` (`USoundWaveProcedural`).
+    c. Casts bytes to int16 PCM samples.
+    d. Appends to `PlaybackPCMBuffer` (for lip sync processing).
+    e. Computes RMS loudness.
+    f. Starts the lip sync timer (10ms interval) if not already running.
+4. LipSync Timer -> `IntervieweeActor::ProcessLipSyncFrames` (every 10ms):
+    a. Extracts 240-sample frame (10ms at 24kHz).
+    b. Passes to `OVRLipSyncContext::ProcessFrame()`.
+    c. Stores returned 15 viseme weights in `CurrentVisemes[]`.
+5. `ABP_Face_PostProcess` (Animation Blueprint) runs at ~72fps:
+    a. Reads `CurrentVisemes[]` via `GetCurrentVisemes()`.
+    b. Applies per-viseme multipliers.
+    c. Smooths with `FInterpTo`.
+    d. Writes to `LipSyncCurves` map.
+    e. ModifyCurve node applies curves to `CTRL_expressions_*` control rig.
+    f. RigLogic evaluates full facial deformation.
+6. `AIToolInterpreterSubsystem::HandleFunctionCall`:
+    a. Reads `name` field from function call JSON.
+    b. If `name == "set_emotion"`: fires `OnSetEmotion(emotion)`.
+    c. `IntervieweeActor` receives `OnSetEmotion`, switches animation state.
 
 ### Phase 4: Session Save (During/After Session)
 
+```mermaid
+sequenceDiagram
+    participant GI as BP_GameInstance
+    participant Save as SaveToAWS
+    participant APIGW as API Gateway
+    participant Lambda as FSE100_SaveSession
+    participant DB as DynamoDB
+
+    GI->>Save: SendStudentSessionToAWS(...)
+    Save->>APIGW: POST /session
+    APIGW->>Lambda: Invoke
+    Lambda->>DB: PutItem
+    DB-->>Lambda: OK
+    Lambda-->>APIGW: 200 OK
+    APIGW-->>Save: 200 OK
 ```
-1. BP_GameInstance calls USaveToAWS::SendStudentSessionToAWS(...)
-2. SaveToAWS constructs JSON body with session fields
-3. HTTP request: POST → https://<id>.execute-api.us-east-2.amazonaws.com/session
-4. API Gateway invokes FSE100_SaveSession Lambda
-5. Lambda calls DynamoDB PutItem with session data
-6. Response: 200 OK → logged to Unreal Output Log
-```
+
+1. `BP_GameInstance` calls `USaveToAWS::SendStudentSessionToAWS(...)`.
+2. `SaveToAWS` constructs JSON body with session fields.
+3. HTTP request: POST -> `https://<id>.execute-api.us-east-2.amazonaws.com/session`.
+4. API Gateway invokes `FSE100_SaveSession` Lambda.
+5. Lambda calls DynamoDB `PutItem` with session data.
+6. Response: `200 OK` -> logged to Unreal Output Log.
 
 ---
 
 ## Multi-Repository Relationship Map
 
-```
-FSE100Capstone/DeVILSona           (This is the UE5 project)
-├── References: DeVILSona-infra    (for AWS endpoint URLs embedded at build time)
-├── Uses: OVRLipSync plugin        (local, in Plugins/ dir)
-└── Uses: Meta XR plugin           (local, in Engine/Plugins/Marketplace/)
-
-FSE100Capstone/DeVILSona-infra     (Terraform configuration)
-├── Outputs: API Gateway URLs      (fed back into DeVILSona UE5 project)
-└── Managed by: DeVILStarter
-
-FSE100Capstone/DeVILStarter        (Desktop launcher)
-└── Wraps: DeVILSona-infra         (the Terraform directory)
-
-FSE100Capstone/DeVILSona.wiki      (Documentation only)
-```
+| Repository | Role | Relationships |
+|-----------|------|---------------|
+| **FSE100Capstone/DeVILSona** | UE5 project | - References: DeVILSona-infra (API Gateway URLs embedded at build time).<br/>- Uses: OVRLipSync plugin (local, in Plugins/).<br/>- Uses: Meta XR plugin (Engine/Plugins/Marketplace/). |
+| **FSE100Capstone/DeVILSona-infra** | Terraform configuration | - Outputs: API Gateway URLs (fed back into DeVILSona UE5 project).<br/>- Managed by: DeVILStarter. |
+| **FSE100Capstone/DeVILStarter** | Desktop launcher | - Wraps: DeVILSona-infra (the Terraform directory). |
+| **FSE100Capstone/DeVILSona.wiki** | Documentation only | - No runtime dependencies. |
 
 ---
 
