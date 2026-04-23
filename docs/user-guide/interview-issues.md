@@ -34,7 +34,7 @@ If microphone access is not allowed for the APK app, the interview system may no
 
 ### 3. Restart the game if AI responses are missing
 
-If you can speak but do not hear AI responses, fully exit the game and restart it. In some cases, restarting the application can restore audio behavior.
+If you can speak but do not hear AI responses, see Lip-Sync, or subtitles displaying text above Mike, fully exit the game and restart it. In some cases, restarting the application can restore audio behavior.
 
 This can help in both:
 - the **desktop application version through Meta Quest Link**
