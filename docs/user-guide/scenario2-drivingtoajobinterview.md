@@ -16,6 +16,29 @@ At this time, the **APK version is not recommended** for this scenario due to st
 
 For the most reliable experience, please play Scenario 2 using the desktop application version.
 
+## Player Positioning and Play Style
+
+At the start of the level, during the controls tutorial, you should be positioned **just outside the driver-side door** and within comfortable reach of the door handle. You will remain in this position until you complete **Objective 1: Open the driver-side door**.
+
+After completing Objective 1, you are automatically moved into the vehicle. Once repositioned, you should be seated in the **driver's seat** and see the scene from Mike’s perspective at approximately **eye level**, including visibility of his torso and legs.
+
+For the best experience, it is recommended that you choose **either seated play or standing play for the entire scenario** and remain consistent throughout. Switching between standing and sitting during the scenario can affect player placement and make interactions more difficult.
+
+### Reorienting Your View
+
+Scenario 2 is intended to be played through the **desktop application using Meta Quest Link**. If you are not positioned correctly at the start of the level or after entering the vehicle, you can re-center your view through Meta Quest Link:
+
+- Press the **Meta button** on the **right controller**
+- Select **Reset View**
+
+This should help place you back in the correct position for the scenario.
+
+### In-Game Menu Note
+
+The **Menu** button with the **three horizontal lines** on the **left controller** opens an in-game settings menu. However, those settings are not currently functional in Scenario 2.
+
+At this time, those menu options should not be relied on while playing this level.
+
 ## Controls and Settings
 
 Before the scenario begins, a tutorial screen explains the controls used throughout the experience and lets you choose optional voice and subtitle settings.
