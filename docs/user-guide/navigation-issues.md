@@ -29,7 +29,7 @@ This is typically the most direct way to re-center yourself while using the desk
 **Option 2: In-Game Reset Orientation**
 Some parts of the project also provide a **Reset Orientation** option through the in-game menu. This may be accessible through:
 
-- the **watch widget**
+- the **watch widget** (**Y** button on **left controller** or **B** button on **right controller**)
 - the **Menu** button with the **three horizontal lines** on the **left controller**
 
 If this option is available and functional in the current scenario, it can also be used while playing the desktop application version.
@@ -43,7 +43,7 @@ For the APK version, you must rely on the in-game reset option instead.
 **In-Game Reset Orientation**
 If available in the current scenario, use **Reset Orientation** through:
 
-- the **watch widget**
+- the **watch widget** (**Y** button on **left controller** or **B** button on **right controller**)
 - the **Menu** button with the **three horizontal lines** on the **left controller**
 
 For the **APK version**, this is the primary method for resetting your orientation while remaining in the app.
