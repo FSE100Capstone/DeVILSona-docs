@@ -41,7 +41,7 @@ This should help place you back in the correct position for the scenario.
 
 ### In-Game Menu Note
 
-The **Menu** button with the **three horizontal lines** on the **left controller** opens an in-game settings menu. However, those settings are not currently functional in Scenario 2.
+The **Menu** button with the **three horizontal lines** on the **left controller** opens an in-game settings menu. The same menu can also be opened using the **left-hand watch widget**. However, those settings are not currently functional in Scenario 2.
 
 At this time, those menu options should not be relied on while playing this level.
 
