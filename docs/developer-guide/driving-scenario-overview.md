@@ -1774,6 +1774,24 @@ The Niagara systems provide the exterior volumetric rain presence, while the win
 
 The following items were identified during development as desirable improvements or follow-up work for **Scenario 2: Driving to a Job Interview**, but were not completed before handoff.
 
+#### Controls Tutorial HUD Exit Option
+
+The controls tutorial HUD shown at the start of the scenario does not currently include a **Return to Main Menu** button.
+
+As a result, once the user enters this level and reaches the tutorial screen, there is no built-in way to exit back to the main menu from that interface alone. Adding a clear return/exit option would improve usability and make it easier for players to leave the scenario without fully closing the application.
+
+#### In-Game Menu / Watch Widget Functionality
+
+The in-game settings menu can be opened in Scenario 2 either by pressing the **Menu** button with the **three horizontal lines** on the left controller or by using the **left-hand watch widget**.
+
+However, while the menu can still be opened, its settings are not currently functional in this scenario. These controls were not fully integrated into the level during development, and the associated options should be treated as non-operational in the current handoff version.
+
+#### Accidental Teleport / Footstep Audio
+
+Scenario 2 does not actively use teleport movement. However, if the player accidentally attempts to teleport using the joystick/controller movement toggle, footstep audio may still play.
+
+This behavior appears to come from inherited functionality in the base `VRPawn`, which `BP_Driving_VRPawn` extends as a child. Because teleport is not intentionally used in this level, this is typically only noticeable when the player triggers it by accident.
+
 #### Steering Wheel Interaction
 
 The original intent was to allow the player to freely interact with the steering wheel between required objectives, even though steering is **not** one of the 23 formal scenario objectives.
