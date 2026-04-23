@@ -24,6 +24,12 @@ After completing Objective 1, you are automatically moved into the vehicle. Once
 
 For the best experience, it is recommended that you choose **either seated play or standing play for the entire scenario** and remain consistent throughout. Switching between standing and sitting during the scenario can affect player placement and make interactions more difficult.
 
+### Movement in Scenario 2
+
+Unlike some other scenarios in the project, Scenario 2 does **not** use teleport movement.
+
+You do not need to move yourself around the environment during this level. Instead, you are automatically positioned where you need to be at each stage of the scenario. Your focus should remain on completing the current objective and interacting with the vehicle controls using the required hand inputs.
+
 ### Reorienting Your View
 
 Scenario 2 is intended to be played through the **desktop application using Meta Quest Link**. If you are not positioned correctly at the start of the level or after entering the vehicle, you can re-center your view through Meta Quest Link:
