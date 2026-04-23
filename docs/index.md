@@ -52,6 +52,17 @@ This wiki is the comprehensive knowledge base for everyone involved in the DeVIL
 
 ---
 
+### 📘 Student Guide
+*For student end users of the VR experience.*
+
+| Page | Description |
+|------|-------------|
+| [Scenario 2 User Guide: Driving to a Job Interview](user-guide/scenario2-drivingtoajobinterview.md) | End-to-end guide for Scenario 2, including controls, objective flow, player positioning, and important usage notes |
+| [Troubleshooting Interview Audio and Microphone Issues](user-guide/interview-issues.md) | Troubleshooting steps for microphone input, permissions, and missing AI dialogue during interview interactions |
+| [Troubleshooting Navigation Issues](user-guide/navigation-issues.md) | Troubleshooting steps for player placement, recentering, movement expectations, and related navigation concerns |
+
+---
+
 ## 📦 Project Ecosystem at a Glance
 
 | Repository | Tech Stack | Purpose |
