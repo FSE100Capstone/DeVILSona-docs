@@ -8,6 +8,14 @@ Throughout the scenario, you will follow guided on-screen objectives, interact w
 
 ![Scenario 2 Controls and Settings Screen](images/scenario2-controls-hud.png)
 
+## Important Platform Note
+
+Scenario 2 is currently recommended for use in the **desktop application version**.
+
+At this time, the **APK version is not recommended** for this scenario due to stability and performance issues. In the APK build, the level may take a long time to load and may crash shortly after gameplay begins, often within the first few interactions.
+
+For the most reliable experience, please play Scenario 2 using the desktop application version.
+
 ## Controls and Settings
 
 Before the scenario begins, a tutorial screen explains the controls used throughout the experience and lets you choose optional voice and subtitle settings.
@@ -122,9 +130,33 @@ From this screen, you can:
 - load the **Morning Routine** scenario,
 - or load the **Grocery Run and Preparing Dinner** scenario.
 
-## Tips for Users
+## Tips for Best Experience
 
-- Follow the **Objective HUD** for the current task and interaction hint.
-- If the **turn signal** or **windshield wiper** interaction does not trigger immediately, use a larger pull motion.
+- Follow the **Objective HUD** and wait for the next objective to appear before performing the next interaction.
+- Even if you already know what comes next, do not complete actions early. Performing an interaction before it is shown on the current objective may prevent the scenario from progressing correctly.
+- If the **turn signal** or **windshield wiper** interaction does not trigger immediately, continue the motion farther until it registers.
 - **Voice is enabled by default**, so disable it before starting if you do not want spoken dialogue.
 - Turn on **subtitles** before starting if you want text support during dialogue.
+
+## Troubleshooting and Important Notes
+
+### AI Speech Issues
+
+In some playthroughs, Mike’s AI voice may not behave exactly as intended.
+
+- In rare cases, the AI may say the word **“function”** instead of the expected dialogue.
+- In some sections, especially during the **phone conversation**, spoken dialogue may be cut off or may not exactly match the subtitle text.
+
+These issues do **not** prevent you from completing the scenario. If the AI speaks incorrectly at the start of the level, exiting and restarting the scenario may resolve the issue.
+
+### Objective Progression
+
+Always wait for the **Objective HUD** to display your next task before performing it.
+
+Even if you are replaying the scenario and already know the sequence, completing objectives early can interfere with scenario progression and may prevent later steps from registering correctly. For the best experience, complete each interaction only when it is shown as the current objective.
+
+### Saving and Progress Tracking
+
+Scenario 2 is designed to be completed in a single session and does **not** support resuming from a specific objective partway through the level.
+
+In addition, scenario completion or progress may not always appear correctly in progress-tracking interfaces after finishing the experience. This means that even if you complete the scenario successfully, the completion percentage may not always update as expected on other menu or progress screens.
