@@ -7,114 +7,114 @@ nav_order: 1
 
 # DeVILSona Game User Guide
 
-이 문서는 DeVILSona 게임의 기본적인 조작법부터 계정 생성, 면접(AI) 시스템, 그리고 시나리오 진행까지의 전반적인 가이드를 제공합니다.
+This document provides a comprehensive guide to DeVILSona, covering everything from basic controls and account creation to the AI interview system and scenario progression.
 
 ---
 
-## 1. Basic Game Menu (기본 게임 메뉴)
+## 1. Basic Game Menu
 
-### 1.1 Basic Control (기본 조작법)
-게임 내 기본적인 이동 및 상호작용은 VR/콘솔 컨트롤러(조이스틱)를 통해 직관적으로 이루어집니다.
+### 1.1 Basic Controls
+Basic movement and interactions in the game are intuitively controlled via VR/Console controllers (joystick).
 
-![조이스틱 조작법 스크린샷 위치](/docs/user-guide/images/joystick.png)
-> **Note:** (이곳에 조이스틱 조작법 스크린샷을 넣어주세요.)
+![Joystick Controls Screenshot](/docs/user-guide/images/joystick.png)
+> **Note:** (Please insert the joystick controls screenshot here.)
 
-* **오른쪽 조이스틱 (Right Joystick):** 캐릭터 이동 (Move)
-* **왼쪽 조이스틱 (Left Joystick):** 시점 및 카메라 회전 (Rotate)
-* **버튼 클릭 (Trigger / Button Click):** 오브젝트 및 NPC 상호작용 (Interact)
-* **A 버튼 또는 X 버튼 (A / X Button):** 퀵 메뉴 소환 (Summon Menu)
+* **Right Joystick:** Move the character
+* **Left Joystick:** Rotate the camera/view
+* **Trigger / Button Click:** Interact with objects and NPCs
+* **A / X Button:** Summon the Quick Menu (Smartwatch)
 
-### 1.2 Agreement & Credits (이용 동의 및 크레딧)
-게임을 처음 시작하거나 접속할 때, 게임 진행에 필요한 데이터 수집 동의 화면이 나타납니다.
+### 1.2 Agreement & Credits
+When you start or log into the game for the first time, a data collection agreement screen will appear.
 
-![동의서 화면 스크린샷 위치](/docs/user-guide/images/agreement.png)
+![Agreement Screen Screenshot](/docs/user-guide/images/agreement.png)
 
-* **데이터 수집 동의 (Agreement):** 게임의 원활한 진행(AI 면접 분석 등)에 필요한 필수적인 기본 데이터 수집에 대한 안내입니다. 동의를 완료해야 게임 플레이가 가능합니다.
-* **크레딧 (Credits):** 화면 하단에 위치한 **[Credit]** 버튼을 클릭하면, 이 프로젝트(DeVILSona) 제작에 기여하고 참여한 사람들의 목록을 확인할 수 있습니다.
+* **Agreement:** This is an agreement to collect minimal basic data necessary for smooth gameplay (such as AI interview analysis). You must agree to proceed with the game.
+* **Credits:** Click the **[Credit]** button at the bottom of the screen to view the list of developers and contributors who participated in creating the DeVILSona project.
 
-### 1.3 Quick Menu & Watch (퀵 메뉴 및 스마트워치)
-게임 플레이 중 언제든지 스마트워치를 활용하여 퀵 메뉴를 호출할 수 있습니다.
+### 1.3 Quick Menu (Watch)
+You can call up the quick menu using your smartwatch at any time during gameplay.
 
-![스마트워치 퀵 메뉴 스크린샷 위치](/docs/user-guide/images/quickmenu_watch.png)
+![Smartwatch Quick Menu Screenshot](/docs/user-guide/images/quickmenu_watch.png)
 
-* **접근 방법:** 캐릭터의 **왼쪽 손목시계를 조준(Aim)**한 뒤 **상호작용 버튼**을 누르거나, 컨트롤러의 **A / X 버튼**을 눌러 퀵 메뉴 화면에 접근할 수 있습니다.
-* **활용:** 퀵 메뉴를 통해 게임 진행 상황 확인, 상세 설정 진입 등 다양한 편의 기능에 빠르게 접근할 수 있습니다.
-
----
-
-## 2. Save and Login (저장 및 로그인)
-
-본 게임은 별도의 수동 저장 없이, 대부분의 플레이 단계에서 **자동 저장(Auto-save)** 시스템이 작동하므로 진행 상황을 안전하게 보존할 수 있습니다.
-
-![로그인 및 계정 생성 화면 스크린샷 위치](/docs/user-guide/images/login_main.png)
-
-### 2.1 How to Create (계정 생성)
-신규 사용자는 메인 화면 중앙에 위치한 **[Create Account]** 버튼을 눌러 새로운 프로필을 생성할 수 있습니다.
-
-1. **ASU ID 입력:** 플레이어 본인의 고유 ASU ID를 입력합니다.
-2. **Session ID 지정:** 게임 진행 데이터를 저장할 고유의 세션 아이디(Session ID)를 설정합니다. 별도로 지정하지 않고 빈칸으로 둘 경우, **기본값인 `0001`**로 자동 할당됩니다.
-3. **이름 입력:** 게임 내에서 사용할 이름(Name)을 입력합니다.
-4. **저장:** 모든 정보 입력이 끝나면 확인/저장 버튼을 눌러 계정 생성을 완료합니다.
-
-### 2.2 Login (로그인)
-* 이미 계정을 생성했거나 이전에 플레이한 기록이 있다면, 메인 로그인 화면에서 **ASU ID**와 **Session ID**를 입력하여 접속합니다.
-* 성공적으로 로그인되면 오토세이브 된 시점부터 게임을 이어서(Load) 진행할 수 있습니다.
+* **How to Access:** **Aim at your left wristwatch** and press the **Interact button**, or simply press the **A / X Button** on your controller to open the quick menu.
+* **Usage:** Use the quick menu to rapidly access various convenient features, such as checking your game progress or opening detailed settings.
 
 ---
 
-## 3. Settings and Options (상세 설정 및 옵션)
+## 2. Save and Login
 
-메인 메뉴나 스마트워치의 퀵 메뉴를 통해 Settings에 진입하면, 플레이어의 환경에 맞게 게임을 최적화할 수 있습니다.
+The game features an **Auto-save** system that works in the background during most stages of gameplay, safely preserving your progress without the need for manual saves.
 
-![설정 화면 스크린샷 위치](/docs/user-guide/images/settings_menu.png)
+![Login and Account Creation Screenshot](/docs/user-guide/images/login_main.png)
 
-### 3.1 Graphic Change (그래픽 설정)
-* **메타휴먼 품질 조절:** 그래픽 설정을 변경하면 게임 내 등장하는 **메타휴먼(AI 면접관 등) 캐릭터의 해상도 및 디테일 품질**이 변경됩니다.
-* **성능 최적화 (Tip):** 게임 플레이 중 화면이 끊기거나 프레임 저하가 발생한다면, 이 그래픽 품질을 한 단계 낮추어 보다 원활하게 진행할 수 있습니다.
+### 2.1 How to Create an Account
+New users can create a new profile by clicking the **[Create Account]** button in the center of the main menu.
 
-### 3.2 Speech to Text (음성 인식) 및 대화 설정
-* **Speech to Text (기본값 ON):** 마이크를 통해 사용자의 실제 음성을 인식하여 대화하는 기능입니다. 만약 마이크를 통한 음성 수집을 원치 않는다면 이 기능을 **OFF**로 변경할 수 있습니다.
-* **Text to Speech (가상 키보드 모드):** 음성 대신 텍스트로 대화하고자 할 때 이 기능을 켜면, 인터뷰 진행 시 화면에 **작은 가상 키보드**가 생성됩니다. 이를 이용해 직접 텍스트를 타이핑하여 면접관과 대화할 수 있습니다.
+1. **Enter ASU ID:** Enter your unique ASU ID.
+2. **Assign Session ID:** Set a unique Session ID to save your game data. If you leave it blank, it will automatically default to **`0001`**.
+3. **Enter Name:** Enter the name you wish to use in the game.
+4. **Save:** Once all information is entered, press the Save button to complete account creation.
 
-### 3.3 Volume Control (볼륨 조절)
-* **배경음악 (BGM):** 게임 내 배경음악(Background Music)의 볼륨 크기를 조절할 수 있습니다.
-* **메타휴먼 음성 끄기:** AI 면접관(메타휴먼)의 목소리를 듣고 싶지 않거나 자막에만 집중하고 싶을 경우, 설정에서 메타휴먼의 음성 출력을 비활성화(OFF)할 수 있습니다.
-
----
-
-## 4. Interview (면접 시스템)
-
-![캐릭터 선택 및 인터뷰 화면 스크린샷 위치](/docs/user-guide/images/interview_select.png)
-
-### 4.1 Basic Flow & Character Selection (기본 진행 흐름)
-1. **아키타입 선택:** 먼저 인터뷰를 진행할 캐릭터 아키타입을 선택합니다. *(현재 버전에서는 밀리터리 베테랑인 **Mike**만 선택 가능합니다.)*
-2. **면접장 입장:** 선택을 완료하고 인터뷰 장소로 입장한 뒤, Mike 캐릭터를 향해 상호작용(Interact)을 시도하면 본격적인 면접이 시작됩니다.
-
-### 4.2 Interview With AI (생성형 AI 실시간 대화 모드)
-정상적인 네트워크 환경에서는 생성형 AI를 기반으로 한 실시간 대화가 가능합니다.
-* **음성 대화 (STT):** 마이크 기능(STT)이 켜져 있어, 플레이어가 육성으로 질문을 던지면 AI(Mike)가 이를 듣고 실시간으로 대답합니다.
-* **텍스트 대화 (TTS 활성화):** 마이크를 사용할 수 없는 환경이라면, 설정에서 Text to Speech 모드를 켜서 가상 키보드로 타이핑하여 대화할 수 있습니다.
-* **추천 질문 (Choose Questions):** 대화 중 어떤 질문을 해야 할지 막막하다면, 메뉴에서 **[Choose Questions]**를 선택하여 시스템이 제공하는 예시 질문을 활용할 수 있습니다.
-
-### 4.3 Interview Without AI (오프라인/스크립트 모드)
-인터넷 연결이 끊기거나 OpenAI 서버가 다운되는 경우, 게임은 자동으로 오프라인 모드로 작동합니다.
-* **기능 제한:** STT(음성 인식)와 TTS(텍스트 입력 AI 답변) 기능은 모두 비활성화됩니다.
-* **스크립트 대화 진행:** 당황하지 마시고 **[Choose Questions]**를 선택해 주세요. 예시 질문을 클릭하면 미리 준비된 스크립트 대답이 출력되어 정상적으로 인터뷰를 계속 진행할 수 있습니다.
+### 2.2 Login
+* If you have already created an account or have a previous play record, enter your **ASU ID** and **Session ID** on the main login screen to log in.
+* Upon successful login, you can load your game and continue playing from your last auto-saved point.
 
 ---
 
-## 5. Scenarios (시나리오 선택 및 진행)
+## 3. Settings and Options
 
-인터뷰 장소 내에서 특정 상황극(시나리오)을 선택하여 플레이할 수 있습니다.
+You can optimize your gameplay experience by accessing the Settings via the main menu or the smartwatch quick menu.
 
-![시나리오 선택 화면 스크린샷 위치](/docs/user-guide/images/scenario_select.png)
+![Settings Menu Screenshot](/docs/user-guide/images/settings_menu.png)
 
-### 5.1 시나리오 선택창 (Scenario Selection)
-* **위치:** 각 캐릭터의 인터뷰 장소(Room)에 입장한 후 **오른쪽**을 바라보면 시나리오를 선택할 수 있는 UI 창이 위치해 있습니다.
-* **정보 확인:** 원하는 시나리오를 선택하면 해당 시나리오의 간략한 **이미지**와 **설명**을 확인할 수 있습니다.
-* **진행 상태 (Last Played):** 창 하단에는 해당 시나리오를 마지막으로 플레이한 시간이 표시됩니다. 만약 처음 시도하는 시나리오라면 **`NEW`** 마크가 표시됩니다.
+### 3.1 Graphic Change
+* **MetaHuman Quality:** Changing graphic settings adjusts the **resolution and detail quality of the MetaHuman characters** (such as AI interviewers).
+* **Optimization Tip:** If you experience lagging or frame drops during gameplay, try lowering this graphic quality option for smoother performance.
 
-### 5.2 시나리오 초기화 및 플레이 (Reset & Play)
-* **초기화 (Reset):** 기존에 플레이했던 시나리오의 진행 상황을 초기화하고 싶다면 **[Reset]** 버튼을 누릅니다. 
-  > ⚠️ **주의:** 초기화 진행 시 서버에 안전하게 데이터가 저장되도록 **약 5초 정도 대기**해 주시기 바랍니다.
-* **플레이 (Play):** 준비가 완료되면 **[Play]** 버튼을 눌러 선택한 시나리오에 맞는 특정 장소(예: 시나리오 1 장소)로 이동하여 본격적인 플레이를 시작합니다.
+### 3.2 Speech to Text & Text Input
+* **Speech to Text (Default: ON):** This feature uses your microphone to recognize your voice for conversation. It is enabled by default. If you prefer not to use your microphone, you can change this setting to **OFF**.
+* **Text to Speech (Virtual Keyboard Mode):** If you wish to communicate via text instead of voice, turn this feature on. During an interview, a **small virtual keyboard** will appear on the screen, allowing you to type your questions and converse with the interviewer.
+
+### 3.3 Volume Control
+* **Background Music (BGM):** You can adjust the volume level of the in-game background music.
+* **Mute MetaHuman Voice:** If you prefer not to hear the AI MetaHuman's voice or want to focus solely on the subtitles, you can disable (OFF) the MetaHuman voice output in the settings.
+
+---
+
+## 4. Interview System
+
+![Character Selection and Interview Screenshot](/docs/user-guide/images/interview_select.png)
+
+### 4.1 Basic Flow & Character Selection
+1. **Choose Character Archetype:** First, select the character archetype you want to interview. *(Currently, only the military veteran **Mike** is available.)*
+2. **Enter the Interview Room:** After making your selection, enter the interview location and interact with Mike to begin the interview.
+
+### 4.2 Interview With AI (Real-time Generative AI Mode)
+Under a normal network environment, you can have a real-time conversation powered by generative AI.
+* **Voice Conversation (STT):** With the microphone (STT) enabled, Mike will listen to your spoken questions and answer in real-time.
+* **Text Conversation (TTS Enabled):** If you are in an environment where you cannot use a microphone, enable Text to Speech in the settings to type your questions using the virtual keyboard.
+* **Choose Questions:** If you are unsure what to ask during the conversation, select **[Choose Questions]** from the menu to use example questions provided by the system.
+
+### 4.3 Interview Without AI (Offline / Scripted Mode)
+If your internet connection drops or the OpenAI servers go down, the game automatically switches to Offline Mode.
+* **Feature Limitations:** Both STT (voice recognition) and TTS (text input for AI responses) features will be disabled.
+* **Scripted Dialogue:** Do not panic; simply select **[Choose Questions]**. Clicking on an example question will display a pre-written scripted response, allowing you to seamlessly continue the interview.
+
+---
+
+## 5. Scenarios
+
+You can select and play specific role-playing scenarios within the interview location.
+
+![Scenario Selection Screenshot](/docs/user-guide/images/scenario_select.png)
+
+### 5.1 Scenario Selection Window
+* **Location:** Upon entering any character's interview room, look to your **right** to find the dedicated Scenario Selection UI.
+* **View Details:** Select a scenario to see a brief **image** and **description** of it.
+* **Last Played:** The bottom of the window displays the last time you played that scenario. If it is your first time trying it, a **`NEW`** badge will be displayed.
+
+### 5.2 Reset & Play Scenarios
+* **Reset:** If you want to reset the progress of a previously played scenario, press the **[Reset]** button.
+  > ⚠️ **Caution:** Please **wait for about 5 seconds** after resetting to ensure the data is safely saved to the server.
+* **Play:** When you are ready, press the **[Play]** button. You will be teleported to the specific location for your chosen scenario (e.g., Scenario 1 location) to begin playing.
