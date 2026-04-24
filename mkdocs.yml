@@ -149,6 +149,13 @@ nav:
     - Level Implementations:
       - Scenario 2 Driving to a Job Interview Overview and Blueprint Guide: developer-guide/driving-scenario-overview.md
 
+  - User Guide:
+    - Scenarios:
+      - Scenario 2 User Guide Driving to a Job Interview: user-guide/scenario2-drivingtoajobinterview.md
+    - Troubleshooting:
+      - Troubleshooting Interview Audio and Microphone Issues: user-guide/interview-issues.md
+      - Troubleshooting Navigation Issues: user-guide/navigation-issues.md
+
   - Legacy:
     - API Reference:
       - API Documentation: legacy/api-documentation.md
