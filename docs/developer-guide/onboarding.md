@@ -236,6 +236,55 @@ This creates `FSE100Capstone.sln` which Visual Studio needs to compile the C++ c
 !!! note
     If you don't see this context menu option, ensure Unreal Engine is installed via the Epic Games Launcher and properly registered with Windows.
 
+### Unreal Engine Plugin Installation
+
+Before compiling the project for the first time, install the following required plugins. The project depends on these plugins and will fail to compile without them.
+
+#### Meta XR Plugin
+
+The Meta XR plugin provides core VR support for Meta Quest headsets (input, tracking, rendering, etc.).
+
+1. Open the [Unreal Engine 5 Integration](https://developers.meta.com/horizon/downloads/package/unreal-engine-5-integration/) downloads page
+2. Download the latest **Meta XR plugin** `.zip` using the button on the top right of the page
+3. Extract the `.zip` contents into your Unreal Engine plugins folder:
+    ```
+    <UE Install Path>\Engine\Plugins\Marketplace
+    ```
+    Create the `Marketplace` folder if it does not already exist. For example:
+    ```
+    C:\Program Files\Epic Games\UE_5.6\Engine\Plugins\Marketplace
+    ```
+4. Open Unreal Engine, go to **Edit → Plugins**, and search for **Meta XR**
+5. Confirm the plugin appears in the list and **enable it** if it is not already enabled
+
+!!! tip "Official Documentation"
+    For the latest installation instructions and troubleshooting, refer to the official Meta developer documentation: [Installing the Meta XR Plugin](https://developers.meta.com/horizon/documentation/unreal/unreal-quick-start-install-metaxr-plugin/).
+
+#### OVRLipSync Plugin
+
+The OVRLipSync plugin enables real-time lip synchronization for MetaHuman characters by analyzing audio and producing viseme weights.
+
+!!! note
+    The OVRLipSync plugin is **already included** in the repository under `Plugins/OVRLipSync/`. You do not need to download it separately. However, it requires additional manual configuration (see [Oculus LipSync Plugin Setup](../legacy/oculus-lipsync.md)). You should also verify it was pulled correctly via Git LFS (see [OVRLipSync Plugin Verification](#ovrlipsync-plugin-verification) below).
+
+#### MetaHuman Plugin
+
+The MetaHuman plugin suite (MetaHuman Creator, MetaHuman Animator, MetaHuman Core Tech, MetaHuman SDK) is required for creating and rendering the AI character models used in this project. These plugins ship with Unreal Engine and need to be **enabled** in the editor.
+
+1. In Unreal Engine, go to **Edit → Plugins**
+2. Search for and enable each of the following:
+    - ✅ **MetaHuman Creator**
+    - ✅ **MetaHuman Animator**
+    - ✅ **MetaHuman Core Tech**
+    - ✅ **MetaHuman SDK**
+3. Restart Unreal Engine after enabling the plugins
+
+For the complete MetaHuman setup guide including character creation, assembly, and VR optimization settings, see the legacy documentation:
+
+➡️ **[MetaHuman Creator Setup](../legacy/metahuman-creator.md)**
+
+---
+
 ### First Compilation
 
 **Option A: Open in Unreal Engine (Compiles automatically)**
