@@ -1,8 +1,8 @@
+
 # Troubleshooting Scenario 1: Morning Routine
 
 This guide covers common issues you might encounter while playing **Scenario 1: Morning Routine** and provides steps to resolve them.
 
----
 
 ## 1. Right Hand is Invisible or Missing
 **Issue:** When the scenario starts, you cannot see your right hand or use it to interact with objects.

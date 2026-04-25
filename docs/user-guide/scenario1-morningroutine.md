@@ -1,9 +1,3 @@
----
-layout: default
-title: Scenario 1 - Morning Routine
-parent: Game User Guide
-nav_order: 2
----
 
 # Scenario 1: Morning Routine
 ![Scenario Start Screen](/docs/user-guide/images/scenario1_Start.png)
