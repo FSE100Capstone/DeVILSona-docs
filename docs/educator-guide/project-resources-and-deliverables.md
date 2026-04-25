@@ -2,6 +2,25 @@
 
 This page collects major project resources, design artifacts, research materials, and non-code deliverables created during the DeVILSona capstone. It is intended to provide future teams with quick access to important external materials that support the project but are not stored directly as implementation code in the repository.
 
+## Final Builds (Spring 2026)
+
+The final Windows and Android builds for the Spring 2026 release of DeVILSona are available in a shared OneDrive folder:
+
+- [DeVILSona Spring 26 Release](https://arizonastateu-my.sharepoint.com/shared?id=%2Fpersonal%2Fajbauma2%5Fasurite%5Fasu%5Fedu%2FDocuments%2FDevilsona%20Spring%2026%20Release&listurl=%2Fpersonal%2Fajbauma2%5Fasurite%5Fasu%5Fedu%2FDocuments)
+
+The folder contains two subdirectories:
+
+| Folder | Contents |
+|--------|----------|
+| **Windows** | Packaged Windows Shipping build |
+| **Android** | Packaged Android APK for Meta Quest |
+
+!!! warning "Known Issues"
+    - **Scenario 2 (Driving to a Job Interview) crashes on the Quest 3 (Android APK build).** The Windows build is unaffected.
+    - **Scenario 3 (Grocery Store) is incomplete** and should not be considered a finished deliverable.
+
+---
+
 ## Figma Prototype
 
 The Figma prototype contains the primary design and interaction mockups created for the DeVILSona project. It was used to plan scenario structure, interface flow, and early user experience decisions before and during implementation.
