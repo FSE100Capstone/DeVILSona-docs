@@ -414,16 +414,16 @@ When the game starts, call this node:
 ### **SetAWSApiUrls**
 
 ```
-SaveUrl : https://your-api-id.execute-api.us-east-2.amazonaws.com/prod/session
-LoginUrl: https://your-api-id.execute-api.us-east-2.amazonaws.com/prod/login
+SaveUrl : https://api.devilsona.click/session
+LoginUrl: https://api.devilsona.click/login
 ```
 
 Example Blueprint setup:
 
 ```
 Event BeginPlay
-→ SetAWSApiUrls("https://xxx.execute-api.us-east-2.amazonaws.com/prod/session",
-                "https://xxx.execute-api.us-east-2.amazonaws.com/prod/login")
+→ SetAWSApiUrls("https://api.devilsona.click/session",
+                "https://api.devilsona.click/login")
 ```
 
 You only need to set this once at game startup (GameInstance recommended).
@@ -440,8 +440,8 @@ void UMyGameInstance::Init()
     Super::Init();
 
     USaveToAWS::SetAWSApiUrls(
-        TEXT("https://xxx.execute-api.us-east-2.amazonaws.com/prod/session"),
-        TEXT("https://xxx.execute-api.us-east-2.amazonaws.com/prod/login")
+        TEXT("https://api.devilsona.click/session"),
+        TEXT("https://api.devilsona.click/login")
     );
 }
 ```

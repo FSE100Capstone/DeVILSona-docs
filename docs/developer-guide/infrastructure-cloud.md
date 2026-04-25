@@ -159,8 +159,8 @@ The UE5 side makes asynchronous HTTP calls using Unreal's `IHttpRequest`:
 ```cpp
 // Setting the API URLs (done once at game startup in GameInstance::Init)
 USaveToAWS::SetAWSApiUrls(
-    TEXT("https://abcd1234.execute-api.us-east-2.amazonaws.com/session"),  // Save URL
-    TEXT("https://abcd1234.execute-api.us-east-2.amazonaws.com/login")     // Login URL
+    TEXT("https://api.devilsona.click/session"),  // Save URL
+    TEXT("https://api.devilsona.click/login")     // Login URL
 );
 
 // Blueprint usage for loading (asynchronous!):
@@ -372,9 +372,9 @@ terraform plan    # Review: should show "X to add, 0 to change, 0 to destroy"
 terraform apply   # Type "yes" when prompted (DeVILStarter does this automatically)
 
 # Note the output URLs:
-# session_api_session_url = "https://abcd.execute-api.us-east-2.amazonaws.com/session"
-# session_api_login_url   = "https://abcd.execute-api.us-east-2.amazonaws.com/login"
-# → These must be embedded in the UE5 project
+# session_api_session_url = "https://api.devilsona.click/session"
+# session_api_login_url   = "https://api.devilsona.click/login"
+# → These are mapped via the custom domain (api.devilsona.click)
 
 # Tear down (run after each class to save costs):
 terraform destroy  # Type "yes" when prompted (DeVILStarter does this automatically)

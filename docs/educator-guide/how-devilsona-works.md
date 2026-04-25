@@ -86,7 +86,7 @@ If your campus IT team asks what network traffic DeVILSona generates, here is th
 ```mermaid
 graph TD
     A["Meta Quest Headset<br/>(DeVILSona App)"] -->|"WebSocket, Port 443<br/>(voice data)"| B["OpenAI Realtime API<br/>api.openai.com"]
-    A -->|"HTTPS, Port 443<br/>(login + save data)"| C["AWS API Gateway<br/>*.execute-api.us-east-2.amazonaws.com"]
+    A -->|"HTTPS, Port 443<br/>(login + save data)"| C["AWS API Gateway<br/>api.devilsona.click"]
     C --> D["Cloud Function: Login"]
     C --> E["Cloud Function: Save Session"]
     D --> F["Database: Student Records"]
@@ -105,7 +105,7 @@ All DeVILSona traffic uses **standard internet port 443 (HTTPS)**. No special or
 | What | Destination | Protocol | Port |
 |------|------------|----------|------|
 | AI voice conversation | `api.openai.com` | WebSocket over HTTPS | 443 |
-| Student login & save | `*.execute-api.us-east-2.amazonaws.com` | HTTPS | 443 |
+| Student login & save | `api.devilsona.click` | HTTPS | 443 |
 | DeVILStarter (your laptop) | `*.amazonaws.com` | HTTPS | 443 |
 
 !!! tip "For IT"

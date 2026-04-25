@@ -14,7 +14,7 @@ DeVILSona needs outbound internet access to **two services**, both on **standard
 | Service | Address | Protocol | Port | Purpose |
 |---------|---------|----------|------|---------|
 | **OpenAI** | `api.openai.com` | WebSocket over HTTPS | 443 | Real-time AI voice conversation |
-| **AWS Backend** | `*.execute-api.us-east-2.amazonaws.com` | HTTPS | 443 | Student login and session saving |
+| **AWS Backend** | `api.devilsona.click` | HTTPS | 443 | Student login and session saving |
 | **AWS Management** (DeVILStarter laptop only) | `*.amazonaws.com` | HTTPS | 443 | Starting/stopping the cloud backend |
 
 No unusual or non-standard ports are required. All traffic is encrypted.
@@ -61,23 +61,25 @@ ALLOW TCP OUTBOUND → api.openai.com:443
 
 When a student logs in or their session is saved, the headset makes a brief HTTPS request to the AWS backend. These are standard web requests (like loading a web page) and are much less likely to be blocked.
 
-### The Challenge: Dynamic URLs
-
-The AWS backend URL changes each time the cloud infrastructure is restarted (which can happen between semesters). The URL looks like:
+The backend uses a custom domain:
 
 ```
-https://<random-id>.execute-api.us-east-2.amazonaws.com
+https://api.devilsona.click
 ```
 
 ### What to Tell Your IT Team
 
-Rather than whitelisting a specific URL (which would change), ask IT to allow the entire AWS API Gateway subdomain:
+Ask IT to allow outbound HTTPS to the production domain:
+
+```
+ALLOW HTTPS OUTBOUND → api.devilsona.click:443
+```
+
+As a fallback (in case the custom domain changes), you can also whitelist the underlying AWS address pattern:
 
 ```
 ALLOW HTTPS OUTBOUND → *.execute-api.us-east-2.amazonaws.com:443
 ```
-
-This is a standard AWS address pattern and ensures the rule remains valid even if the backend is recreated.
 
 ---
 
@@ -152,7 +154,7 @@ Use this checklist before each semester's first session:
 
 - [ ] Headsets can connect to the classroom Wi-Fi (correct SSID and password)
 - [ ] `api.openai.com:443` is reachable from the classroom Wi-Fi (WebSocket connections allowed)
-- [ ] `*.execute-api.us-east-2.amazonaws.com:443` is reachable
+- [ ] `api.devilsona.click:443` is reachable (or `*.execute-api.us-east-2.amazonaws.com:443` as fallback)
 - [ ] No captive portal on the headset's network (or staff can assist with portal acceptance)
 - [ ] No SSL inspection on `api.openai.com`
 - [ ] WebSocket idle timeout is at least 5 minutes
