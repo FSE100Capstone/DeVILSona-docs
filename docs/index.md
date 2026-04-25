@@ -57,6 +57,7 @@ This wiki is the comprehensive knowledge base for everyone involved in the DeVIL
 
 | Page | Description |
 |------|-------------|
+| [Launching the Game](user-guide/launching-the-game.md) | Guide to launching DeVILSona through Windows desktop or directly via APK on the headset |
 | [Game User Guide](user-guide/game-guide.md) | Comprehensive guide to DeVILSona, covering basic controls, account creation, AI interview system, and scenario progression |
 | [Scenario 1 User Guide: Morning Routine](user-guide/scenario1-morningroutine.md) | End-to-end guide for Scenario 1, including waking up, taking a shower, equipping the prosthetic arm, and other early interactions |
 | [Scenario 2 User Guide: Driving to a Job Interview](user-guide/scenario2-drivingtoajobinterview.md) | End-to-end guide for Scenario 2, including controls, objective flow, player positioning, and important usage notes |
