@@ -57,9 +57,12 @@ This wiki is the comprehensive knowledge base for everyone involved in the DeVIL
 
 | Page | Description |
 |------|-------------|
+| [Game User Guide](user-guide/game-guide.md) | Comprehensive guide to DeVILSona, covering basic controls, account creation, AI interview system, and scenario progression |
+| [Scenario 1 User Guide: Morning Routine](user-guide/scenario1-morningroutine.md) | End-to-end guide for Scenario 1, including waking up, taking a shower, equipping the prosthetic arm, and other early interactions |
 | [Scenario 2 User Guide: Driving to a Job Interview](user-guide/scenario2-drivingtoajobinterview.md) | End-to-end guide for Scenario 2, including controls, objective flow, player positioning, and important usage notes |
 | [Troubleshooting Interview Audio and Microphone Issues](user-guide/interview-issues.md) | Troubleshooting steps for microphone input, permissions, and missing AI dialogue during interview interactions |
 | [Troubleshooting Navigation Issues](user-guide/navigation-issues.md) | Troubleshooting steps for teleport disorientation, reset orientation, positioning problems, and general VR navigation comfort |
+| [Troubleshooting Scenario 1 Issues](user-guide/scenario1-issues.md) | Troubleshooting steps for common issues in Scenario 1, such as the shower dial, equipping the prosthetic arm, and hand visibility |
 
 ---
 
