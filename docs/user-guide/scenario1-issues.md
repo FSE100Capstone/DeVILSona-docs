@@ -1,10 +1,3 @@
----
-layout: default
-title: Troubleshooting Scenario 1 Issues
-parent: Game User Guide
-nav_order: 3
----
-
 # Troubleshooting Scenario 1: Morning Routine
 
 This guide covers common issues you might encounter while playing **Scenario 1: Morning Routine** and provides steps to resolve them.
