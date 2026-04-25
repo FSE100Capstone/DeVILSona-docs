@@ -119,6 +119,8 @@ The table below provides a user-facing summary of the scenario steps.
 | 22 | Unfasten your seatbelt |
 | 23 | Open the driver-side door |
 
+![Scenario 2 Example Objective](images/scenario2-objective7.png)
+
 ## What to Expect During the Scenario
 
 At a high level, Scenario 2 follows this progression:
