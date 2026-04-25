@@ -42,6 +42,7 @@ The game features an **Auto-save** system that works in the background during mo
 ### 2.1 How to Create an Account
 New users can create a new profile by clicking the **[Create Account]** button in the center of the main menu.
 ![Account Creation Screenshot](images/login_New.png)
+
 1. **Enter ASU ID:** Enter your unique ASU ID.
 2. **Assign Session ID:** Set a unique Session ID to save your game data. If you leave it blank, it will automatically default to **`0001`**.
 3. **Enter Name:** Enter the name you wish to use in the game.
@@ -81,6 +82,7 @@ You can optimize your gameplay experience by accessing the Settings via the main
 
 ### 4.1 Basic Flow & Character Selection
 ![Character Selection Screenshot](images/interview_select.png)
+
 1. **Choose Character Archetype:** First, select the character archetype you want to interview. *(Currently, only the military veteran **Mike** is available.)*
 
 ![Interview Room Screenshot](images/interview_inside.png)
@@ -88,17 +90,17 @@ You can optimize your gameplay experience by accessing the Settings via the main
 
 ### 4.2 Interview With AI (Real-time Generative AI Mode)
 Under a normal network environment, you can have a real-time conversation powered by generative AI.
-* **Voice Conversation (STT):** With the microphone (STT) enabled, Mike will listen to your spoken questions and answer in real-time.
+**Voice Conversation (STT):** With the microphone (STT) enabled, Mike will listen to your spoken questions and answer in real-time.
 ![Interview Text to Speech Screenshot](images/interview_TTS.png)
-* **Text Conversation (TTS Enabled):** If you are in an environment where you cannot use a microphone, enable Text to Speech in the settings to type your questions using the virtual keyboard.
+ **Text Conversation (TTS Enabled):** If you are in an environment where you cannot use a microphone, enable Text to Speech in the settings to type your questions using the virtual keyboard.
 
 ![Interview Questions Screenshot](images/interview_Questions.png)
-* **Choose Questions:** If you are unsure what to ask during the conversation, select **[Choose Questions]** from the menu to use example questions provided by the system.
+ **Choose Questions:** If you are unsure what to ask during the conversation, select **[Choose Questions]** from the menu to use example questions provided by the system.
 
 ### 4.3 Interview Without AI (Offline / Scripted Mode)
 If your internet connection drops or the OpenAI servers go down, the game automatically switches to Offline Mode.
-* **Feature Limitations:** Both STT (voice recognition) and TTS (text input for AI responses) features will be disabled.
-* **Scripted Dialogue:** Do not panic; simply select **[Choose Questions]**. Clicking on an example question will display a pre-written scripted response, allowing you to seamlessly continue the interview.
+ **Feature Limitations:** Both STT (voice recognition) and TTS (text input for AI responses) features will be disabled.
+ **Scripted Dialogue:** Do not panic; simply select **[Choose Questions]**. Clicking on an example question will display a pre-written scripted response, allowing you to seamlessly continue the interview.
 
 ---
 
@@ -111,12 +113,14 @@ You can select and play specific role-playing scenarios within the interview loc
 ### 5.1 Scenario Selection Window
 
 ![Scenario Details Screenshot](images/scenario_detail.png)
-* **Location:** Upon entering any character's interview room, look to your **right** to find the dedicated Scenario Selection UI.
-* **View Details:** Select a scenario to see a brief **image** and **description** of it.
-* **Last Played:** The bottom of the window displays the last time you played that scenario. If it is your first time trying it, a **`NEW`** badge will be displayed.
+
+ **Location:** Upon entering any character's interview room, look to your **right** to find the dedicated Scenario Selection UI.
+ **View Details:** Select a scenario to see a brief **image** and **description** of it.
+ **Last Played:** The bottom of the window displays the last time you played that scenario. If it is your first time trying it, a **`NEW`** badge will be displayed.
 
 ### 5.2 Reset & Play Scenarios
 ![Scenario Reset and Play Buttons Screenshot](images/scenario_reset.png)
-* **Reset:** If you want to reset the progress of a previously played scenario, press the **[Reset]** button.
+
+ **Reset:** If you want to reset the progress of a previously played scenario, press the **[Reset]** button.
   > ⚠️ **Caution:** Please **wait for about 5 seconds** after resetting to ensure the data is safely saved to the server.
-* **Play:** When you are ready, press the **[Play]** button. You will be teleported to the specific location for your chosen scenario (e.g., Scenario 1 location) to begin playing.
+ **Play:** When you are ready, press the **[Play]** button. You will be teleported to the specific location for your chosen scenario (e.g., Scenario 1 location) to begin playing.
