@@ -1,6 +1,7 @@
 
 # Scenario 1: Morning Routine
 ![Scenario Start Screen](images/scenario1_Start.png)
+
 When the game starts, your objectives will be displayed on the screen. You will need to complete the following steps in order: **Wake up**, **Take a shower**, **Equip your prosthetic arm**, and **Drink coffee**. 
 
 > **Note:** Your right hand will remain invisible until you equip the prosthetic arm. However, for your convenience, a guide ray will still be visible when operating the UI.
@@ -23,12 +24,17 @@ When the game starts, your objectives will be displayed on the screen. You will 
 
 ## 4. Interacting in the Living Room
 ![Scenario AI Screenshot](images/scenario1_AI.png)
-* **Mary (Wife NPC):** Move to the living room where you will find Mary, Mike's wife. She is highly supportive of him. Approach her to initiate an **interview interaction**.
+
+ **Mary (Wife NPC):** Move to the living room where you will find Mary, Mike's wife. She is highly supportive of him. Approach her to initiate an **interview interaction**.
 ![Scenario Dog Screenshot](images/scenario1_dog.png)
-* **Pet Dog:** You can pet the dog on the head to trigger a simple, friendly interaction.
+
+ **Pet Dog:** You can pet the dog on the head to trigger a simple, friendly interaction.
 
 ## 5. Completing the Scenario
 ![Scenario Coffee Screenshot](images/scenario1_coffee.png)
+
 * Finally, grab the **coffee** resting on the table.
+
 ![Scenario Complete Screenshot](images/scenario1_complete.png)
-* Doing this completes the Morning Routine scenario. A menu UI will then appear, prompting you to either proceed to the next scenario or return to the main menu.
+
+ Doing this completes the Morning Routine scenario. A menu UI will then appear, prompting you to either proceed to the next scenario or return to the main menu.
