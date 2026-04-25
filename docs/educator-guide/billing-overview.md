@@ -60,9 +60,6 @@ The estimate below assumes **4 class sessions per semester** (one session per FS
 
     The majority of this cost comes from the Route 53 hosted zone fee ($0.50/month), DNS query charges, and the annual domain name renewal. The usage-based charges (API Gateway, Lambda, DynamoDB) are minimal at this volume but are budgeted with a conservative buffer to account for testing, retries, or unexpected usage spikes.
 
-!!! tip "AWS Free Tier"
-    If the AWS account is less than 12 months old, many of these services include a generous free tier (e.g., 1 million free Lambda requests/month, 1 million free API Gateway requests/month, 25 GB of free DynamoDB storage). During the free tier period, the only cost would be Route 53 and domain registration.
-
 ### Official AWS Pricing References
 
 For the most current pricing, refer to the official AWS pricing pages:
