@@ -14,24 +14,15 @@ This wiki is the comprehensive knowledge base for everyone involved in the DeVIL
 | Page | Description |
 |------|-------------|
 | [Welcome to DeVILSona](educator-guide/welcome.md) | What DeVILSona is, its educational goals, and the role of AI |
+| [How DeVILSona Works](educator-guide/how-devilsona-works.md) | Plain-language overview of how the system components fit together |
 | [Classroom Setup & Hardware](educator-guide/classroom-setup.md) | Physical space setup, headset management, charging & sanitation |
+| [Headset Setup & Sideloading](educator-guide/headset-setup-and-sideloading.md) | One-time setup: Developer Mode, SideQuest installation, app deployment |
+| [Network Requirements](educator-guide/network-requirements.md) | Wi-Fi, firewall, and bandwidth requirements (shareable with IT) |
 | [Running a Session](educator-guide/running-a-session.md) | Step-by-step guide for launching and running a class session |
+| [Billing Overview](educator-guide/billing-overview.md) | Cost breakdown for AWS, OpenAI, and GitHub |
 | [Student Safety & Privacy](educator-guide/safety-privacy.md) | AI content guardrails, data privacy, VR sickness protocols |
-| [Troubleshooting for Educators](educator-guide/troubleshooting.md) | Quick-fix guide for common classroom problems |
+| [Troubleshooting](educator-guide/troubleshooting.md) | Quick-fix guide, advanced diagnostics, and escalation path |
 | [Project Resources and Deliverables](educator-guide/project-resources-and-deliverables.md) | Centralized links to major project resources, research materials, design artifacts, and non-code deliverables created during the DeVILSona capstone (Fall 2025/Spring 2026) |
-
----
-
-### 🖥️ Technical Administrator Guide
-*For IT staff and technical administrators managing deployment and infrastructure.*
-
-| Page | Description |
-|------|-------------|
-| [System & Architecture Overview](admin-guide/system-architecture.md) | End-to-end topology of the VR client, cloud backend, and launcher |
-| [Hardware Provisioning & Sideloading](admin-guide/hardware-provisioning.md) | Developer Mode setup, ADB deployment, DeVILStarter configuration |
-| [Network Configuration](admin-guide/network-configuration.md) | Whitelisting OpenAI and AWS endpoints, bandwidth requirements |
-| [Backend & Cloud Operations](admin-guide/backend-cloud.md) | AWS Console navigation, DynamoDB & Lambda monitoring |
-| [Logging & Incident Response](admin-guide/logging-incident-response.md) | Pulling crash logs, reading error outputs, escalation paths |
 
 ---
 

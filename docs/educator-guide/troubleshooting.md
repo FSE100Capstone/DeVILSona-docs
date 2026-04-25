@@ -3,7 +3,7 @@
 !!! info "Audience"
     Educators running a live DeVILSona class session who encounter a problem and need a quick solution.
 
-This page provides a simple **"If X happens, do Y"** guide for the most common classroom issues. Technical administrators should consult the [Admin-Guide-Logging-&-Incident-Response](../admin-guide/logging-incident-response.md) for deeper diagnostic information.
+This page provides a simple **"If X happens, do Y"** guide for the most common classroom issues. For deeper technical diagnostics, see the [Advanced Diagnostics](#advanced-diagnostics-capturing-logs) section at the bottom of this page.
 
 ---
 
@@ -23,7 +23,7 @@ This page provides a simple **"If X happens, do Y"** guide for the most common c
 
 5. **Check if other headsets can connect:** If only one headset has issues while others connect fine, the problem is likely that specific headset. Try restarting it again or contact IT.
 
-6. **Network may block required traffic:** If no headsets can connect and the network name is correct, the classroom network may be blocking the ports DeVILSona needs (port 443 for HTTPS, and WebSocket upgrade). Contact your IT department with this information. See [Admin-Guide-Network-Configuration](../admin-guide/network-configuration.md) for exact whitelisting requirements.
+6. **Network may block required traffic:** If no headsets can connect and the network name is correct, the classroom network may be blocking the ports DeVILSona needs (port 443 for HTTPS, and WebSocket upgrade). Contact your IT department with this information. See [Network Requirements](network-requirements.md) for the exact rules to share with IT.
 
 ---
 
@@ -115,14 +115,83 @@ This page provides a simple **"If X happens, do Y"** guide for the most common c
 
 ---
 
-## Escalation Contact
+## Advanced Diagnostics: Capturing Logs
 
-If you've tried the relevant steps above and the issue persists:
+If the quick-fix steps above don't resolve the issue, the next step is to **capture diagnostic logs** from the headset. These logs record everything happening inside the app and can help identify what went wrong.
 
-1. **Try the session with a different headset** (if available) to determine if the problem is device-specific or platform-wide.
-2. **Document what happened:** Note the exact error message or behavior, which headset was in use, and what steps you already tried.
-3. **Contact the Technical Administrator** for this deployment. They will have access to logs, the AWS Console, and the ability to re-deploy the application if necessary.
+### What You Need
+
+- **SideQuest** installed on your computer (see [Headset Setup & Sideloading](headset-setup-and-sideloading.md) for installation instructions)
+- The headset connected to your computer via **USB-C**
+- SideQuest showing a **green connection indicator**
+
+### Capturing Logs with SideQuest
+
+1. Open **SideQuest** on your computer
+2. Connect the headset via USB-C and confirm it shows as connected (green dot)
+3. Click the **"Run ADB Commands"** button (wrench icon in the top-right toolbar)
+4. Select **"Logcat"** from the menu
+5. Choose a **folder** on your computer where the log file will be saved
+6. Click **"Start collecting logs"**
+7. **Reproduce the issue** on the headset (launch the app, trigger the problem)
+8. Return to SideQuest and click **"Stop collecting logs"**
+9. Navigate to the folder you selected — you'll find a log file (`.txt` or `.log`) with the captured data
+
+### Interpreting Logs with an AI Assistant
+
+The captured log files contain highly technical output that can be difficult to read. A quick and effective way to make sense of them is to **paste the log contents into an AI assistant** such as [ChatGPT](https://chat.openai.com) or a similar tool.
+
+Try a prompt like:
+
+> "I captured this log from a VR application called DeVILSona running on a Meta Quest headset. The issue I'm experiencing is [describe the problem]. Can you help me identify what went wrong? Here is the log:"
+> 
+> *(paste the log file contents)*
+
+The AI can often identify error messages, failed connections, and common issues much faster than reading through the logs manually.
+
+### What to Look For in Logs
+
+If you prefer to scan the logs yourself, here are the key patterns:
+
+| Log Pattern | What It Means |
+|------------|---------------|
+| `[AWS] Save API URL is not set!` | The app wasn't given the backend URL — restart DeVILStarter |
+| `[AWS] SaveSession failed` | Couldn't reach the backend — check Wi-Fi and DeVILStarter status |
+| `OpenAI WebSocket: Connection closed with code 1006` | AI connection dropped — check network and firewall rules |
+| `CAPSTONE_PROJECT_OPENAI_API_KEY environment variable is not set` | Missing API key — this is a build issue, contact the development team |
 
 ---
 
-*For deeper technical diagnostics, see the [Technical Administrator Guide](../admin-guide/system-architecture.md).*
+## Escalation Path
+
+If you've exhausted the troubleshooting steps and log capture above, escalate through the following levels:
+
+### Level 1: Self-Service (You)
+
+- Follow the troubleshooting steps on this page
+- Restart the app, check Wi-Fi, restart the headset
+- Restart DeVILStarter and re-deploy the infrastructure
+
+### Level 2: Log Capture & AI-Assisted Diagnosis
+
+- Capture logs using SideQuest (see above)
+- Paste logs into an AI assistant for interpretation
+- Try the suggested fixes from the AI
+
+### Level 3: Contact the Development Team
+
+Escalate to the capstone development team when:
+
+- The app crashes **every time** on launch
+- The AI never responds despite confirmed network connectivity
+- DeVILStarter consistently fails despite correct credentials
+- A new build of the app is needed (bug fix or new feature)
+
+**When contacting the development team, provide:**
+
+1. The **log file** captured from SideQuest
+2. The **exact steps** you took to reproduce the issue
+3. Which **headset model** is affected (Quest 2, Quest 3, etc.)
+4. What **network** the headset was on (campus Wi-Fi name, any known restrictions)
+5. Screenshots of any **error messages** visible in DeVILStarter or the headset
+

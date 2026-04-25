@@ -114,8 +114,11 @@ nav:
   - Educator Guide:
     - Overview:
       - Welcome to DeVILSona: educator-guide/welcome.md
+      - How DeVILSona Works: educator-guide/how-devilsona-works.md
     - Setup & Operations:
       - Classroom Setup & Hardware: educator-guide/classroom-setup.md
+      - Headset Setup & Sideloading: educator-guide/headset-setup-and-sideloading.md
+      - Network Requirements: educator-guide/network-requirements.md
       - Running a Session: educator-guide/running-a-session.md
       - Billing Overview: educator-guide/billing-overview.md
     - Safety & Support:
@@ -123,16 +126,6 @@ nav:
       - Troubleshooting: educator-guide/troubleshooting.md
     - Fall 2025/Spring 2026 Development Team External Resources and Deliverables:
       - Project Resources and Deliverables: educator-guide/project-resources-and-deliverables.md
-
-  - Admin Guide:
-    - Overview:
-      - System Architecture Overview: admin-guide/system-architecture.md
-    - Hardware & Networking:
-      - Hardware Provisioning & Sideloading: admin-guide/hardware-provisioning.md
-      - Network Configuration: admin-guide/network-configuration.md
-    - Cloud & Operations:
-      - Backend & Cloud Operations: admin-guide/backend-cloud.md
-      - Logging & Incident Response: admin-guide/logging-incident-response.md
 
   - Developer Guide:
     - Getting Started:

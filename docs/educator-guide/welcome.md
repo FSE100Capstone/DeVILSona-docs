@@ -1,7 +1,7 @@
 # Welcome to DeVILSona
 
 !!! note "This guide is written for educators and project sponsors."
-    No technical background is required. If you are an IT administrator looking for deployment instructions, see the [Technical Administrator Guide](../admin-guide/system-architecture.md).
+    No technical background is required. This guide covers everything from classroom setup to headset deployment, network requirements, and troubleshooting.
 
 ---
 
