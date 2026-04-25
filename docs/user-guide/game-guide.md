@@ -1,10 +1,3 @@
----
-layout: default
-title: Game User Guide
-parent: User Guide
-nav_order: 1
----
-
 # DeVILSona Game User Guide
 
 This document provides a comprehensive guide to DeVILSona, covering everything from basic controls and account creation to the AI interview system and scenario progression.
