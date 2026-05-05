@@ -1,0 +1,187 @@
+/* ═══════════════════════════════════════════════════════
+   DeVILSona Documentation — ASU Brand Color Theme
+   Based on: https://brandguide.asu.edu/brand-elements/design/color
+   ═══════════════════════════════════════════════════════ */
+
+/* ── ASU Brand Color Tokens ──────────────────────────── */
+:root {
+  /* Primary */
+  --asu-maroon:      #8C1D40;
+  --asu-gold:        #FFC627;
+  --asu-black:       #000000;
+  --asu-white:       #FFFFFF;
+
+  /* Secondary */
+  --asu-green:       #78BE20;
+  --asu-blue:        #00A3E0;
+  --asu-orange:      #FF7F32;
+  --asu-gray:        #747474;
+  --asu-copper:      #AF674B;
+  --asu-turquoise:   #4AB7C4;
+  --asu-pink:        #E74973;
+
+  /* Derived shades */
+  --asu-maroon-dark: #6a1631;
+  --asu-maroon-light:#a8345a;
+  --asu-gold-dark:   #e6b020;
+  --asu-gold-light:  #ffd35c;
+}
+
+/* ── Light Mode — Material Custom Primary ────────────── */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color:         var(--asu-maroon);
+  --md-primary-fg-color--light:  var(--asu-maroon-light);
+  --md-primary-fg-color--dark:   var(--asu-maroon-dark);
+  --md-primary-bg-color:         var(--asu-white);
+  --md-primary-bg-color--light:  #ffffffb3;
+
+  --md-accent-fg-color:          var(--asu-gold-dark);
+  --md-accent-fg-color--transparent: #ffc62733;
+  --md-accent-bg-color:          var(--asu-white);
+  --md-accent-bg-color--light:   #ffffffb3;
+
+  /* Typeset link color */
+  --md-typeset-a-color:          var(--asu-maroon);
+}
+
+/* ── Dark Mode — Material Custom Primary ─────────────── */
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color:         var(--asu-maroon);
+  --md-primary-fg-color--light:  var(--asu-maroon-light);
+  --md-primary-fg-color--dark:   var(--asu-maroon-dark);
+  --md-primary-bg-color:         var(--asu-white);
+  --md-primary-bg-color--light:  #ffffffb3;
+
+  --md-accent-fg-color:          var(--asu-gold);
+  --md-accent-fg-color--transparent: #ffc62733;
+  --md-accent-bg-color:          #1e1e1e;
+  --md-accent-bg-color--light:   #1e1e1eb3;
+
+  /* Brighter gold for links in dark mode for accessibility */
+  --md-typeset-a-color:          var(--asu-gold);
+
+  --md-default-bg-color:         #1a1a2e;
+  --md-default-bg-color--light:  #1e1e3a;
+}
+
+/* ── Smooth scrolling ────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── H1 styling ──────────────────────────────────────── */
+.md-content h1 {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+/* ── Wider content area for 16:9 screens ─────────────── */
+.md-grid {
+  max-width: 75%;
+}
+
+/* ── Header bar — ASU Maroon ─────────────────────────── */
+.md-header {
+  background-color: var(--asu-maroon);
+}
+
+/* ── Navigation tabs — slightly lighter maroon ───────── */
+.md-tabs {
+  background-color: var(--asu-maroon-dark);
+}
+
+/* ── Active tab indicator — gold underline ───────────── */
+.md-tabs__link--active,
+.md-tabs__link:hover {
+  color: var(--asu-gold) !important;
+}
+
+/* ── Search bar subtle gold focus ────────────────────── */
+[data-md-color-scheme="default"] .md-search__input:focus {
+  border-color: var(--asu-gold);
+}
+
+/* ── Sidebar link active state ───────────────────────── */
+.md-nav__link--active {
+  color: var(--asu-maroon) !important;
+  font-weight: 600;
+}
+
+[data-md-color-scheme="slate"] .md-nav__link--active {
+  color: var(--asu-gold) !important;
+}
+
+/* ── Table styling ───────────────────────────────────── */
+.md-typeset table:not([class]) {
+  font-size: 0.82rem;
+  border-collapse: collapse;
+}
+
+.md-typeset table:not([class]) th {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  background-color: var(--asu-maroon);
+  color: var(--asu-white);
+}
+
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) th {
+  background-color: var(--asu-maroon-dark);
+}
+
+/* ── Code block enhancements ─────────────────────────── */
+.md-typeset pre > code {
+  font-size: 0.82rem;
+}
+
+/* ── Admonition tweaks ───────────────────────────────── */
+.md-typeset .admonition,
+.md-typeset details {
+  border-radius: 8px;
+}
+
+/* ── Navigation tab styling ──────────────────────────── */
+.md-tabs__link {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* Mermaid diagrams still centered */
+.md-typeset .mermaid {
+  text-align: center;
+}
+
+/* ── Footer — dark maroon ────────────────────────────── */
+.md-footer {
+  background-color: var(--asu-maroon-dark);
+}
+
+.md-footer-meta {
+  background-color: var(--asu-maroon);
+  font-size: 0.78rem;
+}
+
+/* ── Back-to-top button — gold ───────────────────────── */
+.md-top {
+  background-color: var(--asu-gold);
+  color: var(--asu-maroon);
+}
+
+.md-top:hover {
+  background-color: var(--asu-gold-dark);
+}
+
+/* ── Search highlight — gold tint ────────────────────── */
+.md-search-result .md-search-result__article--document {
+  border-left-color: var(--asu-maroon);
+}
+
+/* ── Horizontal rules — subtle gold ──────────────────── */
+.md-typeset hr {
+  border-color: var(--asu-gold-light);
+}
+
+[data-md-color-scheme="slate"] .md-typeset hr {
+  border-color: var(--asu-maroon-light);
+}
