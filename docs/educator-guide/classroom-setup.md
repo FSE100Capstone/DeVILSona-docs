@@ -157,6 +157,6 @@ Many Meta Quest headsets include a **glasses spacer** that creates extra room be
 
 ## Next Steps
 
-Now that your physical space is ready, proceed to the session launch guide:
+Now that your physical space is ready, proceed to the headset setup guide:
 
-➡️ **[Running a Session](running-a-session.md)**
+➡️ **[Headset Setup & Sideloading](headset-setup-and-sideloading.md)**
