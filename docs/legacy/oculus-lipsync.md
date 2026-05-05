@@ -1,5 +1,17 @@
 # MetaHuman Lip Sync Setup (OVRLipSync)
 
+!!! warning "Known Limitation — Interview Text Input / Suggested Questions"
+    Lip sync currently **does not trigger correctly** when the interview uses:
+
+    - **Text-to-Speech / Speech-to-Text accessibility input**
+    - **Suggested Questions HUD** selections
+
+    In these cases, the text is sent to the AI and a **verbal response is returned**, but the first response currently plays **without lip sync**.
+
+    Because lip sync is not started for that initial text-driven response path, the AI may then hear its own output and incorrectly respond a second time. That second response may appear with lip sync, but this behavior is **not intentional** and indicates a limitation in the current implementation.
+
+    This issue occurs because the current lip sync logic was built around the streamed audio response path and did not fully account for all interview text-driven response flows.
+    
 ## Overview
 
 This system enables real-time lip synchronization for MetaHuman characters using the Oculus **OVRLipSync** plugin.
@@ -17,6 +29,51 @@ The system works in the following stages:
 6. RigLogic evaluates facial deformation
 
 The result is **real-time MetaHuman mouth animation synchronized to speech audio**.
+
+---
+
+# Current Limitation: Interview Text-Driven Responses
+
+The current OVRLipSync implementation is designed around the **streamed AI audio response pipeline**, where incoming audio deltas are decoded, buffered, and continuously analyzed for viseme extraction.
+
+However, the interview system also supports **text-based input paths** that do not currently trigger lip sync correctly in all cases.
+
+## Affected Cases
+
+The following interview flows are currently affected:
+
+- **Text-to-Speech / Speech-to-Text accessibility mode**
+- **Suggested Questions HUD** button selections
+
+In these cases:
+
+1. Text is sent to the AI
+2. A verbal response is returned
+3. The first spoken response plays **without lip sync**
+4. The AI may then hear that response and incorrectly respond again
+5. That second response may appear with lip sync
+
+## Cause
+
+This happens because the current logic did not fully account for interview text-driven responses needing to explicitly start the same lip sync processing flow used for streamed conversational audio.
+
+In other words, the implementation correctly handles the standard streamed audio path, but not all text-originated interview response paths currently initialize lip sync state the same way.
+
+## Impact
+
+As a result:
+
+- mouth animation may be missing on the first response
+- the AI may incorrectly treat its own output as a new input
+- duplicate responses may occur in these specific interview flows
+
+## Recommendation for Future Fix
+
+A future fix should ensure that interview text-originated responses:
+
+- initialize lip sync processing the same way as streamed conversational responses
+- correctly coordinate microphone capture control before playback begins
+- avoid allowing the AI to hear and respond to its own first text-driven output
 
 ---
 
@@ -500,7 +557,32 @@ MetaHumans/Common/Face/ABP_Face_PostProcess
 ```
 ## Microphone Capture Control
 
-To prevent feedback loops and unintended responses, microphone capture is explicitly controlled during AI playback.
+To prevent feedback loops and unintended responses, microphone capture is explicitly controlled during standard AI playback.
+
+### When AI Starts Speaking
+
+`AudioInputSubsystem->StopCapturing();`
+
+### When AI Finishes Speaking
+
+`AudioInputSubsystem->StartCapturing();`
+
+### Importance
+
+This is intended to prevent:
+
+- the AI from hearing its own output
+- recursive responses
+- duplicate or unintended dialogue triggers
+
+### Current Limitation
+
+This protection currently works for the primary streamed AI playback path, but it does **not yet fully cover all interview text-driven response flows**, including:
+
+- **Text-to-Speech / Speech-to-Text accessibility input**
+- **Suggested Questions HUD** selections
+
+Because those paths do not currently initialize lip sync and playback control in the same way, the AI may still hear its own response and answer again.
 
 ### When AI Starts Speaking
 
