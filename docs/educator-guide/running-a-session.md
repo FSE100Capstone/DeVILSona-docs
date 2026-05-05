@@ -97,17 +97,15 @@ Before the headset goes on, take 1–2 minutes to prepare the student:
 
 1. **Explain the activity:** "You are going to have a conversation with an AI character in VR. This character represents a real person with real challenges related to your design project. Your goal is to ask questions and listen carefully—just like you would in a real user interview."
 
-2. **Explain the controls:** "You don't need to use the controllers for anything complex. The main interaction is your voice—just speak naturally. You can look around freely. You are not moving through the space, so there is no risk of VR sickness from movement."
+2. **Set expectations:** "The AI responds dynamically, so you can ask follow-up questions. If you're not sure what to ask, start with 'Can you tell me a bit about your daily routine?' or 'What's the most challenging part of your day?'"
 
-3. **Set expectations:** "The AI responds dynamically, so you can ask follow-up questions. If you're not sure what to ask, start with 'Can you tell me a bit about your daily routine?' or 'What's the most challenging part of your day?'"
-
-4. **Safety reminder:** "Stay in the marked area. If you feel unwell or disoriented at any point, just say so and we'll pause the session."
+3. **Safety reminder:** "Stay in the marked area. If you feel unwell or disoriented at any point, just say so and we'll pause the session."
 
 ### Fitting the Headset
 
 1. **Adjust the top strap first:** Loosen the wheel on the back of the headset until it's loose, then have the student put the headset over their face and tighten the wheel until the headset feels secure but not tight. It should not create pressure on the face.
 
-2. **Check IPD (if applicable):** On Quest 2, the IPD (interpupillary distance) slider is on the bottom of the headset. Adjust it so the student sees a clear, comfortable image (three IPD settings are available; a default middle position works for most people).
+2. **Check IPD (if applicable):** On Quest headsets, the IPD (interpupillary distance) slider is on the bottom of the headset. Adjust it so the student sees a clear, comfortable image (three IPD settings are available; a default middle position works for most people).
 
 3. **Ensure the image is clear:** Ask the student "Does the text look sharp?" If not, adjust the IPD or the headset position up/down slightly.
 
@@ -130,23 +128,6 @@ Once the headset is on and comfortable:
 ---
 
 ## Monitoring the Session
-
-### Casting the View
-
-While a session is in progress, you (and the rest of the class) can optionally watch what the student sees in VR. This is called **casting**.
-
-**Option A: Cast to the Meta Horizon Mobile App**
-
-1. Install the **Meta Horizon** (formerly Oculus) app on your phone or tablet
-2. Open the app, ensure your phone is on the same Wi-Fi as the headset
-3. Tap **Cast** in the app and select the headset
-
-**Option B: Cast to a Browser (Recommended for Classroom)**
-
-1. From the headset home screen (before the student puts it on), navigate to **Quick Settings → Cast**
-2. Select **"This computer"** and note the URL shown (typically something like `cast.oculus.com`)
-3. Open that URL on any laptop or display browser connected to the same network
-4. The student's view will stream to the screen—display on a projector for the class to watch
 
 ### Observing the Session
 
