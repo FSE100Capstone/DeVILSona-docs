@@ -114,24 +114,18 @@ nav:
   - Educator Guide:
     - Overview:
       - Welcome to DeVILSona: educator-guide/welcome.md
+      - How DeVILSona Works: educator-guide/how-devilsona-works.md
     - Setup & Operations:
       - Classroom Setup & Hardware: educator-guide/classroom-setup.md
+      - Headset Setup & Sideloading: educator-guide/headset-setup-and-sideloading.md
+      - Network Requirements: educator-guide/network-requirements.md
       - Running a Session: educator-guide/running-a-session.md
+      - Billing Overview: educator-guide/billing-overview.md
     - Safety & Support:
       - Student Safety & Privacy: educator-guide/safety-privacy.md
       - Troubleshooting: educator-guide/troubleshooting.md
     - Fall 2025/Spring 2026 Development Team External Resources and Deliverables:
       - Project Resources and Deliverables: educator-guide/project-resources-and-deliverables.md
-
-  - Admin Guide:
-    - Overview:
-      - System Architecture Overview: admin-guide/system-architecture.md
-    - Hardware & Networking:
-      - Hardware Provisioning & Sideloading: admin-guide/hardware-provisioning.md
-      - Network Configuration: admin-guide/network-configuration.md
-    - Cloud & Operations:
-      - Backend & Cloud Operations: admin-guide/backend-cloud.md
-      - Logging & Incident Response: admin-guide/logging-incident-response.md
 
   - Developer Guide:
     - Getting Started:
@@ -147,14 +141,14 @@ nav:
       - Contribution Guidelines: developer-guide/contribution-guidelines.md
       - Known Issues & Roadmap: developer-guide/known-issues-roadmap.md
     - Level Implementations:
-      - Scenario 2 Driving to a Job Interview Overview and Blueprint Guide: developer-guide/driving-scenario-overview.md
+      - "Scenario 2: Driving to a Job Interview - Overview and Blueprint Guide": developer-guide/driving-scenario-overview.md
 
   - Student Guide:
     - Launching the Game: user-guide/launching-the-game.md
     - Game User Guide: user-guide/game-guide.md
-    - Scenarios:
-      - Scenario 1 User Guide Morning Routine: user-guide/scenario1-morningroutine.md
-      - Scenario 2 User Guide Driving to a Job Interview: user-guide/scenario2-drivingtoajobinterview.md
+    - Scenario Walkthroughs:
+      - "Scenario 1: Morning Routine": user-guide/scenario1-morningroutine.md
+      - "Scenario 2: Driving to a Job Interview": user-guide/scenario2-drivingtoajobinterview.md
     - Troubleshooting:
       - Troubleshooting Scenario 1 Issues: user-guide/scenario1-issues.md
       - Troubleshooting Interview Audio and Microphone Issues: user-guide/interview-issues.md

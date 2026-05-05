@@ -613,7 +613,7 @@ terraform output session_api_login_url
     TSharedRef&lt;IHttpRequest, ESPMode::ThreadSafe&gt; Request =
         FHttpModule::Get().CreateRequest();
 
-    const FString Url = TEXT("https://YOUR_API_ID.execute-api.us-east-2.amazonaws.com/session");
+    const FString Url = TEXT("https://api.devilsona.click/session");
 
     Request-&gt;SetURL(Url);
     Request-&gt;SetVerb(TEXT("POST"));
@@ -660,7 +660,7 @@ terraform output session_api_login_url
     TSharedRef&lt;IHttpRequest, ESPMode::ThreadSafe&gt; Request =
         FHttpModule::Get().CreateRequest();
 
-    const FString Url = TEXT("https://YOUR_API_ID.execute-api.us-east-2.amazonaws.com/login");
+    const FString Url = TEXT("https://api.devilsona.click/login");
 
     Request-&gt;SetURL(Url);
     Request-&gt;SetVerb(TEXT("POST"));

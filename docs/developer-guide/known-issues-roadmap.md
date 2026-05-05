@@ -37,7 +37,7 @@
 **Problem:** Terraform state is stored **locally** on the machine running DeVILStarter. If this machine is replaced, the state file is lost, or multiple people need to manage infrastructure simultaneously, the state will fall out of sync.
 
 **Required Solution:**
-Migrate to S3 + DynamoDB remote state as described in [Backend & Cloud Operations](../admin-guide/backend-cloud.md) Section 5.5:
+Migrate to S3 + DynamoDB remote state:
 
 ```hcl
 terraform {

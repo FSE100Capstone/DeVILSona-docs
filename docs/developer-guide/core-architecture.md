@@ -249,7 +249,7 @@ sequenceDiagram
 
 1. `BP_GameInstance` calls `USaveToAWS::SendStudentSessionToAWS(...)`.
 2. `SaveToAWS` constructs JSON body with session fields.
-3. HTTP request: POST -> `https://<id>.execute-api.us-east-2.amazonaws.com/session`.
+3. HTTP request: POST -> `https://api.devilsona.click/session`.
 4. API Gateway invokes `FSE100_SaveSession` Lambda.
 5. Lambda calls DynamoDB `PutItem` with session data.
 6. Response: `200 OK` -> logged to Unreal Output Log.
